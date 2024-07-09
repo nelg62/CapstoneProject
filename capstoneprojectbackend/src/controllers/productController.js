@@ -13,6 +13,21 @@ const getProducts = (res) => {
     });
 };
 
+const getProductById = (id, res) => {
+  Models.Product.findByPk(id)
+    .then((data) => {
+      if (data) {
+        res.send({ result: 200, data: data });
+      } else {
+        res.send({ result: 404, message: "Product not found" });
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      res.send({ result: 500, error: err.message });
+    });
+};
+
 const createProduct = (data, res) => {
   Models.Product.create(data)
     .then((data) => {
@@ -66,4 +81,5 @@ module.exports = {
   getProducts,
   createProduct,
   fetchAndSaveProducts,
+  getProductById,
 };
