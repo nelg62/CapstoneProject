@@ -2,7 +2,6 @@
 const Models = require("../models");
 const axios = require("axios");
 
-// Finds all products in DB, then sends array as response
 const getProducts = (res) => {
   Models.Product.findAll({})
     .then((data) => {
@@ -14,7 +13,6 @@ const getProducts = (res) => {
     });
 };
 
-// Uses JSON from request body to create new product in DB
 const createProduct = (data, res) => {
   Models.Product.create(data)
     .then((data) => {
@@ -26,7 +24,6 @@ const createProduct = (data, res) => {
     });
 };
 
-// Fetch data from API and save to MySQL
 const fetchAndSaveProducts = async (res) => {
   try {
     const response = await axios.get("https://dummyjson.com/products?limit=10");

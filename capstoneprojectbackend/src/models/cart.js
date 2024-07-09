@@ -1,43 +1,36 @@
 const { DataTypes, Model } = require("sequelize");
 let dbConnect = require("../dbConnect");
 const sequelizeInstance = dbConnect.Sequelize;
-class User extends Model {}
 
-User.init(
+class Cart extends Model {}
+
+Cart.init(
   {
     id: {
       type: DataTypes.INTEGER,
-      allowNull: false,
       autoIncrement: true,
       primaryKey: true,
     },
-    firstName: {
-      type: DataTypes.STRING,
+    userId: {
+      type: DataTypes.INTEGER,
       allowNull: false,
-      required: true,
     },
-    lastName: {
-      type: DataTypes.STRING,
+    productId: {
+      type: DataTypes.INTEGER,
       allowNull: false,
-      required: true,
     },
-    emailId: {
-      type: DataTypes.STRING,
+    quantity: {
+      type: DataTypes.INTEGER,
       allowNull: false,
-      required: true,
-      unique: true,
-    },
-    password: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      required: true,
+      defaultValue: 1,
     },
   },
   {
     sequelize: sequelizeInstance,
-    modelName: "users",
+    modelName: "Cart",
     timestamps: true,
     freezeTableName: true,
   }
 );
-module.exports = User;
+
+module.exports = Cart;
