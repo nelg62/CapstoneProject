@@ -25,6 +25,15 @@ const CartDetails = () => {
     };
     fetchCart();
   }, []);
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
+  if (!cart) {
+    return <p>nothing in cart</p>;
+  }
+
   return (
     <Box sx={{ display: "flex", width: "100%" }}>
       <CartListItems cart={cart} />
