@@ -82,7 +82,7 @@ const ProductDetail = () => {
               {product.weight}
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              {product.dimensions.width} {product.dimensions.height}{" "}
+              {product.dimensions.width} {product.dimensions.height}
               {product.dimensions.depth}
             </Typography>
             <Typography variant="body2" color="text.secondary">
