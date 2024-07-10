@@ -14,7 +14,7 @@ router.post("/create", (req, res) => {
   Controllers.productController.createProduct(req.body, res);
 });
 
-router.get("/fetch-and-save", (req, res) => {
+router.get("/fetch/fetch-and-save", (req, res) => {
   Controllers.productController.fetchAndSaveProducts(res);
 });
 
