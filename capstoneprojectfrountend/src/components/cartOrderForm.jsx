@@ -1,4 +1,4 @@
-import { Box, Button, TextField } from "@mui/material";
+import { Box, Button, Paper, TextField } from "@mui/material";
 
 export default function CartOrderForm({ cart }) {
   return (
@@ -8,16 +8,20 @@ export default function CartOrderForm({ cart }) {
         width: "100%",
         marginTop: "10px",
         marginLeft: "10px",
-        border: "solid 1px",
         display: "flex",
         flexDirection: "column",
       }}
     >
-      <TextField label="First Name" sx={{ margin: "6px" }} />
-      <TextField label="Last Name" sx={{ margin: "6px" }} />
-      <Button type="submit" variant="contained">
-        CheckOut
-      </Button>
+      <Paper sx={{ display: "flex", flexDirection: "column" }}>
+        <TextField label="First Name" sx={{ margin: "6px" }} />
+        <TextField label="Last Name" sx={{ margin: "6px" }} />
+        <TextField label="Last Name" sx={{ margin: "6px" }} />
+      </Paper>
+      <Paper>
+        <Button type="submit" variant="contained" sx={{ width: "100%" }}>
+          CheckOut
+        </Button>
+      </Paper>
     </Box>
   );
 }
