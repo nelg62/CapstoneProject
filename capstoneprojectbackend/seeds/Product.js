@@ -6,10 +6,6 @@ exports.seed = async function (knex) {
   // Deletes ALL existing entries
   await knex("table_name").del();
   await knex("table_name").insert([
-    { id: 1, colName: "rowValue1" },
-    { id: 2, colName: "rowValue2" },
-    { id: 3, colName: "rowValue3" },
-
     {
       id: 78,
       title: "Apple MacBook Pro 14 Inch Space Grey",
@@ -28,29 +24,6 @@ exports.seed = async function (knex) {
       warrantyInformation: "1 month warranty",
       shippingInformation: "Ships in 1 week",
       availabilityStatus: "In Stock",
-      reviews: [
-        {
-          rating: 5,
-          comment: "Would buy again!",
-          date: "2024-05-23T08:56:21.622Z",
-          reviewerName: "Hunter Gordon",
-          reviewerEmail: "hunter.gordon@x.dummyjson.com",
-        },
-        {
-          rating: 5,
-          comment: "Would buy again!",
-          date: "2024-05-23T08:56:21.622Z",
-          reviewerName: "Emma Wilson",
-          reviewerEmail: "emma.wilson@x.dummyjson.com",
-        },
-        {
-          rating: 5,
-          comment: "Very pleased!",
-          date: "2024-05-23T08:56:21.622Z",
-          reviewerName: "David Martinez",
-          reviewerEmail: "david.martinez@x.dummyjson.com",
-        },
-      ],
       returnPolicy: "30 days return policy",
       minimumOrderQuantity: 1,
       meta: {
@@ -85,29 +58,6 @@ exports.seed = async function (knex) {
       warrantyInformation: "No warranty",
       shippingInformation: "Ships in 3-5 business days",
       availabilityStatus: "In Stock",
-      reviews: [
-        {
-          rating: 5,
-          comment: "Very satisfied!",
-          date: "2024-05-23T08:56:21.622Z",
-          reviewerName: "Jack Ward",
-          reviewerEmail: "jack.ward@x.dummyjson.com",
-        },
-        {
-          rating: 1,
-          comment: "Very disappointed!",
-          date: "2024-05-23T08:56:21.622Z",
-          reviewerName: "Ava Harris",
-          reviewerEmail: "ava.harris@x.dummyjson.com",
-        },
-        {
-          rating: 5,
-          comment: "Great value for money!",
-          date: "2024-05-23T08:56:21.622Z",
-          reviewerName: "Brayden Fleming",
-          reviewerEmail: "brayden.fleming@x.dummyjson.com",
-        },
-      ],
       returnPolicy: "No return policy",
       minimumOrderQuantity: 1,
       meta: {
@@ -142,29 +92,6 @@ exports.seed = async function (knex) {
       warrantyInformation: "2 year warranty",
       shippingInformation: "Ships in 2 weeks",
       availabilityStatus: "In Stock",
-      reviews: [
-        {
-          rating: 4,
-          comment: "Great value for money!",
-          date: "2024-05-23T08:56:21.622Z",
-          reviewerName: "Samantha Howard",
-          reviewerEmail: "samantha.howard@x.dummyjson.com",
-        },
-        {
-          rating: 2,
-          comment: "Would not buy again!",
-          date: "2024-05-23T08:56:21.622Z",
-          reviewerName: "Daniel Cook",
-          reviewerEmail: "daniel.cook@x.dummyjson.com",
-        },
-        {
-          rating: 5,
-          comment: "Very satisfied!",
-          date: "2024-05-23T08:56:21.622Z",
-          reviewerName: "Brayden Fleming",
-          reviewerEmail: "brayden.fleming@x.dummyjson.com",
-        },
-      ],
       returnPolicy: "60 days return policy",
       minimumOrderQuantity: 1,
       meta: {
@@ -199,29 +126,6 @@ exports.seed = async function (knex) {
       warrantyInformation: "Lifetime warranty",
       shippingInformation: "Ships in 1 week",
       availabilityStatus: "In Stock",
-      reviews: [
-        {
-          rating: 4,
-          comment: "Very happy with my purchase!",
-          date: "2024-05-23T08:56:21.623Z",
-          reviewerName: "Paisley Bell",
-          reviewerEmail: "paisley.bell@x.dummyjson.com",
-        },
-        {
-          rating: 4,
-          comment: "Very pleased!",
-          date: "2024-05-23T08:56:21.623Z",
-          reviewerName: "Lincoln Kelly",
-          reviewerEmail: "lincoln.kelly@x.dummyjson.com",
-        },
-        {
-          rating: 4,
-          comment: "Great product!",
-          date: "2024-05-23T08:56:21.623Z",
-          reviewerName: "Luna Russell",
-          reviewerEmail: "luna.russell@x.dummyjson.com",
-        },
-      ],
       returnPolicy: "No return policy",
       minimumOrderQuantity: 1,
       meta: {
@@ -256,29 +160,6 @@ exports.seed = async function (knex) {
       warrantyInformation: "Lifetime warranty",
       shippingInformation: "Ships overnight",
       availabilityStatus: "In Stock",
-      reviews: [
-        {
-          rating: 3,
-          comment: "Very disappointed!",
-          date: "2024-05-23T08:56:21.623Z",
-          reviewerName: "Julian Newton",
-          reviewerEmail: "julian.newton@x.dummyjson.com",
-        },
-        {
-          rating: 4,
-          comment: "Very pleased!",
-          date: "2024-05-23T08:56:21.623Z",
-          reviewerName: "Grace Perry",
-          reviewerEmail: "grace.perry@x.dummyjson.com",
-        },
-        {
-          rating: 5,
-          comment: "Great product!",
-          date: "2024-05-23T08:56:21.623Z",
-          reviewerName: "Daniel Taylor",
-          reviewerEmail: "daniel.taylor@x.dummyjson.com",
-        },
-      ],
       returnPolicy: "7 days return policy",
       minimumOrderQuantity: 1,
       meta: {
@@ -314,29 +195,6 @@ exports.seed = async function (knex) {
       warrantyInformation: "1 week warranty",
       shippingInformation: "Ships in 1 week",
       availabilityStatus: "In Stock",
-      reviews: [
-        {
-          rating: 4,
-          comment: "Highly impressed!",
-          date: "2024-05-23T08:56:21.625Z",
-          reviewerName: "Wyatt Perry",
-          reviewerEmail: "wyatt.perry@x.dummyjson.com",
-        },
-        {
-          rating: 5,
-          comment: "Awesome product!",
-          date: "2024-05-23T08:56:21.625Z",
-          reviewerName: "Olivia Anderson",
-          reviewerEmail: "olivia.anderson@x.dummyjson.com",
-        },
-        {
-          rating: 4,
-          comment: "Highly recommended!",
-          date: "2024-05-23T08:56:21.625Z",
-          reviewerName: "Mateo Nguyen",
-          reviewerEmail: "mateo.nguyen@x.dummyjson.com",
-        },
-      ],
       returnPolicy: "No return policy",
       minimumOrderQuantity: 2,
       meta: {
@@ -371,29 +229,6 @@ exports.seed = async function (knex) {
       warrantyInformation: "3 year warranty",
       shippingInformation: "Ships overnight",
       availabilityStatus: "In Stock",
-      reviews: [
-        {
-          rating: 5,
-          comment: "Would buy again!",
-          date: "2024-05-23T08:56:21.625Z",
-          reviewerName: "Nicholas Bailey",
-          reviewerEmail: "nicholas.bailey@x.dummyjson.com",
-        },
-        {
-          rating: 5,
-          comment: "Great product!",
-          date: "2024-05-23T08:56:21.625Z",
-          reviewerName: "Clara Berry",
-          reviewerEmail: "clara.berry@x.dummyjson.com",
-        },
-        {
-          rating: 3,
-          comment: "Not as described!",
-          date: "2024-05-23T08:56:21.625Z",
-          reviewerName: "Gavin Stanley",
-          reviewerEmail: "gavin.stanley@x.dummyjson.com",
-        },
-      ],
       returnPolicy: "60 days return policy",
       minimumOrderQuantity: 3,
       meta: {
@@ -428,29 +263,6 @@ exports.seed = async function (knex) {
       warrantyInformation: "1 year warranty",
       shippingInformation: "Ships in 2 weeks",
       availabilityStatus: "In Stock",
-      reviews: [
-        {
-          rating: 5,
-          comment: "Highly impressed!",
-          date: "2024-05-23T08:56:21.625Z",
-          reviewerName: "Aria Roberts",
-          reviewerEmail: "aria.roberts@x.dummyjson.com",
-        },
-        {
-          rating: 4,
-          comment: "Great product!",
-          date: "2024-05-23T08:56:21.625Z",
-          reviewerName: "Ryan Graham",
-          reviewerEmail: "ryan.graham@x.dummyjson.com",
-        },
-        {
-          rating: 2,
-          comment: "Poor quality!",
-          date: "2024-05-23T08:56:21.625Z",
-          reviewerName: "Mason Wright",
-          reviewerEmail: "mason.wright@x.dummyjson.com",
-        },
-      ],
       returnPolicy: "7 days return policy",
       minimumOrderQuantity: 1,
       meta: {
@@ -485,29 +297,6 @@ exports.seed = async function (knex) {
       warrantyInformation: "3 months warranty",
       shippingInformation: "Ships in 1 month",
       availabilityStatus: "In Stock",
-      reviews: [
-        {
-          rating: 1,
-          comment: "Very unhappy with my purchase!",
-          date: "2024-05-23T08:56:21.625Z",
-          reviewerName: "Eleanor Tyler",
-          reviewerEmail: "eleanor.tyler@x.dummyjson.com",
-        },
-        {
-          rating: 5,
-          comment: "Very satisfied!",
-          date: "2024-05-23T08:56:21.625Z",
-          reviewerName: "Maya Reed",
-          reviewerEmail: "maya.reed@x.dummyjson.com",
-        },
-        {
-          rating: 4,
-          comment: "Fast shipping!",
-          date: "2024-05-23T08:56:21.625Z",
-          reviewerName: "Elena Baker",
-          reviewerEmail: "elena.baker@x.dummyjson.com",
-        },
-      ],
       returnPolicy: "30 days return policy",
       minimumOrderQuantity: 2,
       meta: {
@@ -542,29 +331,6 @@ exports.seed = async function (knex) {
       warrantyInformation: "No warranty",
       shippingInformation: "Ships in 1 month",
       availabilityStatus: "In Stock",
-      reviews: [
-        {
-          rating: 2,
-          comment: "Not worth the price!",
-          date: "2024-05-23T08:56:21.625Z",
-          reviewerName: "Owen Fisher",
-          reviewerEmail: "owen.fisher@x.dummyjson.com",
-        },
-        {
-          rating: 4,
-          comment: "Fast shipping!",
-          date: "2024-05-23T08:56:21.625Z",
-          reviewerName: "Jack Ward",
-          reviewerEmail: "jack.ward@x.dummyjson.com",
-        },
-        {
-          rating: 2,
-          comment: "Very dissatisfied!",
-          date: "2024-05-23T08:56:21.625Z",
-          reviewerName: "Nora Mills",
-          reviewerEmail: "nora.mills@x.dummyjson.com",
-        },
-      ],
       returnPolicy: "30 days return policy",
       minimumOrderQuantity: 5,
       meta: {
@@ -599,29 +365,6 @@ exports.seed = async function (knex) {
       warrantyInformation: "3 year warranty",
       shippingInformation: "Ships in 1-2 business days",
       availabilityStatus: "In Stock",
-      reviews: [
-        {
-          rating: 4,
-          comment: "Would buy again!",
-          date: "2024-05-23T08:56:21.625Z",
-          reviewerName: "Benjamin Foster",
-          reviewerEmail: "benjamin.foster@x.dummyjson.com",
-        },
-        {
-          rating: 5,
-          comment: "Very pleased!",
-          date: "2024-05-23T08:56:21.625Z",
-          reviewerName: "Lillian Bishop",
-          reviewerEmail: "lillian.bishop@x.dummyjson.com",
-        },
-        {
-          rating: 3,
-          comment: "Would not recommend!",
-          date: "2024-05-23T08:56:21.625Z",
-          reviewerName: "Harper Garcia",
-          reviewerEmail: "harper.garcia@x.dummyjson.com",
-        },
-      ],
       returnPolicy: "30 days return policy",
       minimumOrderQuantity: 5,
       meta: {
@@ -656,29 +399,6 @@ exports.seed = async function (knex) {
       warrantyInformation: "2 year warranty",
       shippingInformation: "Ships in 2 weeks",
       availabilityStatus: "In Stock",
-      reviews: [
-        {
-          rating: 2,
-          comment: "Would not buy again!",
-          date: "2024-05-23T08:56:21.625Z",
-          reviewerName: "Penelope Harper",
-          reviewerEmail: "penelope.harper@x.dummyjson.com",
-        },
-        {
-          rating: 4,
-          comment: "Very satisfied!",
-          date: "2024-05-23T08:56:21.625Z",
-          reviewerName: "Nathan Reed",
-          reviewerEmail: "nathan.reed@x.dummyjson.com",
-        },
-        {
-          rating: 5,
-          comment: "Very happy with my purchase!",
-          date: "2024-05-23T08:56:21.625Z",
-          reviewerName: "Madison Stewart",
-          reviewerEmail: "madison.stewart@x.dummyjson.com",
-        },
-      ],
       returnPolicy: "No return policy",
       minimumOrderQuantity: 1,
       meta: {
@@ -714,29 +434,6 @@ exports.seed = async function (knex) {
       warrantyInformation: "Lifetime warranty",
       shippingInformation: "Ships in 1 week",
       availabilityStatus: "In Stock",
-      reviews: [
-        {
-          rating: 5,
-          comment: "Very happy with my purchase!",
-          date: "2024-05-23T08:56:21.625Z",
-          reviewerName: "Ava Harrison",
-          reviewerEmail: "ava.harrison@x.dummyjson.com",
-        },
-        {
-          rating: 3,
-          comment: "Waste of money!",
-          date: "2024-05-23T08:56:21.625Z",
-          reviewerName: "Sophia Brown",
-          reviewerEmail: "sophia.brown@x.dummyjson.com",
-        },
-        {
-          rating: 5,
-          comment: "Great product!",
-          date: "2024-05-23T08:56:21.625Z",
-          reviewerName: "Grace Perry",
-          reviewerEmail: "grace.perry@x.dummyjson.com",
-        },
-      ],
       returnPolicy: "30 days return policy",
       minimumOrderQuantity: 1,
       meta: {
@@ -771,29 +468,6 @@ exports.seed = async function (knex) {
       warrantyInformation: "1 month warranty",
       shippingInformation: "Ships in 3-5 business days",
       availabilityStatus: "In Stock",
-      reviews: [
-        {
-          rating: 4,
-          comment: "Highly recommended!",
-          date: "2024-05-23T08:56:21.625Z",
-          reviewerName: "Benjamin Foster",
-          reviewerEmail: "benjamin.foster@x.dummyjson.com",
-        },
-        {
-          rating: 4,
-          comment: "Very satisfied!",
-          date: "2024-05-23T08:56:21.625Z",
-          reviewerName: "Madison Collins",
-          reviewerEmail: "madison.collins@x.dummyjson.com",
-        },
-        {
-          rating: 5,
-          comment: "Fast shipping!",
-          date: "2024-05-23T08:56:21.625Z",
-          reviewerName: "Emily Johnson",
-          reviewerEmail: "emily.johnson@x.dummyjson.com",
-        },
-      ],
       returnPolicy: "7 days return policy",
       minimumOrderQuantity: 1,
       meta: {
@@ -828,29 +502,6 @@ exports.seed = async function (knex) {
       warrantyInformation: "1 week warranty",
       shippingInformation: "Ships in 1 month",
       availabilityStatus: "In Stock",
-      reviews: [
-        {
-          rating: 5,
-          comment: "Awesome product!",
-          date: "2024-05-23T08:56:21.625Z",
-          reviewerName: "Hannah Howard",
-          reviewerEmail: "hannah.howard@x.dummyjson.com",
-        },
-        {
-          rating: 1,
-          comment: "Would not recommend!",
-          date: "2024-05-23T08:56:21.625Z",
-          reviewerName: "Claire Foster",
-          reviewerEmail: "claire.foster@x.dummyjson.com",
-        },
-        {
-          rating: 1,
-          comment: "Very dissatisfied!",
-          date: "2024-05-23T08:56:21.625Z",
-          reviewerName: "Nora Russell",
-          reviewerEmail: "nora.russell@x.dummyjson.com",
-        },
-      ],
       returnPolicy: "60 days return policy",
       minimumOrderQuantity: 5,
       meta: {
@@ -885,29 +536,6 @@ exports.seed = async function (knex) {
       warrantyInformation: "1 month warranty",
       shippingInformation: "Ships in 2 weeks",
       availabilityStatus: "In Stock",
-      reviews: [
-        {
-          rating: 5,
-          comment: "Would buy again!",
-          date: "2024-05-23T08:56:21.625Z",
-          reviewerName: "Jace Smith",
-          reviewerEmail: "jace.smith@x.dummyjson.com",
-        },
-        {
-          rating: 4,
-          comment: "Would buy again!",
-          date: "2024-05-23T08:56:21.625Z",
-          reviewerName: "Ruby Andrews",
-          reviewerEmail: "ruby.andrews@x.dummyjson.com",
-        },
-        {
-          rating: 5,
-          comment: "Great value for money!",
-          date: "2024-05-23T08:56:21.625Z",
-          reviewerName: "Aria Roberts",
-          reviewerEmail: "aria.roberts@x.dummyjson.com",
-        },
-      ],
       returnPolicy: "No return policy",
       minimumOrderQuantity: 1,
       meta: {
@@ -942,29 +570,6 @@ exports.seed = async function (knex) {
       warrantyInformation: "Lifetime warranty",
       shippingInformation: "Ships in 3-5 business days",
       availabilityStatus: "In Stock",
-      reviews: [
-        {
-          rating: 2,
-          comment: "Very unhappy with my purchase!",
-          date: "2024-05-23T08:56:21.625Z",
-          reviewerName: "Christopher West",
-          reviewerEmail: "christopher.west@x.dummyjson.com",
-        },
-        {
-          rating: 5,
-          comment: "Very happy with my purchase!",
-          date: "2024-05-23T08:56:21.625Z",
-          reviewerName: "Hazel Evans",
-          reviewerEmail: "hazel.evans@x.dummyjson.com",
-        },
-        {
-          rating: 4,
-          comment: "Very happy with my purchase!",
-          date: "2024-05-23T08:56:21.625Z",
-          reviewerName: "Luna Russell",
-          reviewerEmail: "luna.russell@x.dummyjson.com",
-        },
-      ],
       returnPolicy: "No return policy",
       minimumOrderQuantity: 1,
       meta: {
@@ -999,29 +604,6 @@ exports.seed = async function (knex) {
       warrantyInformation: "1 month warranty",
       shippingInformation: "Ships overnight",
       availabilityStatus: "In Stock",
-      reviews: [
-        {
-          rating: 4,
-          comment: "Great value for money!",
-          date: "2024-05-23T08:56:21.625Z",
-          reviewerName: "Grace Perry",
-          reviewerEmail: "grace.perry@x.dummyjson.com",
-        },
-        {
-          rating: 4,
-          comment: "Highly impressed!",
-          date: "2024-05-23T08:56:21.625Z",
-          reviewerName: "Elijah Hill",
-          reviewerEmail: "elijah.hill@x.dummyjson.com",
-        },
-        {
-          rating: 4,
-          comment: "Would buy again!",
-          date: "2024-05-23T08:56:21.625Z",
-          reviewerName: "Eleanor Tyler",
-          reviewerEmail: "eleanor.tyler@x.dummyjson.com",
-        },
-      ],
       returnPolicy: "No return policy",
       minimumOrderQuantity: 1,
       meta: {
@@ -1056,29 +638,6 @@ exports.seed = async function (knex) {
       warrantyInformation: "1 week warranty",
       shippingInformation: "Ships overnight",
       availabilityStatus: "In Stock",
-      reviews: [
-        {
-          rating: 5,
-          comment: "Very pleased!",
-          date: "2024-05-23T08:56:21.625Z",
-          reviewerName: "Alice Smith",
-          reviewerEmail: "alice.smith@x.dummyjson.com",
-        },
-        {
-          rating: 5,
-          comment: "Great value for money!",
-          date: "2024-05-23T08:56:21.625Z",
-          reviewerName: "Harper Kelly",
-          reviewerEmail: "harper.kelly@x.dummyjson.com",
-        },
-        {
-          rating: 5,
-          comment: "Great product!",
-          date: "2024-05-23T08:56:21.625Z",
-          reviewerName: "Lillian Simmons",
-          reviewerEmail: "lillian.simmons@x.dummyjson.com",
-        },
-      ],
       returnPolicy: "7 days return policy",
       minimumOrderQuantity: 3,
       meta: {
@@ -1113,29 +672,6 @@ exports.seed = async function (knex) {
       warrantyInformation: "1 week warranty",
       shippingInformation: "Ships overnight",
       availabilityStatus: "In Stock",
-      reviews: [
-        {
-          rating: 3,
-          comment: "Would not recommend!",
-          date: "2024-05-23T08:56:21.625Z",
-          reviewerName: "Elijah Stewart",
-          reviewerEmail: "elijah.stewart@x.dummyjson.com",
-        },
-        {
-          rating: 4,
-          comment: "Great product!",
-          date: "2024-05-23T08:56:21.625Z",
-          reviewerName: "Aria Roberts",
-          reviewerEmail: "aria.roberts@x.dummyjson.com",
-        },
-        {
-          rating: 4,
-          comment: "Very happy with my purchase!",
-          date: "2024-05-23T08:56:21.625Z",
-          reviewerName: "Hannah Howard",
-          reviewerEmail: "hannah.howard@x.dummyjson.com",
-        },
-      ],
       returnPolicy: "No return policy",
       minimumOrderQuantity: 2,
       meta: {
@@ -1170,29 +706,6 @@ exports.seed = async function (knex) {
       warrantyInformation: "1 week warranty",
       shippingInformation: "Ships overnight",
       availabilityStatus: "Out of Stock",
-      reviews: [
-        {
-          rating: 5,
-          comment: "Highly recommended!",
-          date: "2024-05-23T08:56:21.625Z",
-          reviewerName: "Logan Lee",
-          reviewerEmail: "logan.lee@x.dummyjson.com",
-        },
-        {
-          rating: 5,
-          comment: "Highly recommended!",
-          date: "2024-05-23T08:56:21.625Z",
-          reviewerName: "Nolan Gonzalez",
-          reviewerEmail: "nolan.gonzalez@x.dummyjson.com",
-        },
-        {
-          rating: 4,
-          comment: "Fast shipping!",
-          date: "2024-05-23T08:56:21.625Z",
-          reviewerName: "Bella Grant",
-          reviewerEmail: "bella.grant@x.dummyjson.com",
-        },
-      ],
       returnPolicy: "30 days return policy",
       minimumOrderQuantity: 4,
       meta: {
