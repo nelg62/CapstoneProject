@@ -14,6 +14,7 @@ exports.up = function (knex) {
       table.decimal("rating", 3, 2);
       table.integer("stock").notNullable();
       table.string("brand").notNullable();
+      table.json("tags");
       table.string("sku").notNullable();
       table.decimal("weight", 5, 2);
       table.json("dimensions");
@@ -22,13 +23,14 @@ exports.up = function (knex) {
       table.string("availabilityStatus");
       table.string("returnPolicy");
       table.integer("minimumOrderQuantity").defaultTo(1);
+      table.json("images");
       table.string("thumbnail");
       table.timestamps(true, true);
     })
     .createTable("productImages", function (table) {
       table.increments("id").primary();
       table.integer("productId").unsigned().notNullable();
-      table.string("image").notNullable();
+      table.string("images").notNullable();
       table.foreign("productId").references("Product.id").onDelete("CASCADE");
     });
 };
