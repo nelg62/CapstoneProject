@@ -26,12 +26,6 @@ exports.seed = async function (knex) {
       availabilityStatus: "In Stock",
       returnPolicy: "30 days return policy",
       minimumOrderQuantity: 1,
-      meta: {
-        createdAt: "2024-05-23T08:56:21.622Z",
-        updatedAt: "2024-05-23T08:56:21.622Z",
-        barcode: "3883623063065",
-        qrCode: "https://assets.dummyjson.com/public/qr-code.png",
-      },
       images: [
         "https://cdn.dummyjson.com/products/images/laptops/Apple%20MacBook%20Pro%2014%20Inch%20Space%20Grey/1.png",
         "https://cdn.dummyjson.com/products/images/laptops/Apple%20MacBook%20Pro%2014%20Inch%20Space%20Grey/2.png",
@@ -60,12 +54,6 @@ exports.seed = async function (knex) {
       availabilityStatus: "In Stock",
       returnPolicy: "No return policy",
       minimumOrderQuantity: 1,
-      meta: {
-        createdAt: "2024-05-23T08:56:21.622Z",
-        updatedAt: "2024-05-23T08:56:21.622Z",
-        barcode: "2899455033799",
-        qrCode: "https://assets.dummyjson.com/public/qr-code.png",
-      },
       images: [
         "https://cdn.dummyjson.com/products/images/laptops/Asus%20Zenbook%20Pro%20Dual%20Screen%20Laptop/1.png",
         "https://cdn.dummyjson.com/products/images/laptops/Asus%20Zenbook%20Pro%20Dual%20Screen%20Laptop/2.png",
@@ -94,12 +82,6 @@ exports.seed = async function (knex) {
       availabilityStatus: "In Stock",
       returnPolicy: "60 days return policy",
       minimumOrderQuantity: 1,
-      meta: {
-        createdAt: "2024-05-23T08:56:21.622Z",
-        updatedAt: "2024-05-23T08:56:21.622Z",
-        barcode: "1232723732298",
-        qrCode: "https://assets.dummyjson.com/public/qr-code.png",
-      },
       images: [
         "https://cdn.dummyjson.com/products/images/laptops/Huawei%20Matebook%20X%20Pro/1.png",
         "https://cdn.dummyjson.com/products/images/laptops/Huawei%20Matebook%20X%20Pro/2.png",
@@ -128,12 +110,6 @@ exports.seed = async function (knex) {
       availabilityStatus: "In Stock",
       returnPolicy: "No return policy",
       minimumOrderQuantity: 1,
-      meta: {
-        createdAt: "2024-05-23T08:56:21.623Z",
-        updatedAt: "2024-05-23T08:56:21.623Z",
-        barcode: "9590995785298",
-        qrCode: "https://assets.dummyjson.com/public/qr-code.png",
-      },
       images: [
         "https://cdn.dummyjson.com/products/images/laptops/Lenovo%20Yoga%20920/1.png",
         "https://cdn.dummyjson.com/products/images/laptops/Lenovo%20Yoga%20920/2.png",
@@ -162,12 +138,6 @@ exports.seed = async function (knex) {
       availabilityStatus: "In Stock",
       returnPolicy: "7 days return policy",
       minimumOrderQuantity: 1,
-      meta: {
-        createdAt: "2024-05-23T08:56:21.623Z",
-        updatedAt: "2024-05-23T08:56:21.623Z",
-        barcode: "0358629687929",
-        qrCode: "https://assets.dummyjson.com/public/qr-code.png",
-      },
       images: [
         "https://cdn.dummyjson.com/products/images/laptops/New%20DELL%20XPS%2013%209300%20Laptop/1.png",
         "https://cdn.dummyjson.com/products/images/laptops/New%20DELL%20XPS%2013%209300%20Laptop/2.png",
@@ -197,12 +167,6 @@ exports.seed = async function (knex) {
       availabilityStatus: "In Stock",
       returnPolicy: "No return policy",
       minimumOrderQuantity: 2,
-      meta: {
-        createdAt: "2024-05-23T08:56:21.625Z",
-        updatedAt: "2024-05-23T08:56:21.625Z",
-        barcode: "2903942810911",
-        qrCode: "https://assets.dummyjson.com/public/qr-code.png",
-      },
       images: [
         "https://cdn.dummyjson.com/products/images/smartphones/iPhone%205s/1.png",
         "https://cdn.dummyjson.com/products/images/smartphones/iPhone%205s/2.png",
@@ -231,12 +195,6 @@ exports.seed = async function (knex) {
       availabilityStatus: "In Stock",
       returnPolicy: "60 days return policy",
       minimumOrderQuantity: 3,
-      meta: {
-        createdAt: "2024-05-23T08:56:21.625Z",
-        updatedAt: "2024-05-23T08:56:21.625Z",
-        barcode: "2517230562429",
-        qrCode: "https://assets.dummyjson.com/public/qr-code.png",
-      },
       images: [
         "https://cdn.dummyjson.com/products/images/smartphones/iPhone%206/1.png",
         "https://cdn.dummyjson.com/products/images/smartphones/iPhone%206/2.png",
@@ -265,12 +223,6 @@ exports.seed = async function (knex) {
       availabilityStatus: "In Stock",
       returnPolicy: "7 days return policy",
       minimumOrderQuantity: 1,
-      meta: {
-        createdAt: "2024-05-23T08:56:21.625Z",
-        updatedAt: "2024-05-23T08:56:21.625Z",
-        barcode: "2986724589988",
-        qrCode: "https://assets.dummyjson.com/public/qr-code.png",
-      },
       images: [
         "https://cdn.dummyjson.com/products/images/smartphones/iPhone%2013%20Pro/1.png",
         "https://cdn.dummyjson.com/products/images/smartphones/iPhone%2013%20Pro/2.png",
@@ -299,12 +251,6 @@ exports.seed = async function (knex) {
       availabilityStatus: "In Stock",
       returnPolicy: "30 days return policy",
       minimumOrderQuantity: 2,
-      meta: {
-        createdAt: "2024-05-23T08:56:21.625Z",
-        updatedAt: "2024-05-23T08:56:21.625Z",
-        barcode: "4331405454760",
-        qrCode: "https://assets.dummyjson.com/public/qr-code.png",
-      },
       images: [
         "https://cdn.dummyjson.com/products/images/smartphones/iPhone%20X/1.png",
         "https://cdn.dummyjson.com/products/images/smartphones/iPhone%20X/2.png",
@@ -333,12 +279,6 @@ exports.seed = async function (knex) {
       availabilityStatus: "In Stock",
       returnPolicy: "30 days return policy",
       minimumOrderQuantity: 5,
-      meta: {
-        createdAt: "2024-05-23T08:56:21.625Z",
-        updatedAt: "2024-05-23T08:56:21.625Z",
-        barcode: "1743445108634",
-        qrCode: "https://assets.dummyjson.com/public/qr-code.png",
-      },
       images: [
         "https://cdn.dummyjson.com/products/images/smartphones/Oppo%20A57/1.png",
         "https://cdn.dummyjson.com/products/images/smartphones/Oppo%20A57/2.png",
@@ -367,12 +307,6 @@ exports.seed = async function (knex) {
       availabilityStatus: "In Stock",
       returnPolicy: "30 days return policy",
       minimumOrderQuantity: 5,
-      meta: {
-        createdAt: "2024-05-23T08:56:21.625Z",
-        updatedAt: "2024-05-23T08:56:21.625Z",
-        barcode: "7451360954140",
-        qrCode: "https://assets.dummyjson.com/public/qr-code.png",
-      },
       images: [
         "https://cdn.dummyjson.com/products/images/smartphones/Oppo%20F19%20Pro%20Plus/1.png",
         "https://cdn.dummyjson.com/products/images/smartphones/Oppo%20F19%20Pro%20Plus/2.png",
@@ -401,12 +335,6 @@ exports.seed = async function (knex) {
       availabilityStatus: "In Stock",
       returnPolicy: "No return policy",
       minimumOrderQuantity: 1,
-      meta: {
-        createdAt: "2024-05-23T08:56:21.625Z",
-        updatedAt: "2024-05-23T08:56:21.625Z",
-        barcode: "7535531820285",
-        qrCode: "https://assets.dummyjson.com/public/qr-code.png",
-      },
       images: [
         "https://cdn.dummyjson.com/products/images/smartphones/Oppo%20K1/1.png",
         "https://cdn.dummyjson.com/products/images/smartphones/Oppo%20K1/2.png",
@@ -436,12 +364,6 @@ exports.seed = async function (knex) {
       availabilityStatus: "In Stock",
       returnPolicy: "30 days return policy",
       minimumOrderQuantity: 1,
-      meta: {
-        createdAt: "2024-05-23T08:56:21.625Z",
-        updatedAt: "2024-05-23T08:56:21.625Z",
-        barcode: "3119744926904",
-        qrCode: "https://assets.dummyjson.com/public/qr-code.png",
-      },
       images: [
         "https://cdn.dummyjson.com/products/images/smartphones/Realme%20C35/1.png",
         "https://cdn.dummyjson.com/products/images/smartphones/Realme%20C35/2.png",
@@ -470,12 +392,6 @@ exports.seed = async function (knex) {
       availabilityStatus: "In Stock",
       returnPolicy: "7 days return policy",
       minimumOrderQuantity: 1,
-      meta: {
-        createdAt: "2024-05-23T08:56:21.625Z",
-        updatedAt: "2024-05-23T08:56:21.625Z",
-        barcode: "0139612574728",
-        qrCode: "https://assets.dummyjson.com/public/qr-code.png",
-      },
       images: [
         "https://cdn.dummyjson.com/products/images/smartphones/Realme%20X/1.png",
         "https://cdn.dummyjson.com/products/images/smartphones/Realme%20X/2.png",
@@ -504,12 +420,6 @@ exports.seed = async function (knex) {
       availabilityStatus: "In Stock",
       returnPolicy: "60 days return policy",
       minimumOrderQuantity: 5,
-      meta: {
-        createdAt: "2024-05-23T08:56:21.625Z",
-        updatedAt: "2024-05-23T08:56:21.625Z",
-        barcode: "3985844484131",
-        qrCode: "https://assets.dummyjson.com/public/qr-code.png",
-      },
       images: [
         "https://cdn.dummyjson.com/products/images/smartphones/Realme%20XT/1.png",
         "https://cdn.dummyjson.com/products/images/smartphones/Realme%20XT/2.png",
@@ -538,12 +448,6 @@ exports.seed = async function (knex) {
       availabilityStatus: "In Stock",
       returnPolicy: "No return policy",
       minimumOrderQuantity: 1,
-      meta: {
-        createdAt: "2024-05-23T08:56:21.625Z",
-        updatedAt: "2024-05-23T08:56:21.625Z",
-        barcode: "8841359359362",
-        qrCode: "https://assets.dummyjson.com/public/qr-code.png",
-      },
       images: [
         "https://cdn.dummyjson.com/products/images/smartphones/Samsung%20Galaxy%20S7/1.png",
         "https://cdn.dummyjson.com/products/images/smartphones/Samsung%20Galaxy%20S7/2.png",
@@ -572,12 +476,6 @@ exports.seed = async function (knex) {
       availabilityStatus: "In Stock",
       returnPolicy: "No return policy",
       minimumOrderQuantity: 1,
-      meta: {
-        createdAt: "2024-05-23T08:56:21.625Z",
-        updatedAt: "2024-05-23T08:56:21.625Z",
-        barcode: "1337599403784",
-        qrCode: "https://assets.dummyjson.com/public/qr-code.png",
-      },
       images: [
         "https://cdn.dummyjson.com/products/images/smartphones/Samsung%20Galaxy%20S8/1.png",
         "https://cdn.dummyjson.com/products/images/smartphones/Samsung%20Galaxy%20S8/2.png",
@@ -606,12 +504,6 @@ exports.seed = async function (knex) {
       availabilityStatus: "In Stock",
       returnPolicy: "No return policy",
       minimumOrderQuantity: 1,
-      meta: {
-        createdAt: "2024-05-23T08:56:21.625Z",
-        updatedAt: "2024-05-23T08:56:21.625Z",
-        barcode: "0311929399881",
-        qrCode: "https://assets.dummyjson.com/public/qr-code.png",
-      },
       images: [
         "https://cdn.dummyjson.com/products/images/smartphones/Samsung%20Galaxy%20S10/1.png",
         "https://cdn.dummyjson.com/products/images/smartphones/Samsung%20Galaxy%20S10/2.png",
@@ -640,12 +532,6 @@ exports.seed = async function (knex) {
       availabilityStatus: "In Stock",
       returnPolicy: "7 days return policy",
       minimumOrderQuantity: 3,
-      meta: {
-        createdAt: "2024-05-23T08:56:21.625Z",
-        updatedAt: "2024-05-23T08:56:21.625Z",
-        barcode: "4070349673041",
-        qrCode: "https://assets.dummyjson.com/public/qr-code.png",
-      },
       images: [
         "https://cdn.dummyjson.com/products/images/smartphones/Vivo%20S1/1.png",
         "https://cdn.dummyjson.com/products/images/smartphones/Vivo%20S1/2.png",
@@ -674,12 +560,6 @@ exports.seed = async function (knex) {
       availabilityStatus: "In Stock",
       returnPolicy: "No return policy",
       minimumOrderQuantity: 2,
-      meta: {
-        createdAt: "2024-05-23T08:56:21.625Z",
-        updatedAt: "2024-05-23T08:56:21.625Z",
-        barcode: "1506104702332",
-        qrCode: "https://assets.dummyjson.com/public/qr-code.png",
-      },
       images: [
         "https://cdn.dummyjson.com/products/images/smartphones/Vivo%20V9/1.png",
         "https://cdn.dummyjson.com/products/images/smartphones/Vivo%20V9/2.png",
@@ -708,12 +588,6 @@ exports.seed = async function (knex) {
       availabilityStatus: "Out of Stock",
       returnPolicy: "30 days return policy",
       minimumOrderQuantity: 4,
-      meta: {
-        createdAt: "2024-05-23T08:56:21.625Z",
-        updatedAt: "2024-05-23T08:56:21.625Z",
-        barcode: "2543504494043",
-        qrCode: "https://assets.dummyjson.com/public/qr-code.png",
-      },
       images: [
         "https://cdn.dummyjson.com/products/images/smartphones/Vivo%20X21/1.png",
         "https://cdn.dummyjson.com/products/images/smartphones/Vivo%20X21/2.png",
