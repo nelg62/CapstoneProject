@@ -48,7 +48,7 @@ const ProductDetail = () => {
   }
 
   return (
-    <>
+    <Box>
       <Box sx={{ display: "flex" }}>
         <DotsMobileStepper product={product} />
         <Card sx={{ maxWidth: 345, margin: "auto", marginTop: 4 }}>
@@ -82,8 +82,8 @@ const ProductDetail = () => {
               {product.weight}
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              {product.dimensions.width} {product.dimensions.height}
-              {product.dimensions.depth}
+              {product.width} {product.height}
+              {product.depth}
             </Typography>
             <Typography variant="body2" color="text.secondary">
               {product.availabilityStatus} {product.stock} Left
@@ -108,29 +108,7 @@ const ProductDetail = () => {
       </Box>
 
       <AlignItemsList product={product} />
-
-      <Card sx={{ width: "100%", margin: "auto", marginTop: 4 }}>
-        <CardContent>
-          {product.reviews.map((review, index) => (
-            <div key={index} style={{ marginBottom: "1rem" }}>
-              <Typography variant="body2" color="text.secondary">
-                <strong>{review.reviewerName}</strong>{" "}
-                <div>
-                  <Rating value={review.rating} readOnly precision={0.5} />{" "}
-                  {review.rating}
-                </div>
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                {review.comment}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                {new Date(review.date).toLocaleDateString()}
-              </Typography>
-            </div>
-          ))}
-        </CardContent>
-      </Card>
-    </>
+    </Box>
   );
 };
 

@@ -1,7 +1,18 @@
 const express = require("express");
+const knex = require("knex");
 const cors = require("cors");
 const app = express();
 require("dotenv").config();
+
+const db = knex({
+  client: "mysql2",
+  connection: {
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
+  },
+});
 
 app.use(
   cors({
@@ -16,7 +27,7 @@ app.use(express.json());
 let dbConnect = require("./dbConnect");
 
 let userRoutes = require("./routes/userRoutes");
-let productRoutes = require("./routes/productRoutes");
+let productRoutes = require("./routes/productRoutes")(db);
 let cartRoutes = require("./routes/cartRoutes");
 
 app.use("/api/users", userRoutes);
