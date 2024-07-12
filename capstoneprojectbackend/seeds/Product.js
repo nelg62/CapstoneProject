@@ -190,41 +190,39 @@ exports.seed = async function (knex) {
   ];
 
   for (const product of products) {
-    const [productId] = await knex("Product")
-      .insert({
-        id: product.id,
-        title: product.title,
-        description: product.description,
-        category: product.category,
-        price: product.price,
-        discountPercentage: product.discountPercentage,
-        rating: product.rating,
-        stock: product.stock,
-        brand: product.brand,
-        sku: product.sku,
-        weight: product.weight,
-        width: product.width,
-        height: product.height,
-        depth: product.depth,
-        warrantyInformation: product.warrantyInformation,
-        shippingInformation: product.shippingInformation,
-        availabilityStatus: product.availabilityStatus,
-        returnPolicy: product.returnPolicy,
-        minimumOrderQuantity: product.minimumOrderQuantity,
-        thumbnail: product.thumbnail,
-      })
-      .returning("id");
+    await knex("Product").insert({
+      id: product.id,
+      title: product.title,
+      description: product.description,
+      category: product.category,
+      price: product.price,
+      discountPercentage: product.discountPercentage,
+      rating: product.rating,
+      stock: product.stock,
+      brand: product.brand,
+      sku: product.sku,
+      weight: product.weight,
+      width: product.width,
+      height: product.height,
+      depth: product.depth,
+      warrantyInformation: product.warrantyInformation,
+      shippingInformation: product.shippingInformation,
+      availabilityStatus: product.availabilityStatus,
+      returnPolicy: product.returnPolicy,
+      minimumOrderQuantity: product.minimumOrderQuantity,
+      thumbnail: product.thumbnail,
+    });
 
     await knex("tags").insert(
       product.tags.map((tag) => ({
-        productId: productId,
+        productId: product.id,
         tag: tag,
       }))
     );
 
     await knex("reviews").insert(
       product.reviews.map((review) => ({
-        productId: productId,
+        productId: product.id,
         rating: review.rating,
         comment: review.comment,
         date: new Date(review.date),
@@ -235,7 +233,7 @@ exports.seed = async function (knex) {
 
     await knex("images").insert(
       product.images.map((url) => ({
-        productId: productId,
+        productId: product.id,
         url: url,
       }))
     );

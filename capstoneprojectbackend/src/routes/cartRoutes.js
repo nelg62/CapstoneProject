@@ -1,17 +1,31 @@
 const express = require("express");
-const router = express.Router();
-const Controllers = require("../controllers");
 
-router.post("/add", (req, res) => {
-  Controllers.cartController.addToCart(req.body, res);
-});
+module.exports = (db) => {
+  const router = express.Router();
 
-router.get("/:userId", (req, res) => {
-  Controllers.cartController.getCartItems(req.params.userId, res);
-});
+  router.post("/", async (req, res) => {
+    const { userId, productId, quantity } = req.body;
+    try {
+      const existingItem = await db("Cart")
+        .where({ userId, productId })
+        .first();
 
-router.delete("/remove/:id", (req, res) => {
-  Controllers.cartController.removeFromCart(req.params.id, res);
-});
+      if (existingItem) {
+        await db("Cart")
+          .where({ userId, productId })
+          .update({
+            quantity: existingItem.quantity + quantity,
+            updated_at: new Date(),
+          });
+      } else {
+        await db("Cart").insert({ userId, productId, quantity });
+      }
 
-module.exports = router;
+      res.status(201).json({ message: "Product added to cart" });
+    } catch (error) {
+      res.status(500).json({ error: "Failed to add product to cart" });
+    }
+  });
+
+  return router;
+};

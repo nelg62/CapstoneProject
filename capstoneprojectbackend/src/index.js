@@ -26,9 +26,9 @@ app.use(express.json());
 
 let dbConnect = require("./dbConnect");
 
-let userRoutes = require("./routes/userRoutes");
+let userRoutes = require("./routes/userRoutes")(db);
 let productRoutes = require("./routes/productRoutes")(db);
-let cartRoutes = require("./routes/cartRoutes");
+let cartRoutes = require("./routes/cartRoutes")(db);
 
 app.use("/api/users", userRoutes);
 app.use("/api/products", productRoutes);
