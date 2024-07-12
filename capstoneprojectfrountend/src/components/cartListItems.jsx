@@ -88,9 +88,7 @@ export default function CartListItems({ cart }) {
         </List>
       </Paper>
 
-      <Typography sx={{ float: "right" }}>
-        <Paper>Total $ amount</Paper>
-      </Typography>
+      <Typography sx={{ float: "right" }}>Total $ amount</Typography>
     </Box>
   );
 }

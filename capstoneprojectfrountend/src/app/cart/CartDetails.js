@@ -14,10 +14,11 @@ const CartDetails = () => {
     const fetchCart = async () => {
       setLoading(true);
       try {
+        const userId = 1;
         const response = await axios.get(`${CartApi}/${userId}`);
 
-        // setCart(response.data.data);
-        console.log(response.data.data);
+        setCart(response.data);
+        console.log(response.data);
       } catch (error) {
         console.error("Error fetching products", error);
       }
