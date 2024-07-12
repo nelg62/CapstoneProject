@@ -3,6 +3,7 @@ const express = require("express");
 module.exports = (db) => {
   const router = express.Router();
 
+  // Get list of all Products
   router.get("/", async (req, res) => {
     try {
       const products = await db("Product").select("*");
@@ -32,6 +33,7 @@ module.exports = (db) => {
     }
   });
 
+  // Get one product by ID
   router.get("/:id", async (req, res) => {
     const { id } = req.params;
 
@@ -53,6 +55,23 @@ module.exports = (db) => {
       res.json(product);
     } catch (error) {
       res.status(500).json({ error: "Failed to fetch product" });
+    }
+  });
+
+  // Delete a product
+  router.delete("/:id", async (req, res) => {
+    const { id } = req.params;
+
+    try {
+      const deleted = await db("Product").where({ id }).del();
+      console.log(deleted);
+      if (deleted) {
+        res.json({ message: "Product deleted successfully" });
+      } else {
+        res.status(404).json({ error: "Product not found" });
+      }
+    } catch (error) {
+      res.status(500).json({ error: "Failed to delete product " });
     }
   });
 

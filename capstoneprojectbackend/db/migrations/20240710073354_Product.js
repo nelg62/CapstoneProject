@@ -28,12 +28,22 @@ exports.up = function (knex) {
     })
     .createTable("tags", function (table) {
       table.increments("id").primary();
-      table.integer("productId").unsigned().references("id").inTable("Product");
+      table
+        .integer("productId")
+        .unsigned()
+        .references("id")
+        .inTable("Product")
+        .onDelete("CASCADE");
       table.string("tag");
     })
     .createTable("reviews", function (table) {
       table.increments("id").primary();
-      table.integer("productId").unsigned().references("id").inTable("Product");
+      table
+        .integer("productId")
+        .unsigned()
+        .references("id")
+        .inTable("Product")
+        .onDelete("CASCADE");
       table.integer("rating");
       table.text("comment");
       table.timestamp("date");
@@ -42,7 +52,12 @@ exports.up = function (knex) {
     })
     .createTable("images", function (table) {
       table.increments("id").primary();
-      table.integer("productId").unsigned().references("id").inTable("Product");
+      table
+        .integer("productId")
+        .unsigned()
+        .references("id")
+        .inTable("Product")
+        .onDelete("CASCADE");
       table.string("url");
     });
 };
