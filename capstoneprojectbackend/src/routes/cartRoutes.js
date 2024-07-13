@@ -3,25 +3,26 @@ const express = require("express");
 module.exports = (db) => {
   const router = express.Router();
 
+  // function groupBy(array, keyFunction) {
+  //   return array.reduce((result, item) => {
+  //     const keyValue = keyFunction(item);
+  //     if (!result[keyValue]) {
+  //       result[keyValue] = [];
+  //     }
+  //     console.log("item", keyFunction(item));
+  //     result[keyValue].push(item);
+  //     return result;
+  //   }, {});
+  // }
+
   router.post("/", async (req, res) => {
-    const { userId, productId, quantity } = req.body;
+    const { userId, productId } = req.body;
     try {
-      const existingItem = await db("Cart")
-        .where({ userId, productId })
-        .first();
+      await db("Cart").insert({ userId, productId });
 
-      if (existingItem) {
-        await db("Cart")
-          .where({ userId, productId })
-          .update({
-            quantity: existingItem.quantity + quantity,
-            updated_at: new Date(),
-          });
-      } else {
-        await db("Cart").insert({ userId, productId, quantity });
-      }
-
-      res.status(201).json({ message: "Product added to cart" });
+      res.status(201).json({
+        message: "Product added to cart",
+      });
     } catch (error) {
       res.status(500).json({ error: "Failed to add product to cart" });
     }
@@ -49,6 +50,8 @@ module.exports = (db) => {
           "Product.price",
           "Product.thumbnail"
         );
+
+      // const groupedCartItems = groupBy(cartItems, (item) => item.productId);
 
       res.json(cartItems);
     } catch (error) {

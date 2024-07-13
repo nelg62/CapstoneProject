@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useReducer, useState } from "react";
 import axios from "axios";
 import {
   Box,
+  Button,
   Card,
   CardContent,
   CardMedia,
@@ -14,11 +15,13 @@ import { useParams } from "next/navigation";
 import { ProductApi } from "../../../../utils/api";
 import DotsMobileStepper from "@/components/ImageSlider";
 import AlignItemsList from "@/components/ReviewProductList";
+import { cartAction, useCartContext } from "@/context/CartContext";
 
 const ProductDetail = () => {
+  const { cartDispitch, cartAction, AddToCart } = useCartContext();
   const params = useParams();
   const id = params.id;
-  console.log(id);
+  // console.log(id);
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -45,6 +48,18 @@ const ProductDetail = () => {
 
   if (!product) {
     return <p>Product not found</p>;
+  }
+
+  function addToCart() {
+    AddToCart(1, product.id);
+    console.log("addtoCart");
+  }
+
+  function removeFromCart() {
+    cartDispitch({
+      type: "removeFromCart",
+    });
+    console.log("removeFromCart");
   }
 
   return (
@@ -104,6 +119,13 @@ const ProductDetail = () => {
               {product.minimumOrderQuantity}
             </Typography>
           </CardContent>
+          <Button
+            onClick={addToCart}
+            variant="contained"
+            sx={{ width: "100%" }}
+          >
+            Add to Cart
+          </Button>
         </Card>
       </Box>
 

@@ -1,6 +1,9 @@
+import { useCartContext } from "@/context/CartContext";
 import { Box, Button, Paper, TextField } from "@mui/material";
 
-export default function CartOrderForm({ cart }) {
+export default function CartOrderForm() {
+  const { cart } = useCartContext();
+
   return (
     <Box
       component={"form"}

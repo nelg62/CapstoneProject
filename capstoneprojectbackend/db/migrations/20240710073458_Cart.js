@@ -7,7 +7,7 @@ exports.up = function (knex) {
     table.increments("id").primary();
     table.integer("userId").unsigned().notNullable();
     table.integer("productId").unsigned().notNullable();
-    table.integer("quantity").unsigned().notNullable().defaultTo("1");
+    // table.integer("quantity").unsigned().notNullable().defaultTo("1");
     table.timestamps(true, true);
 
     table
