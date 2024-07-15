@@ -58,12 +58,23 @@ export default function CartListItems() {
             return (
               <ListItem key={group.product.id} disablePadding>
                 <ListItemButton>
-                  <ListItemAvatar>
+                  <Box
+                    component="img"
+                    sx={{
+                      height: 60,
+                      display: "block",
+                      maxWidth: 60,
+                      overflow: "hidden",
+                      width: "100%",
+                    }}
+                    alt={group.product.title}
+                    src={group.product.thumbnail}
+                  ></Box>
+                  {/* <ListItemAvatar>
                     <Avatar
-                      alt={group.product.title}
-                      src={group.product.thumbnail}
+                      
                     />
-                  </ListItemAvatar>
+                  </ListItemAvatar> */}
                   <ListItemText id={labelId} primary={group.product.title} />
                 </ListItemButton>
                 <ListItemButton

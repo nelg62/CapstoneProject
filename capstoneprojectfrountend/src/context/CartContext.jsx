@@ -25,12 +25,16 @@ function reducer(state, action) {
       return [...state, action.payload];
     }
     case cartAction.removeFromCart: {
-      console.log("remove action state", state, action);
-      return state.filter(
-        (item) =>
-          item.productId !== action.payload.productId ||
-          item.userId !== action.payload.userId
+      // console.log("remove action state", state, action);
+      const { userId, productId } = action.payload;
+      const index = state.findIndex(
+        (item) => item.userId === userId && item.productId === productId
       );
+      if (index !== -1) {
+        return [...state.slice(0, index), ...state.slice(index + 1)];
+      }
+
+      return state;
     }
     default: {
       return state;
@@ -87,6 +91,7 @@ export const CartProvider = ({ children }) => {
           type: cartAction.removeFromCart,
           payload: { userId, productId },
         });
+        console.log("removefromcart responce", response);
       } else {
         console.error("Failed to remove product from cart:", response.data);
       }
