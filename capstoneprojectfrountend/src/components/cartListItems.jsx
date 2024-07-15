@@ -34,6 +34,12 @@ import { useCartContext } from "@/context/CartContext";
 export default function CartListItems() {
   const { cart, AddToCart, RemoveFromCart } = useCartContext();
 
+  const calculateTotalPrice = () => {
+    return cart.reduce((total, item) => total + item.price * item.quantity, 0);
+  };
+
+  const totalPrice = calculateTotalPrice();
+
   // const cartGroups = React.useMemo(() => groupBy(cart), [cart]);
 
   // console.log("cartgroup", cartGroups);
@@ -100,7 +106,9 @@ export default function CartListItems() {
         </List>
       </Paper>
 
-      <Typography sx={{ float: "right" }}>Total $ amount</Typography>
+      <Typography sx={{ float: "right" }}>
+        Total: ${totalPrice.toFixed(2)}
+      </Typography>
     </Box>
   );
 }

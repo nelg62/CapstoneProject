@@ -35,28 +35,13 @@ function reducer(state, action) {
       return [...state, { ...newItem, quantity: 1 }];
     }
     case cartAction.removeFromCart: {
-      const { userId, productId } = action.payload;
-      const existingItem = state.find(
-        (item) =>
-          //  item.userId === userId &&
-          item.productId === productId
-      );
-      // console.log("existingitem delete", existingItem);
-      if (existingItem) {
-        if (existingItem.quantity > 1) {
-          return state.map((item) =>
-            // item.userId === userId &&
-            item.productId === productId
-              ? { ...item, quantity: item.quantity - 1 }
-              : item
-          );
-        } else {
-          return state.filter(
-            (item) => item.userId !== userId || item.productId !== productId
-          );
-        }
-      }
-      return state;
+      return state
+        .map((item) =>
+          item.productId === action.payload.productId
+            ? { ...item, quantity: item.quantity - 1 }
+            : item
+        )
+        .filter((item) => item.quantity > 0);
     }
     default: {
       return state;
