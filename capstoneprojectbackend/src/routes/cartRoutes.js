@@ -13,7 +13,7 @@ module.exports = (db) => {
       // Retrieve the newly inserted item
       // const newItem = await db("Cart").where({ userId, productId }).leftJoin().first();
       const cartItems = await db.fromRaw(
-        "(SELECT C.id as cartId, P.id as ProductId, thumbnail FROM Product as P LEFT JOIN Cart as C ON P.id = C.productId where C.userId=? And C.productId=?) as T",
+        "(SELECT C.id as cartId, P.id as ProductId, title, thumbnail, price FROM Product as P LEFT JOIN Cart as C ON P.id = C.productId where C.userId=? And C.productId=?) as T",
         [userId, productId]
       );
       console.log(cartItems);

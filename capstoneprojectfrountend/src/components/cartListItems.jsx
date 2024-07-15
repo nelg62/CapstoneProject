@@ -17,10 +17,13 @@ function groupBy(array) {
     const foundProduct = result.find(
       (i) => i.product && i.product.productId == item.productId
     );
+    console.log("foundproduct", foundProduct);
     if (!foundProduct) {
       result.push({ product: item, items: [item] });
     } else {
+      console.log("found items", foundProduct);
       foundProduct.items.push(item);
+      console.log("else product found", foundProduct);
     }
 
     return result;
@@ -52,11 +55,11 @@ export default function CartListItems() {
           }}
         >
           {cartGroups.map((group) => {
-            console.log("item map group", group);
+            console.log("item map group", group.product.id);
 
             const labelId = `checkbox-list-secondary-label-${group.product.id}`;
             return (
-              <ListItem key={group.product.id} disablePadding>
+              <ListItem key={group.product.id + 1} disablePadding>
                 <ListItemButton>
                   <Box
                     component="img"
