@@ -12,30 +12,31 @@ import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import { useCartContext } from "@/context/CartContext";
 
-function groupBy(array) {
-  return array.reduce((result, item) => {
-    const foundProduct = result.find(
-      (i) => i.product && i.product.productId == item.productId
-    );
-    console.log("foundproduct", foundProduct);
-    if (!foundProduct) {
-      result.push({ product: item, items: [item] });
-    } else {
-      console.log("found items", foundProduct);
-      foundProduct.items.push(item);
-      console.log("else product found", foundProduct);
-    }
+// function groupBy(array) {
+//   return array.reduce((result, item) => {
+//     // console.log("groupbyresult", result, item);
+//     const foundProduct = result.find(
+//       (i) => i.product && i.product.productId == item.productId
+//     );
+//     // console.log("foundproduct", foundProduct);
+//     if (!foundProduct) {
+//       result.push({ product: item, items: [item] });
+//     } else {
+//       // console.log("found items", foundProduct);
+//       foundProduct.items.push(item);
+//       // console.log("else product found", foundProduct);
+//     }
 
-    return result;
-  }, []);
-}
+//     return result;
+//   }, []);
+// }
 
 export default function CartListItems() {
   const { cart, AddToCart, RemoveFromCart } = useCartContext();
 
-  const cartGroups = React.useMemo(() => groupBy(cart), [cart]);
+  // const cartGroups = React.useMemo(() => groupBy(cart), [cart]);
 
-  console.log("cartgroup", cartGroups);
+  // console.log("cartgroup", cartGroups);
 
   return (
     <Box
@@ -54,12 +55,12 @@ export default function CartListItems() {
             bgcolor: "background.paper",
           }}
         >
-          {cartGroups.map((group) => {
-            console.log("item map group", group.product.id);
+          {cart.map((item) => {
+            // console.log("item map group", item);
 
-            const labelId = `checkbox-list-secondary-label-${group.product.id}`;
+            const labelId = `checkbox-list-secondary-label-${item.productId}`;
             return (
-              <ListItem key={group.product.id + 1} disablePadding>
+              <ListItem key={item.productId} disablePadding>
                 <ListItemButton>
                   <Box
                     component="img"
@@ -70,28 +71,26 @@ export default function CartListItems() {
                       overflow: "hidden",
                       width: "100%",
                     }}
-                    alt={group.product.title}
-                    src={group.product.thumbnail}
+                    alt={item.title}
+                    src={item.thumbnail}
                   ></Box>
                   {/* <ListItemAvatar>
                     <Avatar
                       
                     />
                   </ListItemAvatar> */}
-                  <ListItemText id={labelId} primary={group.product.title} />
+                  <ListItemText id={labelId} primary={item.title} />
                 </ListItemButton>
                 <ListItemButton
-                  onClick={() => RemoveFromCart(1, group.product.productId)}
+                  onClick={() => RemoveFromCart(1, item.productId)}
                 >
                   <RemoveIcon />
                 </ListItemButton>
-                <ListItemText>{group.items.length}</ListItemText>
+                <ListItemText>{item.quantity}</ListItemText>
                 <ListItemButton>
-                  <AddIcon
-                    onClick={() => AddToCart(1, group.product.productId)}
-                  />
+                  <AddIcon onClick={() => AddToCart(1, item.productId)} />
                 </ListItemButton>
-                <ListItemText>${group.product.price}</ListItemText>
+                <ListItemText>${item.price}</ListItemText>
                 {/* <ListItemButton>
                   <DeleteIcon />
                 </ListItemButton> */}

@@ -6,23 +6,56 @@ module.exports = (db) => {
   router.post("/", async (req, res) => {
     const { userId, productId } = req.body;
     try {
-      // Insert the product into the cart
-      const product = await db("Product").where({ id: productId });
       await db("Cart").insert({ userId, productId });
 
-      // Retrieve the newly inserted item
-      // const newItem = await db("Cart").where({ userId, productId }).leftJoin().first();
-      const cartItems = await db.fromRaw(
-        "(SELECT C.id as cartId, P.id as ProductId, title, thumbnail, price FROM Product as P LEFT JOIN Cart as C ON P.id = C.productId where C.userId=? And C.productId=?) as T",
-        [userId, productId]
-      );
-      console.log(cartItems);
-      res.status(201).json(cartItems);
+      const cartItems = await db
+        .select(
+          db.raw("MIN(Cart.id) as cartId"),
+          "Product.id as productId",
+          "Product.title",
+          "Product.thumbnail",
+          "Product.price",
+          db.raw("COUNT(*) as quantity")
+        )
+        .from("Cart")
+        .leftJoin("Product", "Product.id", "Cart.productId")
+        .where("Cart.userId", userId)
+        .andWhere("Cart.productId", productId)
+        .groupBy(
+          "Cart.productId",
+          "Product.id",
+          "Product.title",
+          "Product.thumbnail",
+          "Product.price"
+        );
+
+      res.status(201).json(cartItems[0]);
     } catch (error) {
-      console.error("Error adding item to cart:", error);
-      res.status(500).json({ error: "Failed to add product to cart" });
+      console.error("Error adding item to cart", error);
+      res.status(500).json({ error: "failed to add product to cart " });
     }
   });
+
+  // router.post("/", async (req, res) => {
+  //   const { userId, productId } = req.body;
+  //   try {
+  //     // Insert the product into the cart
+  //     const product = await db("Product").where({ id: productId });
+  //     await db("Cart").insert({ userId, productId });
+
+  //     // Retrieve the newly inserted item
+  //     // const newItem = await db("Cart").where({ userId, productId }).leftJoin().first();
+  //     const cartItems = await db.fromRaw(
+  //       "(SELECT C.id as cartId, P.id as ProductId, title, thumbnail, price FROM Product as P LEFT JOIN Cart as C ON P.id = C.productId where C.userId=? And C.productId=?) as T",
+  //       [userId, productId]
+  //     );
+  //     console.log(cartItems);
+  //     res.status(201).json(cartItems);
+  //   } catch (error) {
+  //     console.error("Error adding item to cart:", error);
+  //     res.status(500).json({ error: "Failed to add product to cart" });
+  //   }
+  // });
 
   router.delete("/", async (req, res) => {
     const { userId, productId } = req.body;
@@ -32,6 +65,8 @@ module.exports = (db) => {
         .where({ userId, productId })
         .orderBy("created_at")
         .first();
+
+      console.log("erliestitem delete", earliestItem);
 
       if (!earliestItem) {
         return res.status(404).json({ error: "Item not found in cart" });
@@ -53,7 +88,15 @@ module.exports = (db) => {
         .where({ userId })
         .join("Product", "Cart.productId", "Product.id")
         .select(
-          "Cart.*",
+          "Cart.productId",
+          "Product.title",
+          "Product.price",
+          "Product.thumbnail",
+          db.raw("COUNT(*) as quantity")
+        )
+        .groupBy(
+          "Cart.productId",
+          "Product.id",
           "Product.title",
           "Product.price",
           "Product.thumbnail"

@@ -15,26 +15,47 @@ const CartContext = createContext();
 const initialState = [];
 
 function reducer(state, action) {
-  console.log("state", state);
-  console.log("action", action);
   switch (action.type) {
     case cartAction.initCart: {
       return action.payload;
     }
     case cartAction.addToCart: {
-      console.log("(action.payload", action.payload);
-      return [...state, action.payload];
+      const newItem = action.payload;
+      const existingItem = state.find(
+        (item) => item.productId === newItem.productId
+      );
+      // console.log("existing item", existingItem);
+      if (existingItem) {
+        return state.map((item) =>
+          item.productId === newItem.productId
+            ? { ...item, quantity: (item.quantity || 1) + 1 }
+            : item
+        );
+      }
+      return [...state, { ...newItem, quantity: 1 }];
     }
     case cartAction.removeFromCart: {
-      // console.log("remove action state", state, action);
       const { userId, productId } = action.payload;
-      const index = state.findIndex(
-        (item) => item.userId === userId && item.productId === productId
+      const existingItem = state.find(
+        (item) =>
+          //  item.userId === userId &&
+          item.productId === productId
       );
-      if (index !== -1) {
-        return [...state.slice(0, index), ...state.slice(index + 1)];
+      // console.log("existingitem delete", existingItem);
+      if (existingItem) {
+        if (existingItem.quantity > 1) {
+          return state.map((item) =>
+            // item.userId === userId &&
+            item.productId === productId
+              ? { ...item, quantity: item.quantity - 1 }
+              : item
+          );
+        } else {
+          return state.filter(
+            (item) => item.userId !== userId || item.productId !== productId
+          );
+        }
       }
-
       return state;
     }
     default: {
@@ -42,6 +63,35 @@ function reducer(state, action) {
     }
   }
 }
+
+// function reducer(state, action) {
+//   console.log("state", state);
+//   console.log("action", action);
+//   switch (action.type) {
+//     case cartAction.initCart: {
+//       return action.payload;
+//     }
+//     case cartAction.addToCart: {
+//       console.log("(action.payload", action.payload);
+//       return [...state, action.payload];
+//     }
+//     case cartAction.removeFromCart: {
+//       // console.log("remove action state", state, action);
+//       const { userId, productId } = action.payload;
+//       const index = state.findIndex(
+//         (item) => item.userId === userId && item.productId === productId
+//       );
+//       if (index !== -1) {
+//         return [...state.slice(0, index), ...state.slice(index + 1)];
+//       }
+
+//       return state;
+//     }
+//     default: {
+//       return state;
+//     }
+//   }
+// }
 
 export const CartProvider = ({ children }) => {
   const [cart, cartDispitch] = useReducer(reducer, initialState);
@@ -53,7 +103,7 @@ export const CartProvider = ({ children }) => {
         const response = await axios.get(`${CartApi}/${userId}`);
 
         cartDispitch({ type: cartAction.initCart, payload: response.data });
-        console.log(response.data);
+        // console.log(response.data);
       } catch (error) {
         console.error("Error fetching products", error);
       }
@@ -67,14 +117,14 @@ export const CartProvider = ({ children }) => {
         userId,
         productId,
       });
-      console.log("addtocart responce", response);
+      // console.log("addtocart responce", response);
 
       cartDispitch({
         type: cartAction.addToCart,
         payload: response.data,
       });
 
-      console.log("rsponse", response.data);
+      // console.log("rsponse", response.data);
 
       console.log("Item atted to cart in database");
     } catch (error) {
@@ -92,7 +142,7 @@ export const CartProvider = ({ children }) => {
           type: cartAction.removeFromCart,
           payload: { userId, productId },
         });
-        console.log("removefromcart responce", response);
+        console.log("Product removed from cart", response);
       } else {
         console.error("Failed to remove product from cart:", response.data);
       }
