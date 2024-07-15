@@ -3,27 +3,18 @@ const express = require("express");
 module.exports = (db) => {
   const router = express.Router();
 
-  // function groupBy(array, keyFunction) {
-  //   return array.reduce((result, item) => {
-  //     const keyValue = keyFunction(item);
-  //     if (!result[keyValue]) {
-  //       result[keyValue] = [];
-  //     }
-  //     console.log("item", keyFunction(item));
-  //     result[keyValue].push(item);
-  //     return result;
-  //   }, {});
-  // }
-
   router.post("/", async (req, res) => {
     const { userId, productId } = req.body;
     try {
+      // Insert the product into the cart
       await db("Cart").insert({ userId, productId });
 
-      res.status(201).json({
-        message: "Product added to cart",
-      });
+      // Retrieve the newly inserted item
+      const newItem = await db("Cart").where({ userId, productId }).first();
+
+      res.status(201).json(newItem);
     } catch (error) {
+      console.error("Error adding item to cart:", error);
       res.status(500).json({ error: "Failed to add product to cart" });
     }
   });
@@ -31,9 +22,21 @@ module.exports = (db) => {
   router.delete("/", async (req, res) => {
     const { userId, productId } = req.body;
     try {
-      await db("Cart").where({ userId, productId }).del();
+      // Check if the item exists in the cart
+      const earliestItem = await db("Cart")
+        .where({ userId, productId })
+        .orderBy("created_at")
+        .first();
+
+      if (!earliestItem) {
+        return res.status(404).json({ error: "Item not found in cart" });
+      }
+
+      await db("Cart").where({ id: earliestItem.id }).del();
+
       res.json({ message: "Product removed from cart" });
     } catch (error) {
+      console.error("Error removing item from cart:", error);
       res.status(500).json({ error: "Failed to remove product from cart" });
     }
   });
@@ -50,8 +53,6 @@ module.exports = (db) => {
           "Product.price",
           "Product.thumbnail"
         );
-
-      // const groupedCartItems = groupBy(cartItems, (item) => item.productId);
 
       res.json(cartItems);
     } catch (error) {

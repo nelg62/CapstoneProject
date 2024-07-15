@@ -25,10 +25,15 @@ function reducer(state, action) {
       return [...state, action.payload];
     }
     case cartAction.removeFromCart: {
-      return {
-        userId: action.userId,
-        productId: action.productId,
-      };
+      console.log("remove action state", state, action);
+      return state.filter(
+        (item) =>
+          item.productId !== action.payload.productId ||
+          item.userId !== action.payload.userId
+      );
+    }
+    default: {
+      return state;
     }
   }
 }
@@ -52,7 +57,6 @@ export const CartProvider = ({ children }) => {
   }, []);
 
   const AddToCart = async (userId, productId) => {
-    // console.log("cart action get", action);
     try {
       const response = await axios.post(`${CartApi}`, {
         userId,
@@ -73,8 +77,28 @@ export const CartProvider = ({ children }) => {
     }
   };
 
+  const RemoveFromCart = async (userId, productId) => {
+    try {
+      const response = await axios.delete(`${CartApi}`, {
+        data: { userId, productId },
+      });
+      if (response.status === 200) {
+        cartDispitch({
+          type: cartAction.removeFromCart,
+          payload: { userId, productId },
+        });
+      } else {
+        console.error("Failed to remove product from cart:", response.data);
+      }
+    } catch (error) {
+      console.error("Error removing item from cart:", error);
+    }
+  };
+
   return (
-    <CartContext.Provider value={{ cart, cartDispitch, AddToCart, cartAction }}>
+    <CartContext.Provider
+      value={{ cart, cartDispitch, AddToCart, cartAction, RemoveFromCart }}
+    >
       {children}
     </CartContext.Provider>
   );
