@@ -22,6 +22,7 @@ function reducer(state, action) {
       return action.payload;
     }
     case cartAction.addToCart: {
+      console.log("(action.payload", action.payload);
       return [...state, action.payload];
     }
     case cartAction.removeFromCart: {

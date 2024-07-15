@@ -89,9 +89,9 @@ export default function CartListItems() {
                   />
                 </ListItemButton>
                 <ListItemText>${group.product.price}</ListItemText>
-                <ListItemButton>
+                {/* <ListItemButton>
                   <DeleteIcon />
-                </ListItemButton>
+                </ListItemButton> */}
               </ListItem>
             );
           })}

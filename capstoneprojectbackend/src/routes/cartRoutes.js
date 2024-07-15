@@ -7,12 +7,17 @@ module.exports = (db) => {
     const { userId, productId } = req.body;
     try {
       // Insert the product into the cart
+      const product = await db("Product").where({ id: productId });
       await db("Cart").insert({ userId, productId });
 
       // Retrieve the newly inserted item
-      const newItem = await db("Cart").where({ userId, productId }).first();
-
-      res.status(201).json(newItem);
+      // const newItem = await db("Cart").where({ userId, productId }).leftJoin().first();
+      const cartItems = await db.fromRaw(
+        "(SELECT C.id as cartId, P.id as ProductId, thumbnail FROM Product as P LEFT JOIN Cart as C ON P.id = C.productId where C.userId=? And C.productId=?) as T",
+        [userId, productId]
+      );
+      console.log(cartItems);
+      res.status(201).json(cartItems);
     } catch (error) {
       console.error("Error adding item to cart:", error);
       res.status(500).json({ error: "Failed to add product to cart" });
