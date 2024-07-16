@@ -16,7 +16,7 @@ import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import CustomizedBadges from "./cartIcon";
 
-const pages = ["products", "Pricing", "Blog"];
+const pages = ["products", "signup", "login"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 function ResponsiveAppBar() {

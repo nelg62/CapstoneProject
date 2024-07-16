@@ -1,7 +1,12 @@
+import ProtectedRoute from "@/components/ProtectedRoute";
 import ProductDetail from "./ProductDetails";
 
 const ProductDetailsPage = () => {
-  return <ProductDetail />;
+  return (
+    <ProtectedRoute>
+      <ProductDetail />
+    </ProtectedRoute>
+  );
 };
 
 export default ProductDetailsPage;

@@ -6,4 +6,6 @@ const MultipleProductsApi = "http://localhost:8081/api/products"; // madie add l
 
 const CartApi = "http://localhost:8081/api/cart";
 
-export { ProductApi, MultipleProductsApi, CartApi };
+const UserApi = "http://localhost:8081/api/users";
+
+export { ProductApi, MultipleProductsApi, CartApi, UserApi };

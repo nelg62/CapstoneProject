@@ -49,35 +49,6 @@ function reducer(state, action) {
   }
 }
 
-// function reducer(state, action) {
-//   console.log("state", state);
-//   console.log("action", action);
-//   switch (action.type) {
-//     case cartAction.initCart: {
-//       return action.payload;
-//     }
-//     case cartAction.addToCart: {
-//       console.log("(action.payload", action.payload);
-//       return [...state, action.payload];
-//     }
-//     case cartAction.removeFromCart: {
-//       // console.log("remove action state", state, action);
-//       const { userId, productId } = action.payload;
-//       const index = state.findIndex(
-//         (item) => item.userId === userId && item.productId === productId
-//       );
-//       if (index !== -1) {
-//         return [...state.slice(0, index), ...state.slice(index + 1)];
-//       }
-
-//       return state;
-//     }
-//     default: {
-//       return state;
-//     }
-//   }
-// }
-
 export const CartProvider = ({ children }) => {
   const [cart, cartDispitch] = useReducer(reducer, initialState);
 
