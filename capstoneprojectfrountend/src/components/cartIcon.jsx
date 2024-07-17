@@ -16,6 +16,7 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 
 export default function CustomizedBadges() {
   const { cart } = useCartContext();
+
   return (
     <IconButton aria-label="cart" sx={{ marginRight: "10px" }}>
       <StyledBadge badgeContent={cart.length} color="secondary">

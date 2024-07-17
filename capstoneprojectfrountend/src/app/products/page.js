@@ -4,8 +4,9 @@ import { useEffect, useState } from "react";
 import { MultipleProductsApi } from "../../../utils/api";
 import axios from "axios";
 import { Grid } from "@mui/material";
+import ProtectedRoute from "@/components/ProtectedRoute";
 
-export default function Products() {
+function Products() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -42,3 +43,5 @@ export default function Products() {
     </>
   );
 }
+
+export default ProtectedRoute(Products);

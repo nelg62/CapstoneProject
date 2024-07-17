@@ -1,17 +1,19 @@
-const { useUserContext } = require("@/context/UserContext");
-const { useRouter } = require("next/router");
-const { useEffect } = require("react");
+import { useUserContext } from "@/context/UserContext";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
-const ProtectedRoute = ({ children }) => {
-  const { isAuthenticated } = useUserContext();
-  const router = useRouter();
+const ProtectedRoute = (Components) => {
+  return (props) => {
+    const { user } = useUserContext();
+    const router = useRouter();
 
-  useEffect(() => {
-    if (!isAuthenticated) {
-      router.push("/login");
-    }
-  }, [isAuthenticated, router]);
-  return isAuthenticated ? children : null;
+    useEffect(() => {
+      if (!user.isAuthenticated) {
+        router.push("/login");
+      }
+    }, [user.isAuthenticated, router]);
+    return user.isAuthenticated ? <Components {...props} /> : null;
+  };
 };
 
 export default ProtectedRoute;

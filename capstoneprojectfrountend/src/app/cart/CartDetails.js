@@ -1,6 +1,7 @@
 "use client";
 import CartListItems from "@/components/cartListItems";
 import CartOrderForm from "@/components/cartOrderForm";
+import ProtectedRoute from "@/components/ProtectedRoute";
 import { Box } from "@mui/material";
 
 const CartDetails = () => {
@@ -12,4 +13,4 @@ const CartDetails = () => {
   );
 };
 
-export default CartDetails;
+export default ProtectedRoute(CartDetails);

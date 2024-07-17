@@ -2,6 +2,7 @@
 
 import axios from "axios";
 import { CartApi } from "../../utils/api";
+import { useUserContext } from "./UserContext";
 const { createContext, useContext, useEffect, useReducer } = require("react");
 
 export const cartAction = {
@@ -15,6 +16,8 @@ const CartContext = createContext();
 const initialState = [];
 
 function reducer(state, action) {
+  console.log("state", state);
+  console.log("action", action);
   switch (action.type) {
     case cartAction.initCart: {
       return action.payload;
@@ -24,7 +27,7 @@ function reducer(state, action) {
       const existingItem = state.find(
         (item) => item.productId === newItem.productId
       );
-      // console.log("existing item", existingItem);
+      console.log("existing item", existingItem);
       if (existingItem) {
         return state.map((item) =>
           item.productId === newItem.productId
@@ -51,29 +54,36 @@ function reducer(state, action) {
 
 export const CartProvider = ({ children }) => {
   const [cart, cartDispitch] = useReducer(reducer, initialState);
+  const { user } = useUserContext();
 
   useEffect(() => {
-    const fetchCart = async () => {
-      try {
-        const userId = 1;
-        const response = await axios.get(`${CartApi}/${userId}`);
-
-        cartDispitch({ type: cartAction.initCart, payload: response.data });
-        // console.log(response.data);
-      } catch (error) {
-        console.error("Error fetching products", error);
-      }
-    };
-    fetchCart();
-  }, []);
+    console.log("useeffect user", user);
+    if (user && user.id) {
+      const fetchCart = async () => {
+        try {
+          const response = await axios.get(`${CartApi}/${user.user.id}`, {
+            headers: { Authorization: `Bearer ${user.token}` },
+          });
+          cartDispitch({ type: cartAction.initCart, payload: response.data });
+        } catch (error) {
+          console.error("Error fetching products", error);
+        }
+      };
+      fetchCart();
+    }
+  }, [user]);
 
   const AddToCart = async (userId, productId) => {
     try {
-      const response = await axios.post(`${CartApi}`, {
-        userId,
-        productId,
-      });
-      // console.log("addtocart responce", response);
+      const response = await axios.post(
+        `${CartApi}`,
+        {
+          userId,
+          productId,
+        },
+        { headers: { Authorization: `Bearer ${user.token}` } }
+      );
+      console.log("addtocart responce", response);
 
       cartDispitch({
         type: cartAction.addToCart,
@@ -91,12 +101,13 @@ export const CartProvider = ({ children }) => {
   const RemoveFromCart = async (userId, productId) => {
     try {
       const response = await axios.delete(`${CartApi}`, {
+        headers: { Authorization: `Bearer ${user.token}` },
         data: { userId, productId },
       });
       if (response.status === 200) {
         cartDispitch({
           type: cartAction.removeFromCart,
-          payload: { userId, productId },
+          payload: { productId },
         });
         console.log("Product removed from cart", response);
       } else {

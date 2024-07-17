@@ -11,6 +11,9 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import { useCartContext } from "@/context/CartContext";
+import { useUserContext } from "@/context/UserContext";
+import axios from "axios";
+import { CartApi } from "../../utils/api";
 
 // function groupBy(array) {
 //   return array.reduce((result, item) => {
@@ -32,7 +35,25 @@ import { useCartContext } from "@/context/CartContext";
 // }
 
 export default function CartListItems() {
-  const { cart, AddToCart, RemoveFromCart } = useCartContext();
+  const { cart, AddToCart, RemoveFromCart, cartDispitch, cartAction } =
+    useCartContext();
+  const { user } = useUserContext();
+
+  React.useEffect(() => {
+    console.log("useeffect user", user);
+
+    const fetchCart = async () => {
+      try {
+        const response = await axios.get(`${CartApi}/${user.user.id}`, {
+          headers: { Authorization: `Bearer ${user.token}` },
+        });
+        cartDispitch({ type: cartAction.initCart, payload: response.data });
+      } catch (error) {
+        console.error("Error fetching products", error);
+      }
+    };
+    fetchCart();
+  }, []);
 
   const calculateTotalPrice = () => {
     return cart.reduce((total, item) => total + item.price * item.quantity, 0);
@@ -88,13 +109,15 @@ export default function CartListItems() {
                   <ListItemText id={labelId} primary={item.title} />
                 </ListItemButton>
                 <ListItemButton
-                  onClick={() => RemoveFromCart(1, item.productId)}
+                  onClick={() => RemoveFromCart(user.user.id, item.productId)}
                 >
                   <RemoveIcon />
                 </ListItemButton>
                 <ListItemText>{item.quantity}</ListItemText>
                 <ListItemButton>
-                  <AddIcon onClick={() => AddToCart(1, item.productId)} />
+                  <AddIcon
+                    onClick={() => AddToCart(user.user.id, item.productId)}
+                  />
                 </ListItemButton>
                 <ListItemText>${item.price}</ListItemText>
                 {/* <ListItemButton>

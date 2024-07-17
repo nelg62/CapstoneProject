@@ -1,10 +1,38 @@
 const express = require("express");
+const jwt = require("jsonwebtoken");
+
+const authenticateToken = (req, res, next) => {
+  console.log("Middleware reached");
+  const authHeader = req.headers.authorization;
+  console.log("Authorization Header", authHeader);
+  const token = authHeader && authHeader.split(" ")[1];
+
+  if (token == null) {
+    console.log("No token found");
+    return res.sendStatus(401);
+  }
+
+  jwt.verify(token, process.env.DB_SECRET, (err, user) => {
+    if (err) {
+      console.log("Token verification failed:", err);
+      return res.sendStatus(403);
+    }
+    console.log("Decoded User", user);
+    req.user = user;
+    next();
+  });
+};
 
 module.exports = (db) => {
   const router = express.Router();
 
+  router.use(authenticateToken);
+
   router.post("/", async (req, res) => {
     const { userId, productId } = req.body;
+    console.log("Request user:", req.user);
+    console.log("userId", userId);
+    if (req.user.id !== userId) return res.sendStatus(403);
     try {
       await db("Cart").insert({ userId, productId });
 
@@ -59,6 +87,8 @@ module.exports = (db) => {
 
   router.delete("/", async (req, res) => {
     const { userId, productId } = req.body;
+    console.log("Request user:", req.user);
+    if (req.user.id !== userId) return res.sendStatus(403);
     try {
       // Check if the item exists in the cart
       const earliestItem = await db("Cart")
@@ -83,6 +113,10 @@ module.exports = (db) => {
 
   router.get("/:userId", async (req, res) => {
     const { userId } = req.params;
+    console.log("userId123", userId);
+    console.log("Request user:", req.user);
+
+    if (req.user.id !== parseInt(userId)) return res.sendStatus(403);
     try {
       const cartItems = await db("Cart")
         .where({ userId })

@@ -1,12 +1,9 @@
+"use client";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import ProductDetail from "./ProductDetails";
 
 const ProductDetailsPage = () => {
-  return (
-    <ProtectedRoute>
-      <ProductDetail />
-    </ProtectedRoute>
-  );
+  return <ProductDetail />;
 };
 
-export default ProductDetailsPage;
+export default ProtectedRoute(ProductDetailsPage);

@@ -4,6 +4,19 @@ const jwt = require("jsonwebtoken");
 
 const secret = process.env.DB_SECRET;
 
+const authenticateToken = (req, res, next) => {
+  const authHeader = req.headers.authorization;
+  const token = authHeader && authHeader.split(" ")[1];
+
+  if (token == null) return res.sendStatus(401);
+
+  jwt.verify(token, secret, (err, user) => {
+    if (err) return res.sendStatus(403);
+    req.user = user;
+    next();
+  });
+};
+
 module.exports = (db) => {
   const router = express.Router();
 
@@ -48,13 +61,16 @@ module.exports = (db) => {
       const token = jwt.sign({ id: user.id, username: user.username }, secret, {
         expiresIn: "1h",
       });
-      res.json({ token });
+      res.json({
+        user: { id: user.id, username: user.username, emailId: user.emailId },
+        token,
+      });
     } catch (error) {
       res.status(500).json({ error: "Failed to login user" });
     }
   });
 
-  router.get("/me", async (req, res) => {
+  router.get("/me", authenticateToken, async (req, res) => {
     console.log(req.headers.authorization);
     const authHeader = req.headers.authorization;
     if (!authHeader) {
@@ -72,7 +88,7 @@ module.exports = (db) => {
         return res.status(404).json({ error: "User not found" });
       }
 
-      res.json({ id: user.id, username: user.username, emailId: user.email });
+      res.json({ id: user.id, username: user.username, emailId: user.emailId });
     } catch (error) {
       res.status(500).json({ error: "Failed to get user info" });
     }

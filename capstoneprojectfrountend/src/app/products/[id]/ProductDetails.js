@@ -16,9 +16,11 @@ import { ProductApi } from "../../../../utils/api";
 import DotsMobileStepper from "@/components/ImageSlider";
 import AlignItemsList from "@/components/ReviewProductList";
 import { cartAction, useCartContext } from "@/context/CartContext";
+import { useUserContext } from "@/context/UserContext";
 
 const ProductDetail = () => {
   const { cartDispitch, cartAction, AddToCart } = useCartContext();
+  const { user } = useUserContext();
   const params = useParams();
   const id = params.id;
   // console.log(id);
@@ -51,7 +53,9 @@ const ProductDetail = () => {
   }
 
   function addToCart() {
-    AddToCart(1, product.id);
+    console.log("userid", user.user.id);
+    console.log("productid", product);
+    AddToCart(user.user.id, product.id);
     console.log("addtoCart");
   }
 

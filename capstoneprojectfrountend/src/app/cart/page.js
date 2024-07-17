@@ -1,7 +1,9 @@
+"use client";
+import ProtectedRoute from "@/components/ProtectedRoute";
 import CartDetail from "./CartDetails";
 
 const CartDetailsPage = () => {
   return <CartDetail />;
 };
 
-export default CartDetailsPage;
+export default ProtectedRoute(CartDetailsPage);

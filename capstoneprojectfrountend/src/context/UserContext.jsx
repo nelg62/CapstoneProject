@@ -1,9 +1,10 @@
 "use client";
 
-import { createContext, useContext, useReducer } from "react";
+import { createContext, useContext, useEffect, useReducer } from "react";
 import { UserApi } from "../../utils/api";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
 
 export const UserAction = {
   SignUp: "SignUp",
@@ -11,7 +12,7 @@ export const UserAction = {
   Logout: "Logout",
 };
 
-const userContext = createContext();
+const UserContext = createContext();
 
 const initialState = { user: null, isAuthenticated: false };
 
@@ -19,14 +20,25 @@ function reducer(state, action) {
   switch (action.type) {
     case UserAction.SignUp: {
       console.log("signedup reduser", state);
-      return { ...state, user: action.payload, isAuthenticated: true };
+      return {
+        ...state,
+        user: action.payload.user,
+        isAuthenticated: true,
+        token: action.payload.token,
+      };
     }
     case UserAction.Login: {
-      console.log("login satate and action", state, action);
-      return { ...state, user: action.payload, isAuthenticated: true };
+      console.log("login satate", state);
+      console.log("login action", action);
+      return {
+        ...state,
+        user: action.payload.user,
+        isAuthenticated: true,
+        token: action.payload.token,
+      };
     }
     case UserAction.Logout: {
-      return { ...state, user: null, isAuthenticated: false };
+      return { ...state, user: null, isAuthenticated: false, token: null };
     }
     default:
       return state;
@@ -37,6 +49,24 @@ export const UserProvider = ({ children }) => {
   const [user, userDispatch] = useReducer(reducer, initialState);
   const router = useRouter();
 
+  useEffect(() => {
+    const token = Cookies.get("token");
+    if (token) {
+      axios
+        .get(`${UserApi}/me`, { headers: { Authorization: `Bearer ${token}` } })
+        .then((response) => {
+          const { user } = response.data;
+          userDispatch({
+            type: UserAction.Login,
+            payload: { user, token },
+          }).catch(() => {
+            Cookies.remove("token");
+            router.push("/login");
+          });
+        });
+    }
+  }, []);
+
   const SignUpFunction = async ({ username, emailId, password }) => {
     console.log("sighnupfunction");
     try {
@@ -45,9 +75,11 @@ export const UserProvider = ({ children }) => {
         emailId,
         password,
       });
+      const { token, ...user } = response.data;
+      Cookies.set("token", token);
 
       console.log("User Signed up ", response);
-      userDispatch({ type: UserAction.SignUp, payload: response.data });
+      userDispatch({ type: UserAction.SignUp, payload: { user, token } });
       router.push("/");
       console.log("user", user);
     } catch (error) {
@@ -61,8 +93,11 @@ export const UserProvider = ({ children }) => {
         emailId,
         password,
       });
+      console.log("response", response);
+      const { user, token } = response.data;
+      Cookies.set("token", token);
       console.log("login response", response);
-      userDispatch({ type: UserAction.Login, payload: response.data });
+      userDispatch({ type: UserAction.Login, payload: { user, token } });
       console.log("user", user);
       router.push("/");
     } catch (error) {
@@ -71,18 +106,20 @@ export const UserProvider = ({ children }) => {
   };
 
   const LogoutFunction = () => {
+    Cookies.remove("token");
     userDispatch({ type: UserAction.Logout });
+    router.push("/login");
   };
 
   return (
-    <userContext.Provider
-      value={{ SignUpFunction, ...user, LoginFunction, LogoutFunction }}
+    <UserContext.Provider
+      value={{ SignUpFunction, user, LoginFunction, LogoutFunction }}
     >
       {children}
-    </userContext.Provider>
+    </UserContext.Provider>
   );
 };
 
 export const useUserContext = () => {
-  return useContext(userContext);
+  return useContext(UserContext);
 };
