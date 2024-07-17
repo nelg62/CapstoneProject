@@ -14,9 +14,20 @@ export const UserAction = {
 
 const UserContext = createContext();
 
-const initialState = { user: null, isAuthenticated: false };
+let getToken = localStorage.getItem("token");
+let localStorageKeyUser = JSON.parse(localStorage.getItem("user"));
+
+console.log("localStorageKey", getToken);
+console.log("localStorageKeyUser", localStorageKeyUser);
+
+const initialState = {
+  user: localStorageKeyUser,
+  isAuthenticated: !localStorageKeyUser ? false : true,
+};
 
 function reducer(state, action) {
+  console.log("reducer top state", state);
+  console.log("reducer top action", action);
   switch (action.type) {
     case UserAction.SignUp: {
       console.log("signedup reduser", state);
@@ -50,17 +61,20 @@ export const UserProvider = ({ children }) => {
   const router = useRouter();
 
   useEffect(() => {
-    const token = Cookies.get("token");
+    const token = localStorage.getItem("token");
     if (token) {
       axios
         .get(`${UserApi}/me`, { headers: { Authorization: `Bearer ${token}` } })
         .then((response) => {
+          console.log("response data", response);
           const { user } = response.data;
+          console.log("get me user", user);
           userDispatch({
             type: UserAction.Login,
             payload: { user, token },
           }).catch(() => {
-            Cookies.remove("token");
+            console.log("usernot got", user);
+            localStorage.removeItem("token");
             router.push("/login");
           });
         });
@@ -76,8 +90,8 @@ export const UserProvider = ({ children }) => {
         password,
       });
       const { token, ...user } = response.data;
-      Cookies.set("token", token);
-
+      // Cookies.set("token", token);
+      localStorage.setItem("token", token);
       console.log("User Signed up ", response);
       userDispatch({ type: UserAction.SignUp, payload: { user, token } });
       router.push("/");
@@ -95,7 +109,9 @@ export const UserProvider = ({ children }) => {
       });
       console.log("response", response);
       const { user, token } = response.data;
-      Cookies.set("token", token);
+      // Cookies.set("token", token);
+      localStorage.setItem("token", token);
+      localStorage.setItem("user", JSON.stringify(user));
       console.log("login response", response);
       userDispatch({ type: UserAction.Login, payload: { user, token } });
       console.log("user", user);
@@ -106,7 +122,8 @@ export const UserProvider = ({ children }) => {
   };
 
   const LogoutFunction = () => {
-    Cookies.remove("token");
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
     userDispatch({ type: UserAction.Logout });
     router.push("/login");
   };
