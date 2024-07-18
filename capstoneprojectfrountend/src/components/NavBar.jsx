@@ -16,6 +16,7 @@ import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import CustomizedBadges from "./cartIcon";
 import { useUserContext } from "@/context/UserContext";
+import { useCartContext } from "@/context/CartContext";
 
 const pages = ["products", "signup", "login"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
@@ -23,7 +24,13 @@ const settings = ["Profile", "Account", "Dashboard", "Logout"];
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const { user, LogoutFunction } = useUserContext();
+  const { userState, LogoutFunction } = useUserContext();
+  const { clearCart } = useCartContext();
+
+  const handleLogout = () => {
+    LogoutFunction();
+    clearCart();
+  };
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -135,10 +142,7 @@ function ResponsiveAppBar() {
 
           <Box sx={{ flexGrow: 0 }}>
             <MenuItem>
-              <Button
-                sx={{ color: "inherit" }}
-                onClick={() => LogoutFunction()}
-              >
+              <Button sx={{ color: "inherit" }} onClick={handleLogout}>
                 Logout
               </Button>
             </MenuItem>
@@ -148,7 +152,7 @@ function ResponsiveAppBar() {
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar
-                  alt={!user.user ? "User" : user.user.username}
+                  alt={!userState.user ? "User" : userState.user.username}
                   src="/static/images/avatar/2.jpg"
                 />
               </IconButton>

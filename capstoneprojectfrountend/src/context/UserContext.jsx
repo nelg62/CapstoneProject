@@ -5,6 +5,7 @@ import { UserApi } from "../../utils/api";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
+import { useCartContext } from "./CartContext";
 
 export const UserAction = {
   SignUp: "SignUp",
@@ -14,16 +15,17 @@ export const UserAction = {
 
 const UserContext = createContext();
 
-let getToken = localStorage.getItem("token");
-let localStorageKeyUser = JSON.parse(localStorage.getItem("user"));
-
-console.log("localStorageKey", getToken);
-console.log("localStorageKeyUser", localStorageKeyUser);
-
 const initialState = {
-  user: localStorageKeyUser,
-  isAuthenticated: !localStorageKeyUser ? false : true,
+  user: null,
+  isAuthenticated: false,
+  token: null,
 };
+
+if (typeof window !== "undefined") {
+  initialState.token = localStorage.getItem("token");
+  initialState.user = JSON.parse(localStorage.getItem("user"));
+  initialState.isAuthenticated = !!initialState.user;
+}
 
 function reducer(state, action) {
   console.log("reducer top state", state);
@@ -57,7 +59,7 @@ function reducer(state, action) {
 }
 
 export const UserProvider = ({ children }) => {
-  const [user, userDispatch] = useReducer(reducer, initialState);
+  const [userState, userDispatch] = useReducer(reducer, initialState);
   const router = useRouter();
 
   useEffect(() => {
@@ -67,16 +69,17 @@ export const UserProvider = ({ children }) => {
         .get(`${UserApi}/me`, { headers: { Authorization: `Bearer ${token}` } })
         .then((response) => {
           console.log("response data", response);
-          const { user } = response.data;
+          const user = response.data;
           console.log("get me user", user);
           userDispatch({
             type: UserAction.Login,
             payload: { user, token },
-          }).catch(() => {
-            console.log("usernot got", user);
-            localStorage.removeItem("token");
-            router.push("/login");
           });
+        })
+        .catch(() => {
+          console.log("usernot got", user);
+          localStorage.removeItem("token");
+          router.push("/login");
         });
     }
   }, []);
@@ -92,9 +95,10 @@ export const UserProvider = ({ children }) => {
       const { token, ...user } = response.data;
       // Cookies.set("token", token);
       localStorage.setItem("token", token);
+      localStorage.setItem("user", JSON.stringify(user));
       console.log("User Signed up ", response);
       userDispatch({ type: UserAction.SignUp, payload: { user, token } });
-      router.push("/");
+      router.push("/login");
       console.log("user", user);
     } catch (error) {
       console.error("Error adding user", error);
@@ -130,7 +134,7 @@ export const UserProvider = ({ children }) => {
 
   return (
     <UserContext.Provider
-      value={{ SignUpFunction, user, LoginFunction, LogoutFunction }}
+      value={{ SignUpFunction, userState, LoginFunction, LogoutFunction }}
     >
       {children}
     </UserContext.Provider>

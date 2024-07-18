@@ -9,6 +9,7 @@ export const cartAction = {
   initCart: "initCart",
   addToCart: "addToCart",
   removeFromCart: "removeFromCart",
+  clearCart: "clearCart",
 };
 
 const CartContext = createContext();
@@ -46,6 +47,9 @@ function reducer(state, action) {
         )
         .filter((item) => item.quantity > 0);
     }
+    case cartAction.clearCart: {
+      return { ...state, cart: [] };
+    }
     default: {
       return state;
     }
@@ -54,24 +58,38 @@ function reducer(state, action) {
 
 export const CartProvider = ({ children }) => {
   const [cart, cartDispitch] = useReducer(reducer, initialState);
-  const { user } = useUserContext();
+  const { userState } = useUserContext();
 
   useEffect(() => {
-    console.log("useeffect user", user);
-    if (user && user.id) {
-      const fetchCart = async () => {
+    console.log("useeffect user", userState);
+
+    const fetchCart = async () => {
+      if (userState.isAuthenticated) {
         try {
-          const response = await axios.get(`${CartApi}/${user.user.id}`, {
-            headers: { Authorization: `Bearer ${user.token}` },
+          const response = await axios.get(`${CartApi}/${userState.user.id}`, {
+            headers: { Authorization: `Bearer ${userState.token}` },
           });
           cartDispitch({ type: cartAction.initCart, payload: response.data });
         } catch (error) {
           console.error("Error fetching products", error);
         }
-      };
-      fetchCart();
+      }
+    };
+    fetchCart();
+  }, [userState]);
+
+  const GetItemsInCart = async () => {
+    if (userState.isAuthenticated) {
+      try {
+        const response = await axios.get(`${CartApi}/${userState.user.id}`, {
+          headers: { Authorization: `Bearer ${userState.token}` },
+        });
+        cartDispitch({ type: cartAction.initCart, payload: response.data });
+      } catch (error) {
+        console.error("Error fetching products", error);
+      }
     }
-  }, [user]);
+  };
 
   const AddToCart = async (userId, productId) => {
     try {
@@ -81,7 +99,7 @@ export const CartProvider = ({ children }) => {
           userId,
           productId,
         },
-        { headers: { Authorization: `Bearer ${user.token}` } }
+        { headers: { Authorization: `Bearer ${userState.token}` } }
       );
       console.log("addtocart responce", response);
 
@@ -101,7 +119,7 @@ export const CartProvider = ({ children }) => {
   const RemoveFromCart = async (userId, productId) => {
     try {
       const response = await axios.delete(`${CartApi}`, {
-        headers: { Authorization: `Bearer ${user.token}` },
+        headers: { Authorization: `Bearer ${userState.token}` },
         data: { userId, productId },
       });
       if (response.status === 200) {
@@ -118,9 +136,21 @@ export const CartProvider = ({ children }) => {
     }
   };
 
+  const clearCart = () => {
+    cartDispitch({ type: cartAction.clearCart });
+  };
+
   return (
     <CartContext.Provider
-      value={{ cart, cartDispitch, AddToCart, cartAction, RemoveFromCart }}
+      value={{
+        cart,
+        cartDispitch,
+        AddToCart,
+        cartAction,
+        RemoveFromCart,
+        clearCart,
+        GetItemsInCart,
+      }}
     >
       {children}
     </CartContext.Provider>

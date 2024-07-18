@@ -37,15 +37,15 @@ import { CartApi } from "../../utils/api";
 export default function CartListItems() {
   const { cart, AddToCart, RemoveFromCart, cartDispitch, cartAction } =
     useCartContext();
-  const { user } = useUserContext();
+  const { userState } = useUserContext();
 
   React.useEffect(() => {
-    console.log("useeffect user", user);
+    console.log("useeffect user", userState);
 
     const fetchCart = async () => {
       try {
-        const response = await axios.get(`${CartApi}/${user.user.id}`, {
-          headers: { Authorization: `Bearer ${user.token}` },
+        const response = await axios.get(`${CartApi}/${userState.user.id}`, {
+          headers: { Authorization: `Bearer ${userState.token}` },
         });
         cartDispitch({ type: cartAction.initCart, payload: response.data });
       } catch (error) {
@@ -109,14 +109,16 @@ export default function CartListItems() {
                   <ListItemText id={labelId} primary={item.title} />
                 </ListItemButton>
                 <ListItemButton
-                  onClick={() => RemoveFromCart(user.user.id, item.productId)}
+                  onClick={() =>
+                    RemoveFromCart(userState.user.id, item.productId)
+                  }
                 >
                   <RemoveIcon />
                 </ListItemButton>
                 <ListItemText>{item.quantity}</ListItemText>
                 <ListItemButton>
                   <AddIcon
-                    onClick={() => AddToCart(user.user.id, item.productId)}
+                    onClick={() => AddToCart(userState.user.id, item.productId)}
                   />
                 </ListItemButton>
                 <ListItemText>${item.price}</ListItemText>

@@ -20,7 +20,7 @@ import { useUserContext } from "@/context/UserContext";
 
 const ProductDetail = () => {
   const { cartDispitch, cartAction, AddToCart } = useCartContext();
-  const { user } = useUserContext();
+  const { userState } = useUserContext();
   const params = useParams();
   const id = params.id;
   // console.log(id);
@@ -53,9 +53,9 @@ const ProductDetail = () => {
   }
 
   function addToCart() {
-    console.log("userid", user.user.id);
+    console.log("userid", userState.user.id);
     console.log("productid", product);
-    AddToCart(user.user.id, product.id);
+    AddToCart(userState.user.id, product.id);
     console.log("addtoCart");
   }
 

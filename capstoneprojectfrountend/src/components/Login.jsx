@@ -13,6 +13,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useUserContext } from "@/context/UserContext";
+import { useCartContext } from "@/context/CartContext";
 
 function Copyright(props) {
   return (
@@ -38,8 +39,9 @@ const defaultTheme = createTheme();
 
 export default function LogIn() {
   const { LoginFunction } = useUserContext();
+  const { GetItemsInCart } = useCartContext();
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({
@@ -52,7 +54,8 @@ export default function LogIn() {
       password: data.get("password"),
     };
 
-    LoginFunction(logindata);
+    await LoginFunction(logindata);
+    GetItemsInCart();
   };
 
   return (

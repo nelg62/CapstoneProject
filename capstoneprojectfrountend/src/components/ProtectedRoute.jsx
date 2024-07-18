@@ -4,15 +4,15 @@ import { useEffect } from "react";
 
 const ProtectedRoute = (Components) => {
   return (props) => {
-    const { user } = useUserContext();
+    const { userState } = useUserContext();
     const router = useRouter();
 
     useEffect(() => {
-      if (!user.isAuthenticated) {
+      if (!userState.isAuthenticated) {
         router.push("/login");
       }
-    }, [user.isAuthenticated, router]);
-    return user.isAuthenticated ? <Components {...props} /> : null;
+    }, [userState.isAuthenticated, router]);
+    return userState.isAuthenticated ? <Components {...props} /> : null;
   };
 };
 
