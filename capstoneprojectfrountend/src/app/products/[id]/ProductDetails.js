@@ -9,6 +9,7 @@ import {
   CardContent,
   CardMedia,
   Divider,
+  Grid,
   Rating,
   Typography,
 } from "@mui/material";
@@ -69,155 +70,165 @@ const ProductDetail = () => {
 
   return (
     <Box>
-      <Box sx={{ display: "flex" }}>
-        <DotsMobileStepper product={product} />
-        <Card sx={{ maxWidth: 345, margin: "auto", marginTop: 4 }}>
-          <CardContent>
-            <Typography
-              sx={{
-                textAlign: "center",
-                backgroundColor: "#0E4277",
-                color: "white",
-                fontWeight: "700",
-              }}
-              gutterBottom
-              variant="h5"
-              component="div"
-            >
-              {product.title}
-            </Typography>
+      {/* <Box sx={{ display: "flex" }}> */}
+      <Grid
+        container
+        spacing={{ xs: 2, md: 3 }}
+        columns={{ xs: 4, sm: 8, md: 12 }}
+      >
+        <Grid item xs={4} sm={6} md={6}>
+          <DotsMobileStepper product={product} />
+        </Grid>
+        <Grid item xs={4} sm={6} md={6}>
+          <Card sx={{ maxWidth: 345, margin: "auto", marginTop: 4 }}>
+            <CardContent>
+              <Typography
+                sx={{
+                  textAlign: "center",
+                  backgroundColor: "#0E4277",
+                  color: "white",
+                  fontWeight: "700",
+                }}
+                gutterBottom
+                variant="h5"
+                component="div"
+              >
+                {product.title}
+              </Typography>
 
-            <Divider sx={{ fontWeight: "600" }}>Price</Divider>
+              <Divider sx={{ fontWeight: "600" }}>Price</Divider>
 
-            <Typography
-              sx={{ textAlign: "center", fontWeight: "600" }}
-              gutterBottom
-              variant="body1"
-              color="text.secondary"
-            >
-              ${product.price}
-            </Typography>
+              <Typography
+                sx={{ textAlign: "center", fontWeight: "600" }}
+                gutterBottom
+                variant="body1"
+                color="text.secondary"
+              >
+                ${product.price}
+              </Typography>
 
-            <Divider sx={{ fontWeight: "600" }}>Rating</Divider>
+              <Divider sx={{ fontWeight: "600" }}>Rating</Divider>
 
-            <Typography
-              sx={{ textAlign: "center" }}
-              gutterBottom
-              variant="body2"
-              color="text.secondary"
-            >
-              <Rating
-                sx={{ top: "7px" }}
-                value={product.rating}
-                readOnly
-                precision={0.5}
-              />
-            </Typography>
+              <Typography
+                sx={{ textAlign: "center" }}
+                gutterBottom
+                variant="body2"
+                color="text.secondary"
+              >
+                <Rating
+                  sx={{ top: "7px" }}
+                  value={product.rating}
+                  readOnly
+                  precision={0.5}
+                />
+              </Typography>
 
-            <Divider sx={{ fontWeight: "600" }}>Description</Divider>
-            <Typography
-              sx={{ textAlign: "center" }}
-              gutterBottom
-              variant="body2"
-              color="text.secondary"
-            >
-              {product.description}
-            </Typography>
-            <Divider sx={{ fontWeight: "600" }}>Category</Divider>
-            <Typography
-              sx={{ textAlign: "center" }}
-              gutterBottom
-              variant="body1"
-              color="text.secondary"
-            >
-              {product.category}
-            </Typography>
+              <Divider sx={{ fontWeight: "600" }}>Description</Divider>
+              <Typography
+                sx={{ textAlign: "center" }}
+                gutterBottom
+                variant="body2"
+                color="text.secondary"
+              >
+                {product.description}
+              </Typography>
+              <Divider sx={{ fontWeight: "600" }}>Category</Divider>
+              <Typography
+                sx={{ textAlign: "center" }}
+                gutterBottom
+                variant="body1"
+                color="text.secondary"
+              >
+                {product.category}
+              </Typography>
 
-            {/* <Typography variant="body2" color="text.secondary">
+              {/* <Typography variant="body2" color="text.secondary">
               {product.stock}
             </Typography> */}
-            {/* <Typography variant="body2" color="text.secondary">
+              {/* <Typography variant="body2" color="text.secondary">
               {product.tags}
             </Typography> */}
 
-            <Divider sx={{ fontWeight: "600" }}>Brand</Divider>
+              <Divider sx={{ fontWeight: "600" }}>Brand</Divider>
 
-            <Typography
-              sx={{ textAlign: "center" }}
-              gutterBottom
-              variant="body1"
-              color="text.secondary"
-            >
-              {product.brand}
-            </Typography>
-            {/* <Typography variant="body2" color="text.secondary">
+              <Typography
+                sx={{ textAlign: "center" }}
+                gutterBottom
+                variant="body1"
+                color="text.secondary"
+              >
+                {product.brand}
+              </Typography>
+              {/* <Typography variant="body2" color="text.secondary">
               {product.weight}
             </Typography> */}
-            {/* <Typography variant="body2" color="text.secondary">
+              {/* <Typography variant="body2" color="text.secondary">
               {product.width} {product.height}
               {product.depth}
             </Typography> */}
 
-            <Divider sx={{ fontWeight: "600" }}>Availability</Divider>
+              <Divider sx={{ fontWeight: "600" }}>Availability</Divider>
 
-            <Typography
-              sx={{ textAlign: "center" }}
-              gutterBottom
-              variant="body1"
-              color="text.secondary"
-            >
-              {product.stock} {product.availabilityStatus}
-            </Typography>
+              <Typography
+                sx={{ textAlign: "center" }}
+                gutterBottom
+                variant="body1"
+                color="text.secondary"
+              >
+                {product.stock} {product.availabilityStatus}
+              </Typography>
 
-            <Divider sx={{ fontWeight: "600" }}>Warranty Information</Divider>
+              <Divider sx={{ fontWeight: "600" }}>Warranty Information</Divider>
 
-            <Typography
-              sx={{ textAlign: "center" }}
-              gutterBottom
-              variant="body1"
-              color="text.secondary"
-            >
-              {product.warrantyInformation}
-            </Typography>
+              <Typography
+                sx={{ textAlign: "center" }}
+                gutterBottom
+                variant="body1"
+                color="text.secondary"
+              >
+                {product.warrantyInformation}
+              </Typography>
 
-            <Divider sx={{ fontWeight: "600" }}>Shipping</Divider>
+              <Divider sx={{ fontWeight: "600" }}>Shipping</Divider>
 
-            <Typography
-              sx={{ textAlign: "center" }}
-              gutterBottom
-              variant="body1"
-              color="text.secondary"
-            >
-              {product.shippingInformation}
-            </Typography>
-            {/* <Typography variant="body2" color="text.secondary">
+              <Typography
+                sx={{ textAlign: "center" }}
+                gutterBottom
+                variant="body1"
+                color="text.secondary"
+              >
+                {product.shippingInformation}
+              </Typography>
+              {/* <Typography variant="body2" color="text.secondary">
               {product.availabilityStatus}
             </Typography> */}
 
-            <Divider sx={{ fontWeight: "600" }}>Return Policy</Divider>
+              <Divider sx={{ fontWeight: "600" }}>Return Policy</Divider>
 
-            <Typography
-              sx={{ textAlign: "center" }}
-              gutterBottom
-              variant="body1"
-              color="text.secondary"
-            >
-              {product.returnPolicy}
-            </Typography>
-            {/* <Typography variant="body2" color="text.secondary">
+              <Typography
+                sx={{ textAlign: "center" }}
+                gutterBottom
+                variant="body1"
+                color="text.secondary"
+              >
+                {product.returnPolicy}
+              </Typography>
+              {/* <Typography variant="body2" color="text.secondary">
               {product.minimumOrderQuantity}
             </Typography> */}
-          </CardContent>
-          <Button
-            onClick={addToCart}
-            variant="contained"
-            sx={{ width: "100%", fontWeight: "700" }}
-          >
-            Add to Cart
-          </Button>
-        </Card>
-      </Box>
-
+            </CardContent>
+            <Button
+              onClick={addToCart}
+              variant="contained"
+              sx={{ width: "100%", fontWeight: "700" }}
+            >
+              Add to Cart
+            </Button>
+          </Card>
+        </Grid>
+      </Grid>
+      {/* </Box> */}
+      <Divider sx={{ fontWeight: 600, fontSize: 25 }}>Reviews</Divider>
       <AlignItemsList product={product} />
     </Box>
   );

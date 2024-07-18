@@ -34,7 +34,16 @@ export default function ProductCard({ product }) {
 
           <Divider />
 
-          <Typography gutterBottom variant="body2" color="text.secondary">
+          <Typography
+            sx={{
+              maxHeight: 100,
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+            }}
+            gutterBottom
+            variant="body2"
+            color="text.secondary"
+          >
             {product.description}
           </Typography>
 

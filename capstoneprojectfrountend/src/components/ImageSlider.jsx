@@ -26,19 +26,14 @@ export default function DotsMobileStepper({ product }) {
         component="img"
         image={product.images[activeStep]}
         alt={`${product.title} image ${activeStep + 1}`}
-        sx={{
-          minHeight: 400,
-          maxWidth: 400,
-          maxHeight: 400,
-          objectFit: "contain",
-        }}
+        sx={{ maxHeight: 600, objectFit: "contain" }}
       />
       <MobileStepper
         variant="dots"
         steps={maxSteps}
         position="static"
         activeStep={activeStep}
-        sx={{ maxWidth: 400, flexGrow: 1 }}
+        sx={{ flexGrow: 1 }}
         nextButton={
           <Button
             size="small"
