@@ -92,14 +92,16 @@ export const UserProvider = ({ children }) => {
         emailId,
         password,
       });
-      const { token, ...user } = response.data;
-      // Cookies.set("token", token);
-      localStorage.setItem("token", token);
-      localStorage.setItem("user", JSON.stringify(user));
+      // const { token, ...user } = response.data;
+      // // Cookies.set("token", token);
+      // if (typeof window !== "undefined") {
+      //   localStorage.setItem("token", token);
+      //   localStorage.setItem("user", JSON.stringify(user));
+      // }
       console.log("User Signed up ", response);
-      userDispatch({ type: UserAction.SignUp, payload: { user, token } });
+      // userDispatch({ type: UserAction.SignUp, payload: { user, token } });
       router.push("/login");
-      console.log("user", user);
+      // console.log("user", user);
     } catch (error) {
       console.error("Error adding user", error);
     }

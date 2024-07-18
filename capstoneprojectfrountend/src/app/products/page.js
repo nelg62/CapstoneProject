@@ -32,9 +32,14 @@ function Products() {
       {loading ? (
         <p>Loading</p>
       ) : (
-        <Grid container spacing={8}>
+        <Grid
+          container
+          spacing={{ xs: 2, md: 3 }}
+          columns={{ xs: 4, sm: 8, md: 12 }}
+          sx={{ justifyContent: "flex-start", alignItems: "center" }}
+        >
           {products.map((product) => (
-            <Grid key={product.id} item xs={3}>
+            <Grid key={product.id} item xs={2} sm={4} md={4}>
               <ProductCard product={product} />
             </Grid>
           ))}

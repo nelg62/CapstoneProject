@@ -8,6 +8,7 @@ import {
   Card,
   CardContent,
   CardMedia,
+  Divider,
   Rating,
   Typography,
 } from "@mui/material";
@@ -72,61 +73,145 @@ const ProductDetail = () => {
         <DotsMobileStepper product={product} />
         <Card sx={{ maxWidth: 345, margin: "auto", marginTop: 4 }}>
           <CardContent>
-            <Typography gutterBottom variant="h5" component="div">
+            <Typography
+              sx={{
+                textAlign: "center",
+                backgroundColor: "#0E4277",
+                color: "white",
+                fontWeight: "700",
+              }}
+              gutterBottom
+              variant="h5"
+              component="div"
+            >
               {product.title}
             </Typography>
-            <Typography variant="body2" color="text.secondary">
-              {product.description}
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              {product.category}
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
+
+            <Divider sx={{ fontWeight: "600" }}>Price</Divider>
+
+            <Typography
+              sx={{ textAlign: "center", fontWeight: "600" }}
+              gutterBottom
+              variant="body1"
+              color="text.secondary"
+            >
               ${product.price}
             </Typography>
-            <Typography variant="body2" color="text.secondary">
-              <Rating value={product.rating} readOnly precision={0.5} />
-              {product.rating}
+
+            <Divider sx={{ fontWeight: "600" }}>Rating</Divider>
+
+            <Typography
+              sx={{ textAlign: "center" }}
+              gutterBottom
+              variant="body2"
+              color="text.secondary"
+            >
+              <Rating
+                sx={{ top: "7px" }}
+                value={product.rating}
+                readOnly
+                precision={0.5}
+              />
             </Typography>
-            <Typography variant="body2" color="text.secondary">
+
+            <Divider sx={{ fontWeight: "600" }}>Description</Divider>
+            <Typography
+              sx={{ textAlign: "center" }}
+              gutterBottom
+              variant="body2"
+              color="text.secondary"
+            >
+              {product.description}
+            </Typography>
+            <Divider sx={{ fontWeight: "600" }}>Category</Divider>
+            <Typography
+              sx={{ textAlign: "center" }}
+              gutterBottom
+              variant="body1"
+              color="text.secondary"
+            >
+              {product.category}
+            </Typography>
+
+            {/* <Typography variant="body2" color="text.secondary">
               {product.stock}
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
+            </Typography> */}
+            {/* <Typography variant="body2" color="text.secondary">
               {product.tags}
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
+            </Typography> */}
+
+            <Divider sx={{ fontWeight: "600" }}>Brand</Divider>
+
+            <Typography
+              sx={{ textAlign: "center" }}
+              gutterBottom
+              variant="body1"
+              color="text.secondary"
+            >
               {product.brand}
             </Typography>
-            <Typography variant="body2" color="text.secondary">
+            {/* <Typography variant="body2" color="text.secondary">
               {product.weight}
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
+            </Typography> */}
+            {/* <Typography variant="body2" color="text.secondary">
               {product.width} {product.height}
               {product.depth}
+            </Typography> */}
+
+            <Divider sx={{ fontWeight: "600" }}>Availability</Divider>
+
+            <Typography
+              sx={{ textAlign: "center" }}
+              gutterBottom
+              variant="body1"
+              color="text.secondary"
+            >
+              {product.stock} {product.availabilityStatus}
             </Typography>
-            <Typography variant="body2" color="text.secondary">
-              {product.availabilityStatus} {product.stock} Left
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
+
+            <Divider sx={{ fontWeight: "600" }}>Warranty Information</Divider>
+
+            <Typography
+              sx={{ textAlign: "center" }}
+              gutterBottom
+              variant="body1"
+              color="text.secondary"
+            >
               {product.warrantyInformation}
             </Typography>
-            <Typography variant="body2" color="text.secondary">
+
+            <Divider sx={{ fontWeight: "600" }}>Shipping</Divider>
+
+            <Typography
+              sx={{ textAlign: "center" }}
+              gutterBottom
+              variant="body1"
+              color="text.secondary"
+            >
               {product.shippingInformation}
             </Typography>
-            <Typography variant="body2" color="text.secondary">
+            {/* <Typography variant="body2" color="text.secondary">
               {product.availabilityStatus}
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
+            </Typography> */}
+
+            <Divider sx={{ fontWeight: "600" }}>Return Policy</Divider>
+
+            <Typography
+              sx={{ textAlign: "center" }}
+              gutterBottom
+              variant="body1"
+              color="text.secondary"
+            >
               {product.returnPolicy}
             </Typography>
-            <Typography variant="body2" color="text.secondary">
+            {/* <Typography variant="body2" color="text.secondary">
               {product.minimumOrderQuantity}
-            </Typography>
+            </Typography> */}
           </CardContent>
           <Button
             onClick={addToCart}
             variant="contained"
-            sx={{ width: "100%" }}
+            sx={{ width: "100%", fontWeight: "700" }}
           >
             Add to Cart
           </Button>

@@ -4,7 +4,7 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import { CardActionArea } from "@mui/material";
+import { CardActionArea, Divider, Paper } from "@mui/material";
 import { useRouter } from "next/navigation";
 
 export default function ProductCard({ product }) {
@@ -23,17 +23,32 @@ export default function ProductCard({ product }) {
           alt={product.title}
         />
         <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
+          <Typography
+            gutterBottom
+            variant="h5"
+            component="div"
+            sx={{ marginLeft: "5px" }}
+          >
             {product.title}
           </Typography>
-          <Typography variant="body2" color="text.secondary">
+
+          <Divider />
+
+          <Typography gutterBottom variant="body2" color="text.secondary">
             {product.description}
           </Typography>
-          <Typography variant="body2" color="text.secondary">
+
+          <Divider sx={{ marginBottom: "5px" }} />
+
+          <Typography
+            sx={{ float: "right", fontWeight: "700", marginRight: "5px" }}
+            variant="body1"
+          >
             ${product.price}
           </Typography>
-          <Typography variant="body2" color="text.secondary">
-            {product.availabilityStatus} {product.stock} Left
+
+          <Typography variant="body1" sx={{ marginLeft: "5px" }}>
+            {product.stock} {product.availabilityStatus}
           </Typography>
         </CardContent>
       </CardActionArea>

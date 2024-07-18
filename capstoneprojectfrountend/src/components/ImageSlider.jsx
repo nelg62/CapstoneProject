@@ -21,12 +21,17 @@ export default function DotsMobileStepper({ product }) {
   };
 
   return (
-    <Box sx={{ flexDirection: "column" }}>
+    <Box sx={{ flexDirection: "column", marginTop: 4 }}>
       <CardMedia
         component="img"
         image={product.images[activeStep]}
         alt={`${product.title} image ${activeStep + 1}`}
-        sx={{ maxWidth: 400 }}
+        sx={{
+          minHeight: 400,
+          maxWidth: 400,
+          maxHeight: 400,
+          objectFit: "contain",
+        }}
       />
       <MobileStepper
         variant="dots"
