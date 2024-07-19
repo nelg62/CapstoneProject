@@ -108,8 +108,6 @@ export const CartProvider = ({ children }) => {
         payload: response.data,
       });
 
-      // console.log("rsponse", response.data);
-
       console.log("Item atted to cart in database");
     } catch (error) {
       console.error("Error adding item to cart in database");

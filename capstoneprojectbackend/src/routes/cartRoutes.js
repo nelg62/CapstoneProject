@@ -64,33 +64,11 @@ module.exports = (db) => {
     }
   });
 
-  // router.post("/", async (req, res) => {
-  //   const { userId, productId } = req.body;
-  //   try {
-  //     // Insert the product into the cart
-  //     const product = await db("Product").where({ id: productId });
-  //     await db("Cart").insert({ userId, productId });
-
-  //     // Retrieve the newly inserted item
-  //     // const newItem = await db("Cart").where({ userId, productId }).leftJoin().first();
-  //     const cartItems = await db.fromRaw(
-  //       "(SELECT C.id as cartId, P.id as ProductId, title, thumbnail, price FROM Product as P LEFT JOIN Cart as C ON P.id = C.productId where C.userId=? And C.productId=?) as T",
-  //       [userId, productId]
-  //     );
-  //     console.log(cartItems);
-  //     res.status(201).json(cartItems);
-  //   } catch (error) {
-  //     console.error("Error adding item to cart:", error);
-  //     res.status(500).json({ error: "Failed to add product to cart" });
-  //   }
-  // });
-
   router.delete("/", async (req, res) => {
     const { userId, productId } = req.body;
     console.log("Request user:", req.user);
     if (req.user.id !== userId) return res.sendStatus(403);
     try {
-      // Check if the item exists in the cart
       const earliestItem = await db("Cart")
         .where({ userId, productId })
         .orderBy("created_at")

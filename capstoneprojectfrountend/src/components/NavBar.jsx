@@ -1,6 +1,6 @@
 "use client";
 import * as React from "react";
-import Link from "next/link"; // Import Link from next/link
+import Link from "next/link";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -141,20 +141,19 @@ function ResponsiveAppBar() {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            <MenuItem>
-              <Button sx={{ color: "inherit" }} onClick={handleLogout}>
-                Logout
-              </Button>
-            </MenuItem>
             <Link href={"/cart"}>
               <CustomizedBadges />
             </Link>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar
-                  alt={!userState.user ? "User" : userState.user.username}
-                  src="/static/images/avatar/2.jpg"
-                />
+                {userState.user ? (
+                  <Avatar
+                    alt={userState.user.username}
+                    src="/static/images/avatar/2.jpg"
+                  />
+                ) : (
+                  <Avatar alt={"User"} src="/static/images/avatar/2.jpg" />
+                )}
               </IconButton>
             </Tooltip>
             <Menu
@@ -179,6 +178,11 @@ function ResponsiveAppBar() {
                 </MenuItem>
               ))}
             </Menu>
+            <MenuItem sx={{ float: "right" }}>
+              <Button sx={{ color: "inherit" }} onClick={handleLogout}>
+                Logout
+              </Button>
+            </MenuItem>
           </Box>
         </Toolbar>
       </Container>

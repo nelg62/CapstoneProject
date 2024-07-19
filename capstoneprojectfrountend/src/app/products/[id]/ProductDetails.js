@@ -1,48 +1,32 @@
 "use client";
 
-import { useCallback, useEffect, useReducer, useState } from "react";
-import axios from "axios";
+import { useEffect } from "react";
 import {
   Box,
   Button,
   Card,
   CardContent,
-  CardMedia,
   Divider,
   Grid,
   Rating,
   Typography,
 } from "@mui/material";
 import { useParams } from "next/navigation";
-import { ProductApi } from "../../../../utils/api";
 import DotsMobileStepper from "@/components/ImageSlider";
 import AlignItemsList from "@/components/ReviewProductList";
-import { cartAction, useCartContext } from "@/context/CartContext";
+import { useCartContext } from "@/context/CartContext";
 import { useUserContext } from "@/context/UserContext";
+import { useProductContext } from "@/context/ProductContext";
 
 const ProductDetail = () => {
-  const { cartDispitch, cartAction, AddToCart } = useCartContext();
+  const { cartDispitch, AddToCart } = useCartContext();
   const { userState } = useUserContext();
-  const params = useParams();
-  const id = params.id;
-  // console.log(id);
-  const [product, setProduct] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const { id } = useParams();
+  const { product, loading, fetchProduct } = useProductContext();
 
   useEffect(() => {
     if (id) {
-      const fetchProduct = async () => {
-        try {
-          const response = await axios.get(`${ProductApi}/${id}`);
-          console.log("response", response.data);
-          setProduct(response.data);
-          setLoading(false);
-        } catch (error) {
-          console.error("Error fetching product details", error);
-          setLoading(false);
-        }
-      };
-      fetchProduct();
+      fetchProduct(id);
     }
   }, [id]);
 
@@ -70,7 +54,6 @@ const ProductDetail = () => {
 
   return (
     <Box>
-      {/* <Box sx={{ display: "flex" }}> */}
       <Grid
         container
         spacing={{ xs: 2, md: 3 }}
@@ -142,13 +125,6 @@ const ProductDetail = () => {
                 {product.category}
               </Typography>
 
-              {/* <Typography variant="body2" color="text.secondary">
-              {product.stock}
-            </Typography> */}
-              {/* <Typography variant="body2" color="text.secondary">
-              {product.tags}
-            </Typography> */}
-
               <Divider sx={{ fontWeight: "600" }}>Brand</Divider>
 
               <Typography
@@ -159,13 +135,6 @@ const ProductDetail = () => {
               >
                 {product.brand}
               </Typography>
-              {/* <Typography variant="body2" color="text.secondary">
-              {product.weight}
-            </Typography> */}
-              {/* <Typography variant="body2" color="text.secondary">
-              {product.width} {product.height}
-              {product.depth}
-            </Typography> */}
 
               <Divider sx={{ fontWeight: "600" }}>Availability</Divider>
 
@@ -199,9 +168,6 @@ const ProductDetail = () => {
               >
                 {product.shippingInformation}
               </Typography>
-              {/* <Typography variant="body2" color="text.secondary">
-              {product.availabilityStatus}
-            </Typography> */}
 
               <Divider sx={{ fontWeight: "600" }}>Return Policy</Divider>
 
@@ -213,9 +179,6 @@ const ProductDetail = () => {
               >
                 {product.returnPolicy}
               </Typography>
-              {/* <Typography variant="body2" color="text.secondary">
-              {product.minimumOrderQuantity}
-            </Typography> */}
             </CardContent>
             <Button
               onClick={addToCart}
@@ -227,7 +190,7 @@ const ProductDetail = () => {
           </Card>
         </Grid>
       </Grid>
-      {/* </Box> */}
+
       <Divider sx={{ fontWeight: 600, fontSize: 25 }}>Reviews</Divider>
       <AlignItemsList product={product} />
     </Box>

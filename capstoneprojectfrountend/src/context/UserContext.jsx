@@ -4,8 +4,6 @@ import { createContext, useContext, useEffect, useReducer } from "react";
 import { UserApi } from "../../utils/api";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import Cookies from "js-cookie";
-import { useCartContext } from "./CartContext";
 
 export const UserAction = {
   SignUp: "SignUp",
@@ -92,16 +90,10 @@ export const UserProvider = ({ children }) => {
         emailId,
         password,
       });
-      // const { token, ...user } = response.data;
-      // // Cookies.set("token", token);
-      // if (typeof window !== "undefined") {
-      //   localStorage.setItem("token", token);
-      //   localStorage.setItem("user", JSON.stringify(user));
-      // }
+
       console.log("User Signed up ", response);
-      // userDispatch({ type: UserAction.SignUp, payload: { user, token } });
+
       router.push("/login");
-      // console.log("user", user);
     } catch (error) {
       console.error("Error adding user", error);
     }
@@ -115,7 +107,7 @@ export const UserProvider = ({ children }) => {
       });
       console.log("response", response);
       const { user, token } = response.data;
-      // Cookies.set("token", token);
+
       localStorage.setItem("token", token);
       localStorage.setItem("user", JSON.stringify(user));
       console.log("login response", response);

@@ -4,7 +4,7 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import { CardActionArea, Divider, Paper } from "@mui/material";
+import { CardActionArea, Divider, Rating } from "@mui/material";
 import { useRouter } from "next/navigation";
 
 export default function ProductCard({ product }) {
@@ -48,6 +48,24 @@ export default function ProductCard({ product }) {
           </Typography>
 
           <Divider sx={{ marginBottom: "5px" }} />
+
+          <Typography
+            sx={{ marginLeft: "5px" }}
+            gutterBottom
+            variant="body1"
+            color="text.secondary"
+          >
+            Category: {product.category}
+          </Typography>
+
+          <Typography gutterBottom variant="body2" color="text.secondary">
+            <Rating
+              sx={{ top: "7px" }}
+              value={product.rating}
+              readOnly
+              precision={0.5}
+            />
+          </Typography>
 
           <Typography
             sx={{ float: "right", fontWeight: "700", marginRight: "5px" }}

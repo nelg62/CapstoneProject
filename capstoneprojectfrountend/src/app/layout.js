@@ -3,6 +3,7 @@ import "./globals.css";
 import ResponsiveAppBar from "@/components/NavBar";
 import { CartProvider } from "@/context/CartContext";
 import { UserProvider } from "@/context/UserContext";
+import { ProductProvider } from "@/context/ProductContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,8 +18,10 @@ export default function RootLayout({ children }) {
       <body className={inter.className}>
         <UserProvider>
           <CartProvider>
-            <ResponsiveAppBar />
-            {children}
+            <ProductProvider>
+              <ResponsiveAppBar />
+              {children}
+            </ProductProvider>
           </CartProvider>
         </UserProvider>
       </body>

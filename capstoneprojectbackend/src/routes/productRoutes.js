@@ -6,7 +6,20 @@ module.exports = (db) => {
   // Get list of all Products
   router.get("/", async (req, res) => {
     try {
-      const products = await db("Product").select("*");
+      const { sortBy, order = "asc", category } = req.query;
+      let query = db("Product").select("*");
+
+      if (category) {
+        query = query.where("category", category);
+      }
+
+      if (sortBy) {
+        query = query.orderBy(sortBy, order);
+      }
+
+      const products = await query;
+
+      // const products = await db("Product").select("*");
 
       const productWithNestedData = await Promise.all(
         products.map(async (product) => {
