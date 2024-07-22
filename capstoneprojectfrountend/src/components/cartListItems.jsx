@@ -21,7 +21,7 @@ export default function CartListItems() {
 
     const fetchCart = async () => {
       try {
-        const response = await axios.get(`${CartApi}/${userState.user.id}`, {
+        const response = await axios.get(`${CartApi}/${userState.id}`, {
           headers: { Authorization: `Bearer ${userState.token}` },
         });
         cartDispitch({ type: cartAction.initCart, payload: response.data });
@@ -74,16 +74,14 @@ export default function CartListItems() {
                   <ListItemText id={labelId} primary={item.title} />
                 </ListItemButton>
                 <ListItemButton
-                  onClick={() =>
-                    RemoveFromCart(userState.user.id, item.productId)
-                  }
+                  onClick={() => RemoveFromCart(userState.id, item.productId)}
                 >
                   <RemoveIcon />
                 </ListItemButton>
                 <ListItemText>{item.quantity}</ListItemText>
                 <ListItemButton>
                   <AddIcon
-                    onClick={() => AddToCart(userState.user.id, item.productId)}
+                    onClick={() => AddToCart(userState.id, item.productId)}
                   />
                 </ListItemButton>
                 <ListItemText>${item.price}</ListItemText>

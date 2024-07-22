@@ -66,7 +66,7 @@ export const CartProvider = ({ children }) => {
     const fetchCart = async () => {
       if (userState.isAuthenticated) {
         try {
-          const response = await axios.get(`${CartApi}/${userState.user.id}`, {
+          const response = await axios.get(`${CartApi}/${userState.id}`, {
             headers: { Authorization: `Bearer ${userState.token}` },
           });
           cartDispitch({ type: cartAction.initCart, payload: response.data });
@@ -81,7 +81,7 @@ export const CartProvider = ({ children }) => {
   const GetItemsInCart = async () => {
     if (userState.isAuthenticated) {
       try {
-        const response = await axios.get(`${CartApi}/${userState.user.id}`, {
+        const response = await axios.get(`${CartApi}/${userState.id}`, {
           headers: { Authorization: `Bearer ${userState.token}` },
         });
         cartDispitch({ type: cartAction.initCart, payload: response.data });

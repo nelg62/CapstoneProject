@@ -22,12 +22,16 @@ const pages = ["products", "signup", "login"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 function ResponsiveAppBar() {
+  console.log("ResponsivenaveBar");
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const { userState, LogoutFunction } = useUserContext();
   const { clearCart } = useCartContext();
 
+  console.log("responsive navbar uesSDtare", userState);
+
   const handleLogout = () => {
+    console.log("handlelogout");
     LogoutFunction();
     clearCart();
   };
@@ -146,14 +150,10 @@ function ResponsiveAppBar() {
             </Link>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                {userState.user ? (
-                  <Avatar
-                    alt={userState.user.username}
-                    src="/static/images/avatar/2.jpg"
-                  />
-                ) : (
-                  <Avatar alt={"User"} src="/static/images/avatar/2.jpg" />
-                )}
+                <Avatar
+                  alt={userState.username || "User"}
+                  src="/static/images/avatar/2.jpg"
+                />
               </IconButton>
             </Tooltip>
             <Menu

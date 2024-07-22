@@ -39,9 +39,9 @@ const ProductDetail = () => {
   }
 
   function addToCart() {
-    console.log("userid", userState.user.id);
+    console.log("userid", userState.id);
     console.log("productid", product);
-    AddToCart(userState.user.id, product.id);
+    AddToCart(userState.id, product.id);
     console.log("addtoCart");
   }
 
