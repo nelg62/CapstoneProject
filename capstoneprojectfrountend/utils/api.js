@@ -8,4 +8,6 @@ const CartApi = "http://localhost:8081/api/cart";
 
 const UserApi = "http://localhost:8081/api/users";
 
-export { ProductApi, MultipleProductsApi, CartApi, UserApi };
+const OrdersApi = "http://localhost:8081/api/orders";
+
+export { ProductApi, MultipleProductsApi, CartApi, UserApi, OrdersApi };

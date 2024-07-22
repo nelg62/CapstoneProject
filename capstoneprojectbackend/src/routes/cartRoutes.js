@@ -120,5 +120,18 @@ module.exports = (db) => {
     }
   });
 
+  router.post("/clear", async (req, res) => {
+    const { userId } = req.body;
+    console.log("Request user", req.user);
+    if (req.user.id !== userId) return res.sendStatus(403);
+    try {
+      await db("Cart").where({ userId }).del();
+      res.json({ message: "Cart cleared" });
+    } catch (error) {
+      console.error("Error clearing cart", error);
+      res.status(500).json({ error: "Failed to clear cart" });
+    }
+  });
+
   return router;
 };

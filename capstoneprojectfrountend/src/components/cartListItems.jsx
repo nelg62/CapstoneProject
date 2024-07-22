@@ -12,8 +12,14 @@ import axios from "axios";
 import { CartApi } from "../../utils/api";
 
 export default function CartListItems() {
-  const { cart, AddToCart, RemoveFromCart, cartDispitch, cartAction } =
-    useCartContext();
+  const {
+    cart,
+    AddToCart,
+    RemoveFromCart,
+    cartDispitch,
+    cartAction,
+    clearCartAfterOrder,
+  } = useCartContext();
   const { userState } = useUserContext();
 
   React.useEffect(() => {

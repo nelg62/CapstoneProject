@@ -48,7 +48,7 @@ function reducer(state, action) {
         .filter((item) => item.quantity > 0);
     }
     case cartAction.clearCart: {
-      return { ...state, cart: [] };
+      return [];
     }
     default: {
       return state;
@@ -134,6 +134,21 @@ export const CartProvider = ({ children }) => {
     }
   };
 
+  const clearCartAfterOrder = async (userId) => {
+    try {
+      const response = await axios.post(`${CartApi}/clear`, {
+        headers: { Authorization: `Bearer ${userState.token}` },
+        data: { userId },
+      });
+      if (response) {
+        cartDispitch({ type: cartAction.clearCart });
+        console.log("Cart has been cleared in backend", response);
+      }
+    } catch (error) {
+      console.error("Error failed to clear cart in backend", error);
+    }
+  };
+
   const clearCart = () => {
     cartDispitch({ type: cartAction.clearCart });
   };
@@ -148,6 +163,7 @@ export const CartProvider = ({ children }) => {
         RemoveFromCart,
         clearCart,
         GetItemsInCart,
+        clearCartAfterOrder,
       }}
     >
       {children}

@@ -18,7 +18,7 @@ import CustomizedBadges from "./cartIcon";
 import { useUserContext } from "@/context/UserContext";
 import { useCartContext } from "@/context/CartContext";
 
-const pages = ["products", "signup", "login"];
+const pages = ["dashboard", "products", "signup", "login"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 function ResponsiveAppBar() {

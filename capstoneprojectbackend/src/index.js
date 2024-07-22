@@ -29,10 +29,12 @@ let dbConnect = require("./dbConnect");
 let userRoutes = require("./routes/userRoutes")(db);
 let productRoutes = require("./routes/productRoutes")(db);
 let cartRoutes = require("./routes/cartRoutes")(db);
+let orderRoutes = require("./routes/orderRoutes")(db);
 
 app.use("/api/users", userRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/cart", cartRoutes);
+app.use("/api/orders", orderRoutes);
 
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to my application." });

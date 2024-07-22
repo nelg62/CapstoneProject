@@ -15,7 +15,7 @@ const UserContext = createContext();
 
 const initialState = {
   id: null,
-  usename: null,
+  username: null,
   emailId: null,
   isAuthenticated: false,
   token: null,
