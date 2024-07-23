@@ -80,15 +80,19 @@ export default function CartListItems() {
                   <ListItemText id={labelId} primary={item.title} />
                 </ListItemButton>
                 <ListItemButton
+                  sx={{ justifyContent: "center" }}
                   onClick={() => RemoveFromCart(userState.id, item.productId)}
                 >
                   <RemoveIcon />
                 </ListItemButton>
-                <ListItemText>{item.quantity}</ListItemText>
-                <ListItemButton>
-                  <AddIcon
-                    onClick={() => AddToCart(userState.id, item.productId)}
-                  />
+                <ListItemText sx={{ textAlign: "center" }}>
+                  {item.quantity}
+                </ListItemText>
+                <ListItemButton
+                  sx={{ justifyContent: "center" }}
+                  onClick={() => AddToCart(userState.id, item.productId)}
+                >
+                  <AddIcon />
                 </ListItemButton>
                 <ListItemText>${item.price}</ListItemText>
               </ListItem>

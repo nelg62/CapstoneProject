@@ -58,7 +58,7 @@ function reducer(state, action) {
 
 export const CartProvider = ({ children }) => {
   const [cart, cartDispitch] = useReducer(reducer, initialState);
-  const { userState } = useUserContext();
+  const { userState, setAlert } = useUserContext();
 
   useEffect(() => {
     console.log("useeffect user", userState);
@@ -109,8 +109,18 @@ export const CartProvider = ({ children }) => {
       });
 
       console.log("Item atted to cart in database");
+      setAlert({
+        open: true,
+        message: "Item added to Cart",
+        severity: "success",
+      });
     } catch (error) {
       console.error("Error adding item to cart in database");
+      setAlert({
+        open: true,
+        message: "Failed to add Item to Cart",
+        severity: "error",
+      });
     }
   };
 
@@ -126,20 +136,32 @@ export const CartProvider = ({ children }) => {
           payload: { productId },
         });
         console.log("Product removed from cart", response);
+        setAlert({
+          open: true,
+          message: "Removed Product from Cart",
+          severity: "success",
+        });
       } else {
         console.error("Failed to remove product from cart:", response.data);
       }
     } catch (error) {
       console.error("Error removing item from cart:", error);
+      setAlert({
+        open: true,
+        message: "Failed to remove product from Cart",
+        severity: "error",
+      });
     }
   };
 
   const clearCartAfterOrder = async (userId) => {
     try {
-      const response = await axios.post(`${CartApi}/clear`, {
-        headers: { Authorization: `Bearer ${userState.token}` },
-        data: { userId },
-      });
+      const response = await axios.post(
+        `${CartApi}/clear`,
+        { userId },
+        { headers: { Authorization: `Bearer ${userState.token}` } }
+      );
+      console.log("clearcartresponse", response);
       if (response) {
         cartDispitch({ type: cartAction.clearCart });
         console.log("Cart has been cleared in backend", response);

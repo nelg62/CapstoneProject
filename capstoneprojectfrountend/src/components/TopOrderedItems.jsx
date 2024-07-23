@@ -4,15 +4,19 @@ import { OrdersApi } from "../../utils/api";
 import {
   Box,
   Card,
+  CardActionArea,
   CardContent,
   CardMedia,
   Grid,
   Typography,
 } from "@mui/material";
 import ProductCard from "./ProductCard";
+import { useProductContext } from "@/context/ProductContext";
+import { useRouter } from "next/navigation";
 
 export default function TopOrderedItems() {
   const [TopOrderedItemsState, setTopOrderedItemsState] = useState([]);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchTopOrderedItems = async () => {
@@ -27,9 +31,15 @@ export default function TopOrderedItems() {
     fetchTopOrderedItems();
   }, []);
 
+  const handleCardClick = (productId) => {
+    router.push(`/products/${productId}`);
+  };
+
   return (
     <>
-      <Typography>Top Ordered Items</Typography>
+      <Typography variant="h3" sx={{ textAlign: "center" }}>
+        Top Ordered Items
+      </Typography>
       <Box>
         <Grid
           container
@@ -37,23 +47,47 @@ export default function TopOrderedItems() {
           columns={{ xs: 4, sm: 8, md: 12 }}
         >
           {TopOrderedItemsState.map((item) => (
-            <Grid item xs={4} sm={6} md={6}>
+            <Grid key={item.productId} item xs={2} sm={4} md={4}>
               <Card
                 key={item.productId}
-                sx={{ maxWidth: 345, margin: "auto", marginTop: 4 }}
+                sx={{
+                  maxWidth: 345,
+                  margin: "auto",
+                  marginTop: 4,
+                }}
               >
-                <CardMedia
-                  component="img"
-                  image={item.thumbnail}
-                  alt={item.title}
-                />
-                <Box>
-                  <CardContent>
-                    <Typography>{item.title}</Typography>
-                    <Typography>Price: ${item.price}</Typography>
-                    <Typography>Ordered: {item.orderCount} times</Typography>
-                  </CardContent>
-                </Box>
+                <CardActionArea onClick={() => handleCardClick(item.productId)}>
+                  <CardMedia
+                    component="img"
+                    image={item.thumbnail}
+                    alt={item.title}
+                  />
+                  <Box>
+                    <CardContent>
+                      <Typography
+                        gutterBottom
+                        variant="h5"
+                        component="div"
+                        sx={{ marginLeft: "5px" }}
+                      >
+                        {item.title}
+                      </Typography>
+                      <Typography
+                        sx={{
+                          float: "right",
+                          fontWeight: "700",
+                          marginRight: "5px",
+                        }}
+                        variant="body1"
+                      >
+                        Price: ${item.price}
+                      </Typography>
+                      <Typography variant="body1" sx={{ marginLeft: "5px" }}>
+                        Ordered: {item.orderCount} times
+                      </Typography>
+                    </CardContent>
+                  </Box>
+                </CardActionArea>
               </Card>
             </Grid>
           ))}

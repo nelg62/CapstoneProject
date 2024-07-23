@@ -6,7 +6,7 @@ import { useUserContext } from "@/context/UserContext";
 
 export default function CartOrderForm() {
   const { cart, clearCartAfterOrder, GetItemsInCart } = useCartContext();
-  const { userState } = useUserContext();
+  const { userState, setAlert } = useUserContext();
 
   // const intialFormData = {
   //   location: "",
@@ -17,8 +17,7 @@ export default function CartOrderForm() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     console.log("orderform event", event.target);
-    handlePlaceOrder();
-    clearCartAfterOrder();
+    await handlePlaceOrder();
   };
 
   const handlePlaceOrder = async () => {
@@ -28,9 +27,20 @@ export default function CartOrderForm() {
         items: cart,
       });
       console.log("Order placed succesfully", response);
+      await clearCartAfterOrder(userState.id);
+      setAlert({
+        open: true,
+        message: "Order Placed Successfully",
+        severity: "success",
+      });
     } catch (error) {
       console.error("Error placing order", error);
       console.log("Failed to place order");
+      setAlert({
+        open: true,
+        message: "Failed to Place Order",
+        severity: "error",
+      });
     }
   };
 

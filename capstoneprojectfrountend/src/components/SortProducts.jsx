@@ -40,13 +40,13 @@ const SortProductsButtons = () => {
         </Select>
         <Select value={category} onChange={handleCategoryChange}>
           <MenuItem value="">All Categories</MenuItem>
+          <MenuItem value="beauty">Beauty</MenuItem>
           <MenuItem value="furniture">Furniture</MenuItem>
           <MenuItem value="fragrances">Fragrances</MenuItem>
-          <MenuItem value="beauty">Beauty</MenuItem>
-          <MenuItem value="vehicle">Vehicle</MenuItem>
-          <MenuItem value="tablets">Tablets</MenuItem>
           <MenuItem value="laptops">Laptops</MenuItem>
           <MenuItem value="smartphones">Smartphones</MenuItem>
+          <MenuItem value="tablets">Tablets</MenuItem>
+          <MenuItem value="vehicle">Vehicle</MenuItem>
         </Select>
       </Box>
       {loading ? (

@@ -1,9 +1,16 @@
 "use client";
 
-import { createContext, useContext, useEffect, useReducer } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useReducer,
+  useState,
+} from "react";
 import { UserApi } from "../../utils/api";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import SimpleAlert from "@/components/Alert";
 
 export const UserAction = {
   SignUp: "SignUp",
@@ -75,6 +82,11 @@ export const UserProvider = ({ children }) => {
   // console.log("UserProvider");
   const [userState, userDispatch] = useReducer(reducer, initialState);
   const router = useRouter();
+  const [alert, setAlert] = useState({
+    open: false,
+    message: "",
+    severity: "success",
+  });
   // console.log("userProvider userState", userState);
 
   useEffect(() => {
@@ -100,6 +112,10 @@ export const UserProvider = ({ children }) => {
     }
   }, []);
 
+  const closeAlert = () => {
+    setAlert((prev) => ({ ...prev, open: false }));
+  };
+
   const SignUpFunction = async ({ username, emailId, password }) => {
     // console.log("sighnupfunction");
     try {
@@ -109,11 +125,21 @@ export const UserProvider = ({ children }) => {
         password,
       });
 
-      // console.log("User Signed up ", response);
+      console.log("User Signed up ", response);
+      setAlert({
+        open: true,
+        message: "User Signed up successfully",
+        severity: "success",
+      });
 
       router.push("/login");
     } catch (error) {
       console.error("Error adding user", error);
+      setAlert({
+        open: true,
+        message: "User Signed up failed",
+        severity: "error",
+      });
     }
   };
 
@@ -132,9 +158,19 @@ export const UserProvider = ({ children }) => {
       // console.log("login response", response);
       userDispatch({ type: UserAction.Login, payload: { user, token } });
       // console.log("user", user);
-      router.push("/");
+      router.push("/dashboard");
+      setAlert({
+        open: true,
+        message: "User Logged in successfully",
+        severity: "success",
+      });
     } catch (error) {
       console.error("Error logging in", error);
+      setAlert({
+        open: true,
+        message: "User Login in failed",
+        severity: "error",
+      });
     }
   };
 
@@ -144,13 +180,32 @@ export const UserProvider = ({ children }) => {
     localStorage.removeItem("user");
     userDispatch({ type: UserAction.Logout });
     router.push("/login");
+    setAlert({
+      open: true,
+      message: "User Loggedout",
+      severity: "success",
+    });
   };
 
   return (
     <UserContext.Provider
-      value={{ SignUpFunction, userState, LoginFunction, LogoutFunction }}
+      value={{
+        SignUpFunction,
+        userState,
+        LoginFunction,
+        LogoutFunction,
+        setAlert,
+        alert,
+      }}
     >
       {children}
+      {alert.open && (
+        <SimpleAlert
+          message={alert.message}
+          severity={alert.severity}
+          onClose={closeAlert}
+        />
+      )}
     </UserContext.Provider>
   );
 };
