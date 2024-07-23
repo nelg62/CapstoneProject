@@ -6,35 +6,61 @@ import ListItemText from "@mui/material/ListItemText";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
-import { Paper, Rating } from "@mui/material";
+import { Paper, Rating, Skeleton } from "@mui/material";
 
 export default function AlignItemsList({ product }) {
+  const [loading, setLoading] = React.useState(true);
+  setTimeout(() => setLoading(false), 5000);
   return (
     <Paper>
       <List sx={{ width: "100%", bgcolor: "background.paper" }}>
         {product.reviews.map((review, index) => (
           <React.Fragment key={index}>
             <ListItem>
-              <ListItemAvatar>
-                <Avatar
-                  alt={review.reviewerName}
-                  src="/static/images/avatar/1.jpg"
-                />
-              </ListItemAvatar>
+              {loading ? (
+                <Skeleton variant="circular" width={40} height={40}></Skeleton>
+              ) : (
+                <ListItemAvatar>
+                  <Avatar
+                    alt={review.reviewerName}
+                    src="/static/images/avatar/1.jpg"
+                  />
+                </ListItemAvatar>
+              )}
               <ListItemText>
-                <Typography>{review.reviewerName}</Typography>
+                {loading ? (
+                  <Skeleton></Skeleton>
+                ) : (
+                  <Typography>{review.reviewerName}</Typography>
+                )}
 
-                <Typography variant="body2" color="text.secondary">
-                  <Rating value={review.rating} readOnly precision={0.5} />
-                </Typography>
+                {loading ? (
+                  <Skeleton variant="body2"></Skeleton>
+                ) : (
+                  <Typography variant="body2" color="text.secondary">
+                    <Rating value={review.rating} readOnly precision={0.5} />
+                  </Typography>
+                )}
               </ListItemText>
+
               <ListItemText>
-                <Typography color="text.secondary">{review.comment}</Typography>
+                {loading ? (
+                  <Skeleton></Skeleton>
+                ) : (
+                  <Typography color="text.secondary">
+                    {review.comment}
+                  </Typography>
+                )}
               </ListItemText>
+
               <ListItemText>
-                <Typography variant="body2" color="text.secondary">
-                  {new Date(review.date).toLocaleDateString()}
-                </Typography>
+                {loading ? (
+                  <Skeleton variant="body2"></Skeleton>
+                ) : (
+                  <Typography variant="body2" color="text.secondary">
+                    {new Date(review.date).toLocaleDateString()}
+                  </Typography>
+                )}
               </ListItemText>
             </ListItem>
             <Divider variant="inset" component="li" />

@@ -8,6 +8,7 @@ import {
   CardContent,
   CardMedia,
   Grid,
+  Skeleton,
   Typography,
 } from "@mui/material";
 import ProductCard from "./ProductCard";
@@ -17,6 +18,8 @@ import { useRouter } from "next/navigation";
 export default function TopOrderedItems() {
   const [TopOrderedItemsState, setTopOrderedItemsState] = useState([]);
   const router = useRouter();
+  const [loading, setLoading] = useState(true);
+  setTimeout(() => setLoading(false), 5000);
 
   useEffect(() => {
     const fetchTopOrderedItems = async () => {
@@ -57,34 +60,50 @@ export default function TopOrderedItems() {
                 }}
               >
                 <CardActionArea onClick={() => handleCardClick(item.productId)}>
-                  <CardMedia
-                    component="img"
-                    image={item.thumbnail}
-                    alt={item.title}
-                  />
+                  {loading ? (
+                    <Skeleton height={300}></Skeleton>
+                  ) : (
+                    <CardMedia
+                      component="img"
+                      image={item.thumbnail}
+                      alt={item.title}
+                    />
+                  )}
                   <Box>
                     <CardContent>
-                      <Typography
-                        gutterBottom
-                        variant="h5"
-                        component="div"
-                        sx={{ marginLeft: "5px" }}
-                      >
-                        {item.title}
-                      </Typography>
-                      <Typography
-                        sx={{
-                          float: "right",
-                          fontWeight: "700",
-                          marginRight: "5px",
-                        }}
-                        variant="body1"
-                      >
-                        Price: ${item.price}
-                      </Typography>
-                      <Typography variant="body1" sx={{ marginLeft: "5px" }}>
-                        Ordered: {item.orderCount} times
-                      </Typography>
+                      {loading ? (
+                        <Skeleton variant="h5"></Skeleton>
+                      ) : (
+                        <Typography
+                          gutterBottom
+                          variant="h5"
+                          component="div"
+                          sx={{ marginLeft: "5px" }}
+                        >
+                          {item.title}
+                        </Typography>
+                      )}
+                      {loading ? (
+                        <Skeleton variant="body1"></Skeleton>
+                      ) : (
+                        <Typography
+                          sx={{
+                            float: "right",
+                            fontWeight: "700",
+                            marginRight: "5px",
+                          }}
+                          variant="body1"
+                        >
+                          Price: ${item.price}
+                        </Typography>
+                      )}
+                      {loading ? (
+                        <Skeleton variant="body1"></Skeleton>
+                      ) : (
+                        <Typography variant="body1" sx={{ marginLeft: "5px" }}>
+                          Ordered: {item.orderCount} times
+                        </Typography>
+                      )}
                     </CardContent>
                   </Box>
                 </CardActionArea>

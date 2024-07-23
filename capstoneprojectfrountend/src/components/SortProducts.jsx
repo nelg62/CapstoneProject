@@ -1,16 +1,18 @@
 import ProductCard from "./ProductCard";
 
 const { useProductContext } = require("@/context/ProductContext");
-const { Select, MenuItem, Grid, Box } = require("@mui/material");
+const { Select, MenuItem, Grid, Box, Skeleton } = require("@mui/material");
 const { useState, useEffect } = require("react");
 
 const SortProductsButtons = () => {
-  const { productsSort, loading, fetchProductsSort } = useProductContext();
+  const { productsSort, loading, setLoading, fetchProductsSort } =
+    useProductContext();
   const [sortBy, setSortBy] = useState("price");
   const [order, setOrder] = useState("asc");
   const [category, setCategory] = useState("");
 
   useEffect(() => {
+    setLoading(true);
     fetchProductsSort(sortBy, order, category);
   }, [sortBy, order, category]);
 
@@ -49,22 +51,18 @@ const SortProductsButtons = () => {
           <MenuItem value="vehicle">Vehicle</MenuItem>
         </Select>
       </Box>
-      {loading ? (
-        <p>Loading...</p>
-      ) : (
-        <Grid
-          container
-          spacing={{ xs: 2, md: 3 }}
-          columns={{ xs: 4, sm: 8, md: 12 }}
-          sx={{ justifyContent: "flex-start", alignItems: "center" }}
-        >
-          {productsSort.map((product) => (
-            <Grid key={product.id} item xs={2} sm={4} md={4}>
-              <ProductCard product={product} />
-            </Grid>
-          ))}
-        </Grid>
-      )}
+      <Grid
+        container
+        spacing={{ xs: 2, md: 3 }}
+        columns={{ xs: 4, sm: 8, md: 12 }}
+        sx={{ justifyContent: "flex-start", alignItems: "center" }}
+      >
+        {productsSort.map((product) => (
+          <Grid key={product.id} item xs={2} sm={4} md={4}>
+            <ProductCard product={product} />
+          </Grid>
+        ))}
+      </Grid>
     </Box>
   );
 };

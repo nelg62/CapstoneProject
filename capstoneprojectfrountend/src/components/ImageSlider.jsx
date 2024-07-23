@@ -4,11 +4,13 @@ import MobileStepper from "@mui/material/MobileStepper";
 import Button from "@mui/material/Button";
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
-import { Box, CardMedia } from "@mui/material";
+import { Box, CardMedia, Skeleton } from "@mui/material";
 
 export default function DotsMobileStepper({ product }) {
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
+  const [loading, setLoading] = React.useState(true);
+  setTimeout(() => setLoading(false), 5000);
 
   const maxSteps = product.images.length;
 
@@ -22,12 +24,16 @@ export default function DotsMobileStepper({ product }) {
 
   return (
     <Box sx={{ flexDirection: "column", marginTop: 4 }}>
-      <CardMedia
-        component="img"
-        image={product.images[activeStep]}
-        alt={`${product.title} image ${activeStep + 1}`}
-        sx={{ maxHeight: 600, objectFit: "contain" }}
-      />
+      {loading ? (
+        <Skeleton variant="rectangular" width={500} height={300}></Skeleton>
+      ) : (
+        <CardMedia
+          component="img"
+          image={product.images[activeStep]}
+          alt={`${product.title} image ${activeStep + 1}`}
+          sx={{ maxHeight: 600, objectFit: "contain" }}
+        />
+      )}
       <MobileStepper
         variant="dots"
         steps={maxSteps}

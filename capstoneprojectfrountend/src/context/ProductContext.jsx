@@ -41,6 +41,7 @@ export const ProductProvider = ({ children }) => {
         product,
         productsSort,
         loading,
+        setLoading,
         fetchProduct,
         fetchProductsSort,
       }}
