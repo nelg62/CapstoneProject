@@ -35,8 +35,8 @@ export default function CartListItems() {
         console.error("Error fetching products", error);
       }
     };
-    fetchCart();
-  }, []);
+    if (userState.isAuthenticated) fetchCart();
+  }, [userState, cartDispitch, cartAction]);
 
   const calculateTotalPrice = () => {
     return cart.reduce((total, item) => total + item.price * item.quantity, 0);

@@ -1,5 +1,3 @@
-import styles from "../page.module.css";
-
-export default function CartLayout({ children }) {
-  return <main className={styles.main}>{children}</main>;
+export default function dashLayout({ children }) {
+  return <main>{children}</main>;
 }
