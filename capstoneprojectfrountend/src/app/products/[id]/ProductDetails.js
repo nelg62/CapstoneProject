@@ -39,17 +39,7 @@ const ProductDetail = () => {
   }
 
   function addToCart() {
-    console.log("userid", userState.id);
-    console.log("productid", product);
     AddToCart(userState.id, product.id);
-    console.log("addtoCart");
-  }
-
-  function removeFromCart() {
-    cartDispitch({
-      type: "removeFromCart",
-    });
-    console.log("removeFromCart");
   }
 
   return (

@@ -22,7 +22,7 @@ export default function TopOrderedItems() {
     const fetchTopOrderedItems = async () => {
       try {
         const response = await axios.get(`${OrdersApi}/topOrderedItems`);
-        console.log("topordereditems", response);
+
         setTopOrderedItemsState(response.data);
       } catch (error) {
         console.error("Error fetching top order items", error);

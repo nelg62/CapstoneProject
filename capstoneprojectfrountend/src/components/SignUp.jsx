@@ -45,11 +45,7 @@ export default function SignUp() {
       emailId: data.get("email"),
       password: data.get("password"),
     };
-    console.log({
-      username: data.get("username"),
-      emailId: data.get("email"),
-      password: data.get("password"),
-    });
+
     SignUpFunction(Signupdata);
   };
 

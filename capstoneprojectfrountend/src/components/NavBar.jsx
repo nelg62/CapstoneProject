@@ -22,16 +22,12 @@ const pages = ["dashboard", "products", "signup", "login"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 function ResponsiveAppBar() {
-  console.log("ResponsivenaveBar");
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const { userState, LogoutFunction } = useUserContext();
   const { clearCart } = useCartContext();
 
-  console.log("responsive navbar uesSDtare", userState);
-
   const handleLogout = () => {
-    console.log("handlelogout");
     LogoutFunction();
     clearCart();
   };

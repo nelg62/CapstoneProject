@@ -3,9 +3,11 @@ const express = require("express");
 module.exports = (db) => {
   const router = express.Router();
 
+  // Create new order from items in cart  POST Route
   router.post("/", async (req, res) => {
     const { userId, items } = req.body;
     try {
+      // Fetch cart items for current user
       const cartItems = await db("Cart")
         .where({ userId })
         .join("Product", "Cart.productId", "Product.id")
@@ -16,16 +18,20 @@ module.exports = (db) => {
           "Cart.created_at"
         );
 
+      // Check if the cart is empty
       if (cartItems.length === 0) {
         return res.status(400).json({ error: "Cart is empty" });
       }
 
+      // Calculate total amount for the order
       const totalAmount = cartItems
         .reduce((acc, item) => acc + parseFloat(item.price), 0)
         .toFixed(2);
 
+      // Insert a new order and get the order id
       const [orderId] = await db("Orders").insert({ userId, totalAmount });
 
+      // Set the orderItems from the cartItems data
       const orderItems = cartItems.map((item) => ({
         orderId,
         productId: item.productId,
@@ -33,10 +39,13 @@ module.exports = (db) => {
         price: parseFloat(item.price),
       }));
 
+      // Insert orderItems to database
       await db("OrderItems").insert(orderItems);
 
+      // Clear the users cart
       await db("Cart").where({ userId }).del();
 
+      // Respond with created order
       res.status(201).json({ orderId });
     } catch (error) {
       console.error("Error creating order:", error);
@@ -44,9 +53,11 @@ module.exports = (db) => {
     }
   });
 
+  // Get top ordered items  GET Route
   router.get("/topOrderedItems", async (req, res) => {
     console.log("Received request for topOrderedItems");
     try {
+      // Fetch top ordered items
       const topOrderedItems = await db("OrderItems")
         .join("Product", "OrderItems.productId", "Product.id")
         .select(
@@ -73,15 +84,18 @@ module.exports = (db) => {
     }
   });
 
+  // Get details of specific order  GET Route
   router.get("/:orderId", async (req, res) => {
     console.log("Received request for orderId:", req.params.orderId);
     const { orderId } = req.params;
     try {
+      // Fetch order details
       const order = await db("Orders").where({ id: orderId }).first();
       if (!order) {
         return res.status(404).json({ error: "Order not found" });
       }
 
+      // Fetch items for the order
       const orderItems = await db("OrderItems")
         .where({ orderId })
         .join("Product", "OrderItems.productId", "Product.id")

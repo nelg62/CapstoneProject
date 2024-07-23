@@ -17,8 +17,6 @@ const CartContext = createContext();
 const initialState = [];
 
 function reducer(state, action) {
-  console.log("state", state);
-  console.log("action", action);
   switch (action.type) {
     case cartAction.initCart: {
       return action.payload;
@@ -28,7 +26,6 @@ function reducer(state, action) {
       const existingItem = state.find(
         (item) => item.productId === newItem.productId
       );
-      console.log("existing item", existingItem);
       if (existingItem) {
         return state.map((item) =>
           item.productId === newItem.productId
@@ -61,8 +58,6 @@ export const CartProvider = ({ children }) => {
   const { userState, setAlert } = useUserContext();
 
   useEffect(() => {
-    console.log("useeffect user", userState);
-
     const fetchCart = async () => {
       if (userState.isAuthenticated) {
         try {

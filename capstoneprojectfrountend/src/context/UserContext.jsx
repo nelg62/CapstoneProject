@@ -29,19 +29,14 @@ const initialState = {
 };
 
 if (typeof window !== "undefined") {
-  // console.log('typeof window !== "undefined"');
   initialState.token = localStorage.getItem("token");
   initialState.user = JSON.parse(localStorage.getItem("user"));
   initialState.isAuthenticated = !!initialState.user;
 }
 
 function reducer(state, action) {
-  // console.log("reducer");
-  // console.log("reducer top state", state);
-  // console.log("reducer top action", action);
   switch (action.type) {
     case UserAction.SignUp: {
-      // console.log("signedup reduser", state);
       return {
         ...state,
         id: action.payload.user.id,
@@ -52,8 +47,6 @@ function reducer(state, action) {
       };
     }
     case UserAction.Login: {
-      // console.log("login satate", state);
-      // console.log("login action", action);
       return {
         ...state,
         id: action.payload.user.id,
@@ -79,7 +72,6 @@ function reducer(state, action) {
 }
 
 export const UserProvider = ({ children }) => {
-  // console.log("UserProvider");
   const [userState, userDispatch] = useReducer(reducer, initialState);
   const router = useRouter();
   const [alert, setAlert] = useState({
@@ -87,25 +79,21 @@ export const UserProvider = ({ children }) => {
     message: "",
     severity: "success",
   });
-  // console.log("userProvider userState", userState);
 
   useEffect(() => {
-    // console.log("UserProvider userEffect");
     const token = localStorage.getItem("token");
     if (token) {
       axios
         .get(`${UserApi}/me`, { headers: { Authorization: `Bearer ${token}` } })
         .then((response) => {
-          // console.log("response data", response);
           const user = response.data;
-          // console.log("get me user", user);
+
           userDispatch({
             type: UserAction.Login,
             payload: { user, token },
           });
         })
         .catch(() => {
-          // console.log("usernot got", user);
           localStorage.removeItem("token");
           router.push("/login");
         });
@@ -117,7 +105,6 @@ export const UserProvider = ({ children }) => {
   };
 
   const SignUpFunction = async ({ username, emailId, password }) => {
-    // console.log("sighnupfunction");
     try {
       const response = await axios.post(`${UserApi}/register`, {
         username,
@@ -144,20 +131,19 @@ export const UserProvider = ({ children }) => {
   };
 
   const LoginFunction = async ({ emailId, password }) => {
-    // console.log("loginFunction");
     try {
       const response = await axios.post(`${UserApi}/login`, {
         emailId,
         password,
       });
-      // console.log("response", response);
+
       const { user, token } = response.data;
 
       localStorage.setItem("token", token);
       localStorage.setItem("user", JSON.stringify(user));
-      // console.log("login response", response);
+
       userDispatch({ type: UserAction.Login, payload: { user, token } });
-      // console.log("user", user);
+
       router.push("/dashboard");
       setAlert({
         open: true,
@@ -175,7 +161,6 @@ export const UserProvider = ({ children }) => {
   };
 
   const LogoutFunction = () => {
-    // console.log("logoutfdunction");
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     userDispatch({ type: UserAction.Logout });

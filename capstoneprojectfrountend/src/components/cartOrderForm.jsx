@@ -16,7 +16,6 @@ export default function CartOrderForm() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log("orderform event", event.target);
     await handlePlaceOrder();
   };
 

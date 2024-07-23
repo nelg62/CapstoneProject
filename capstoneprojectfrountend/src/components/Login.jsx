@@ -42,10 +42,6 @@ export default function LogIn() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      emailId: data.get("email"),
-      password: data.get("password"),
-    });
 
     const logindata = {
       emailId: data.get("email"),

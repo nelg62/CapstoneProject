@@ -23,8 +23,6 @@ export default function CartListItems() {
   const { userState } = useUserContext();
 
   React.useEffect(() => {
-    console.log("useeffect user", userState);
-
     const fetchCart = async () => {
       try {
         const response = await axios.get(`${CartApi}/${userState.id}`, {
@@ -36,7 +34,7 @@ export default function CartListItems() {
       }
     };
     if (userState.isAuthenticated) fetchCart();
-  }, [userState, cartDispitch, cartAction]);
+  }, [userState]);
 
   const calculateTotalPrice = () => {
     return cart.reduce((total, item) => total + item.price * item.quantity, 0);

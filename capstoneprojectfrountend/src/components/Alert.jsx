@@ -1,7 +1,6 @@
 import * as React from "react";
 import Alert from "@mui/material/Alert";
 import CheckIcon from "@mui/icons-material/Check";
-import { alertStyle } from "../styles/makingStyles";
 
 // Component for displaying confirmation/notification alerts
 export default function SimpleAlert({ message, severity, onClose }) {
@@ -14,7 +13,14 @@ export default function SimpleAlert({ message, severity, onClose }) {
   }, [onClose]);
 
   return (
-    <div style={alertStyle}>
+    <div
+      style={{
+        position: "fixed",
+        bottom: "16px",
+        left: "16px",
+        zIndex: "9999",
+      }}
+    >
       {/* Display an alert popup with a message and a severity level recieved from props */}
       <Alert
         variant="filled"
