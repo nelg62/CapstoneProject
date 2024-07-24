@@ -10,7 +10,13 @@ import { Paper, Rating, Skeleton } from "@mui/material";
 
 export default function AlignItemsList({ product }) {
   const [loading, setLoading] = React.useState(true);
-  setTimeout(() => setLoading(false), 5000);
+
+  React.useEffect(() => {
+    if (product && product.reviews) {
+      setLoading(false);
+    }
+  }, [product]);
+
   return (
     <Paper>
       <List sx={{ width: "100%", bgcolor: "background.paper" }}>

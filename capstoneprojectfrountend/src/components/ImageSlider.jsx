@@ -10,16 +10,23 @@ export default function DotsMobileStepper({ product }) {
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
   const [loading, setLoading] = React.useState(true);
-  setTimeout(() => setLoading(false), 5000);
+
+  React.useEffect(() => {
+    if (product) {
+      setLoading(false);
+    }
+  }, [product]);
 
   const maxSteps = product.images.length;
 
   const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    setActiveStep((prevActiveStep) =>
+      Math.min(prevActiveStep + 1, maxSteps - 1)
+    );
   };
 
   const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    setActiveStep((prevActiveStep) => Math.max(prevActiveStep - 1, 0));
   };
 
   return (

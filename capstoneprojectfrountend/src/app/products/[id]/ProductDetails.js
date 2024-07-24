@@ -26,17 +26,17 @@ const ProductDetail = () => {
   const { product, fetchProduct } = useProductContext();
   const [loading, setLoading] = useState(true);
 
-  setTimeout(() => setLoading(false), 5000);
+  useEffect(() => {
+    if (product) {
+      setLoading(false);
+    }
+  }, [product]);
 
   useEffect(() => {
     if (id) {
       fetchProduct(id);
     }
   }, [id]);
-
-  // if (loading) {
-  //   return <p>Loading...</p>;
-  // }
 
   if (!product) {
     return <p>Product not found</p>;

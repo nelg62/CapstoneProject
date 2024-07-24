@@ -10,7 +10,12 @@ import { useRouter } from "next/navigation";
 export default function ProductCard({ product }) {
   const router = useRouter();
   const [loading, setLoading] = React.useState(true);
-  setTimeout(() => setLoading(false), 5000);
+
+  React.useEffect(() => {
+    if (product) {
+      setLoading(false);
+    }
+  }, [product]);
 
   const handleCardClick = () => {
     router.push(`/products/${product.id}`);
