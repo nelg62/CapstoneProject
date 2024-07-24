@@ -18,8 +18,9 @@ import CustomizedBadges from "./cartIcon";
 import { useUserContext } from "@/context/UserContext";
 import { useCartContext } from "@/context/CartContext";
 
-const pages = ["dashboard", "products", "signup", "login"];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+const pages = ["dashboard", "products", "about"];
+const authPages = ["signup", "login"];
+const settings = ["Logout"];
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -101,11 +102,37 @@ function ResponsiveAppBar() {
             >
               {pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Link href={`/${page.toLowerCase()}`}>
-                    <Typography textAlign="center">{page}</Typography>
+                  <Link
+                    style={{ textDecoration: "none" }}
+                    href={`/${page.toLowerCase()}`}
+                    passHref
+                  >
+                    <Button
+                      onClick={handleCloseNavMenu}
+                      sx={{ my: 2, color: "black", display: "block" }}
+                    >
+                      {page}
+                    </Button>
                   </Link>
                 </MenuItem>
               ))}
+              {!userState.isAuthenticated &&
+                authPages.map((page) => (
+                  <MenuItem key={page} onClick={handleCloseNavMenu}>
+                    <Link
+                      style={{ textDecoration: "none" }}
+                      href={`/${page.toLowerCase()}`}
+                      passHref
+                    >
+                      <Button
+                        onClick={handleCloseNavMenu}
+                        sx={{ my: 2, color: "white", display: "block" }}
+                      >
+                        {page}
+                      </Button>
+                    </Link>
+                  </MenuItem>
+                ))}
             </Menu>
           </Box>
           <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
@@ -129,7 +156,12 @@ function ResponsiveAppBar() {
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
-              <Link key={page} href={`/${page.toLowerCase()}`} passHref>
+              <Link
+                style={{ textDecoration: "none" }}
+                key={page}
+                href={`/${page.toLowerCase()}`}
+                passHref
+              >
                 <Button
                   onClick={handleCloseNavMenu}
                   sx={{ my: 2, color: "white", display: "block" }}
@@ -138,10 +170,26 @@ function ResponsiveAppBar() {
                 </Button>
               </Link>
             ))}
+            {!userState.isAuthenticated &&
+              authPages.map((page) => (
+                <Link
+                  style={{ textDecoration: "none" }}
+                  key={page}
+                  href={`/${page.toLowerCase()}`}
+                  passHref
+                >
+                  <Button
+                    onClick={handleCloseNavMenu}
+                    sx={{ my: 2, color: "white", display: "block" }}
+                  >
+                    {page}
+                  </Button>
+                </Link>
+              ))}
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            <Link href={"/cart"}>
+            <Link style={{ textDecoration: "none" }} href={"/cart"}>
               <CustomizedBadges />
             </Link>
             <Tooltip title="Open settings">
@@ -168,17 +216,10 @@ function ResponsiveAppBar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
+              <MenuItem onClick={handleLogout}>
+                <Button sx={{ color: "inherit" }}>Logout</Button>
+              </MenuItem>
             </Menu>
-            <MenuItem sx={{ float: "right" }}>
-              <Button sx={{ color: "inherit" }} onClick={handleLogout}>
-                Logout
-              </Button>
-            </MenuItem>
           </Box>
         </Toolbar>
       </Container>
