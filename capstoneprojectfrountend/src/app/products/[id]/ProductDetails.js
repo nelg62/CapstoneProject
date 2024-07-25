@@ -30,7 +30,7 @@ const ProductDetail = () => {
     if (id) {
       fetchProduct(id);
     }
-  }, [id, fetchProduct]);
+  }, [id]);
 
   useEffect(() => {
     if (product) {

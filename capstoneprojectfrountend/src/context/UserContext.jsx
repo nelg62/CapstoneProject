@@ -80,26 +80,31 @@ export const UserProvider = ({ children }) => {
     message: "",
     severity: "success",
   });
+  const [isload, setIsload] = useState(false);
 
-  // useEffect(() => {
-  //   const token = localStorage.getItem("token");
-  //   if (token) {
-  //     axios
-  //       .get(`${UserApi}/me`, { headers: { Authorization: `Bearer ${token}` } })
-  //       .then((response) => {
-  //         const user = response.data;
-  //         console.log("loccal store", user);
-  //         userDispatch({
-  //           type: UserAction.Login,
-  //           payload: { user, token },
-  //         });
-  //       })
-  //       .catch(() => {
-  //         localStorage.removeItem("token");
-  //         router.push("/login");
-  //       });
-  //   }
-  // }, []);
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      setIsload(false);
+      axios
+        .get(`${UserApi}/me`, { headers: { Authorization: `Bearer ${token}` } })
+        .then((response) => {
+          const user = response.data;
+          console.log("loccal store", user);
+          userDispatch({
+            type: UserAction.Login,
+            payload: { user, token },
+          });
+          setIsload(true);
+        })
+        .catch(() => {
+          localStorage.removeItem("token");
+          router.push("/login");
+        });
+    } else {
+      setIsload(true);
+    }
+  }, []);
 
   const closeAlert = () => {
     setAlert((prev) => ({ ...prev, open: false }));
@@ -184,13 +189,17 @@ export const UserProvider = ({ children }) => {
         alert,
       }}
     >
-      {children}
-      {alert.open && (
-        <SimpleAlert
-          message={alert.message}
-          severity={alert.severity}
-          onClose={closeAlert}
-        />
+      {isload && (
+        <>
+          {children}
+          {alert.open && (
+            <SimpleAlert
+              message={alert.message}
+              severity={alert.severity}
+              onClose={closeAlert}
+            />
+          )}
+        </>
       )}
     </UserContext.Provider>
   );
