@@ -28,12 +28,12 @@ const initialState = {
   token: null,
 };
 
-if (typeof window !== "undefined") {
-  initialState.token = localStorage.getItem("token");
-  initialState.user = JSON.parse(localStorage.getItem("user"));
-  console.log("initialstate user", initialState);
-  initialState.isAuthenticated = !!initialState.user;
-}
+// if (typeof window !== "undefined") {
+//   initialState.token = localStorage.getItem("token");
+//   initialState.user = JSON.parse(localStorage.getItem("user"));
+//   console.log("initialstate user", initialState);
+//   initialState.isAuthenticated = !!initialState.user;
+// }
 
 function reducer(state, action) {
   switch (action.type) {
@@ -81,25 +81,25 @@ export const UserProvider = ({ children }) => {
     severity: "success",
   });
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      axios
-        .get(`${UserApi}/me`, { headers: { Authorization: `Bearer ${token}` } })
-        .then((response) => {
-          const user = response.data;
-
-          userDispatch({
-            type: UserAction.Login,
-            payload: { user, token },
-          });
-        })
-        .catch(() => {
-          localStorage.removeItem("token");
-          router.push("/login");
-        });
-    }
-  }, []);
+  // useEffect(() => {
+  //   const token = localStorage.getItem("token");
+  //   if (token) {
+  //     axios
+  //       .get(`${UserApi}/me`, { headers: { Authorization: `Bearer ${token}` } })
+  //       .then((response) => {
+  //         const user = response.data;
+  //         console.log("loccal store", user);
+  //         userDispatch({
+  //           type: UserAction.Login,
+  //           payload: { user, token },
+  //         });
+  //       })
+  //       .catch(() => {
+  //         localStorage.removeItem("token");
+  //         router.push("/login");
+  //       });
+  //   }
+  // }, []);
 
   const closeAlert = () => {
     setAlert((prev) => ({ ...prev, open: false }));
