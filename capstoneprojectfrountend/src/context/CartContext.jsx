@@ -59,6 +59,7 @@ export const CartProvider = ({ children }) => {
 
   useEffect(() => {
     const fetchCart = async () => {
+      console.log("userState", userState);
       if (userState.isAuthenticated) {
         try {
           const response = await axios.get(`${CartApi}/${userState.id}`, {

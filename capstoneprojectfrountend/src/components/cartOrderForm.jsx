@@ -8,12 +8,6 @@ export default function CartOrderForm() {
   const { cart, clearCartAfterOrder, GetItemsInCart } = useCartContext();
   const { userState, setAlert } = useUserContext();
 
-  // const intialFormData = {
-  //   location: "",
-  //   phone: "",
-  //   email: "",
-  // };
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     await handlePlaceOrder();
@@ -55,15 +49,6 @@ export default function CartOrderForm() {
       }}
       onSubmit={handleSubmit}
     >
-      {/* <Paper sx={{ display: "flex", flexDirection: "column" }}>
-        <TextField
-          label="Delivery Location"
-          name="location"
-          sx={{ margin: "6px" }}
-        />
-        <TextField label="Phone Number" name="phone" sx={{ margin: "6px" }} />
-        <TextField label="Email" name="email" sx={{ margin: "6px" }} />
-      </Paper> */}
       <Paper>
         <Button type="submit" variant="contained" sx={{ width: "100%" }}>
           CheckOut

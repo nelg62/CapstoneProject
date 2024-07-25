@@ -1,4 +1,5 @@
 "use client";
+
 import * as React from "react";
 import Link from "next/link";
 import AppBar from "@mui/material/AppBar";
@@ -27,6 +28,13 @@ function ResponsiveAppBar() {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const { userState, LogoutFunction } = useUserContext();
   const { clearCart } = useCartContext();
+
+  const [isClient, setIsClient] = React.useState(false);
+
+  // Update `isClient` to true only on the client side
+  React.useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   const handleLogout = () => {
     LogoutFunction();
@@ -116,7 +124,8 @@ function ResponsiveAppBar() {
                   </Link>
                 </MenuItem>
               ))}
-              {!userState.isAuthenticated &&
+              {isClient &&
+                !userState.isAuthenticated &&
                 authPages.map((page) => (
                   <MenuItem key={page} onClick={handleCloseNavMenu}>
                     <Link
@@ -126,7 +135,7 @@ function ResponsiveAppBar() {
                     >
                       <Button
                         onClick={handleCloseNavMenu}
-                        sx={{ my: 2, color: "white", display: "block" }}
+                        sx={{ my: 2, color: "black", display: "block" }}
                       >
                         {page}
                       </Button>
@@ -170,7 +179,8 @@ function ResponsiveAppBar() {
                 </Button>
               </Link>
             ))}
-            {!userState.isAuthenticated &&
+            {isClient &&
+              !userState.isAuthenticated &&
               authPages.map((page) => (
                 <Link
                   style={{ textDecoration: "none" }}
@@ -226,4 +236,5 @@ function ResponsiveAppBar() {
     </AppBar>
   );
 }
+
 export default ResponsiveAppBar;

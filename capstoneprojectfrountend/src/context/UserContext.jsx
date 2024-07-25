@@ -31,6 +31,7 @@ const initialState = {
 if (typeof window !== "undefined") {
   initialState.token = localStorage.getItem("token");
   initialState.user = JSON.parse(localStorage.getItem("user"));
+  console.log("initialstate user", initialState);
   initialState.isAuthenticated = !!initialState.user;
 }
 

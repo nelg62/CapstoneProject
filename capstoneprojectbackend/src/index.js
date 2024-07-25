@@ -4,6 +4,9 @@ const cors = require("cors");
 const app = express();
 require("dotenv").config();
 
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocument = require("../swagger.json");
+
 const db = knex({
   client: "mysql2",
   connection: {
@@ -35,6 +38,7 @@ app.use("/api/users", userRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/cart", cartRoutes);
 app.use("/api/orders", orderRoutes);
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to my application." });
