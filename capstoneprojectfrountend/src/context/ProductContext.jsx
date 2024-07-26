@@ -4,13 +4,16 @@ import { ProductApi } from "../../utils/api";
 
 const { createContext, useState, useContext } = require("react");
 
+// Create ProductContext
 const ProductContext = createContext();
 
+// ProduxtProvider component to provide product state and actions
 export const ProductProvider = ({ children }) => {
   const [product, setProduct] = useState(null);
   const [productsSort, setProductsSort] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  // Function to fetch a single product by ID
   const fetchProduct = async (id) => {
     try {
       const response = await axios.get(`${ProductApi}/${id}`);
@@ -22,6 +25,7 @@ export const ProductProvider = ({ children }) => {
     }
   };
 
+  // Function to fetch and sort products by specific criteria
   const fetchProductsSort = async (sortBy, order, category) => {
     try {
       const response = await axios.get(`${ProductApi}`, {
@@ -51,4 +55,5 @@ export const ProductProvider = ({ children }) => {
   );
 };
 
+// Custom hook to use ProductContext
 export const useProductContext = () => useContext(ProductContext);

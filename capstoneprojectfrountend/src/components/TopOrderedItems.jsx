@@ -16,10 +16,12 @@ import { useProductContext } from "@/context/ProductContext";
 import { useRouter } from "next/navigation";
 
 export default function TopOrderedItems() {
+  // State to store top ordered items
   const [TopOrderedItemsState, setTopOrderedItemsState] = useState([]);
   const router = useRouter();
   const [loading, setLoading] = useState(true);
 
+  // Fetch top ordered items when component mounts
   useEffect(() => {
     const fetchTopOrderedItems = async () => {
       try {
@@ -35,6 +37,7 @@ export default function TopOrderedItems() {
     fetchTopOrderedItems();
   }, []);
 
+  // Handle card click to navigate to product details page
   const handleCardClick = (productId) => {
     router.push(`/products/${productId}`);
   };
@@ -50,7 +53,7 @@ export default function TopOrderedItems() {
           spacing={{ xs: 2, md: 3 }}
           columns={{ xs: 4, sm: 8, md: 12 }}
         >
-          {loading
+          {loading //Show skeleton while loading and fetching data
             ? Array.from(new Array(6)).map((_, index) => (
                 <Grid key={index} item xs={2} sm={4} md={4}>
                   <Card sx={{ maxWidth: 345, margin: "auto", marginTop: 4 }}>
@@ -77,56 +80,48 @@ export default function TopOrderedItems() {
                       marginTop: 4,
                     }}
                   >
+                    {/* On Click action to navigate to product details page  */}
                     <CardActionArea
                       onClick={() => handleCardClick(item.productId)}
                     >
-                      {loading ? (
-                        <Skeleton height={300}></Skeleton>
-                      ) : (
-                        <CardMedia
-                          component="img"
-                          image={item.thumbnail}
-                          alt={item.title}
-                        />
-                      )}
+                      {/* Product Image */}
+                      <CardMedia
+                        component="img"
+                        image={item.thumbnail}
+                        alt={item.title}
+                      />
+
                       <Box>
                         <CardContent>
-                          {loading ? (
-                            <Skeleton variant="h5"></Skeleton>
-                          ) : (
-                            <Typography
-                              gutterBottom
-                              variant="h5"
-                              component="div"
-                              sx={{ marginLeft: "5px" }}
-                            >
-                              {item.title}
-                            </Typography>
-                          )}
-                          {loading ? (
-                            <Skeleton variant="body1"></Skeleton>
-                          ) : (
-                            <Typography
-                              sx={{
-                                float: "right",
-                                fontWeight: "700",
-                                marginRight: "5px",
-                              }}
-                              variant="body1"
-                            >
-                              Price: ${item.price}
-                            </Typography>
-                          )}
-                          {loading ? (
-                            <Skeleton variant="body1"></Skeleton>
-                          ) : (
-                            <Typography
-                              variant="body1"
-                              sx={{ marginLeft: "5px" }}
-                            >
-                              Ordered: {item.orderCount} times
-                            </Typography>
-                          )}
+                          {/* Product Title */}
+                          <Typography
+                            gutterBottom
+                            variant="h5"
+                            component="div"
+                            sx={{ marginLeft: "5px" }}
+                          >
+                            {item.title}
+                          </Typography>
+
+                          {/* Product Price */}
+                          <Typography
+                            sx={{
+                              float: "right",
+                              fontWeight: "700",
+                              marginRight: "5px",
+                            }}
+                            variant="body1"
+                          >
+                            Price: ${item.price}
+                          </Typography>
+
+                          {/* Product orderCount */}
+                          <Typography
+                            variant="body1"
+                            sx={{ marginLeft: "5px" }}
+                          >
+                            Ordered: {item.orderCount} times
+                          </Typography>
                         </CardContent>
                       </Box>
                     </CardActionArea>

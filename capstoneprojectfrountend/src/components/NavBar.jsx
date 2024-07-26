@@ -19,6 +19,7 @@ import CustomizedBadges from "./cartIcon";
 import { useUserContext } from "@/context/UserContext";
 import { useCartContext } from "@/context/CartContext";
 
+// Navigation pages
 const pages = ["dashboard", "products", "about"];
 const authPages = ["signup", "login"];
 const settings = ["Logout"];
@@ -26,16 +27,19 @@ const settings = ["Logout"];
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+
+  // State and context hooks
   const { userState, LogoutFunction } = useUserContext();
   const { clearCart } = useCartContext();
 
+  // Client side check
   const [isClient, setIsClient] = React.useState(false);
 
-  // Update `isClient` to true only on the client side
   React.useEffect(() => {
     setIsClient(true);
   }, []);
 
+  // Handle user logout
   const handleLogout = () => {
     LogoutFunction();
     clearCart();
@@ -60,6 +64,7 @@ function ResponsiveAppBar() {
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
+          {/* Logo and brand name for Large screens */}
           <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
           <Typography
             variant="h6"
@@ -79,6 +84,7 @@ function ResponsiveAppBar() {
             LOGO
           </Typography>
 
+          {/* Mobile menu button */}
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"
@@ -144,6 +150,8 @@ function ResponsiveAppBar() {
                 ))}
             </Menu>
           </Box>
+
+          {/* Logo and brand name for smaller screens */}
           <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
           <Typography
             variant="h5"
@@ -163,6 +171,8 @@ function ResponsiveAppBar() {
           >
             LOGO
           </Typography>
+
+          {/* Desktop navigation links */}
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
               <Link
@@ -198,6 +208,7 @@ function ResponsiveAppBar() {
               ))}
           </Box>
 
+          {/* Cart icon and user menu */}
           <Box sx={{ flexGrow: 0 }}>
             <Link style={{ textDecoration: "none" }} href={"/cart"}>
               <CustomizedBadges />

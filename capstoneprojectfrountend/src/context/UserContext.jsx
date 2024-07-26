@@ -12,14 +12,17 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import SimpleAlert from "@/components/Alert";
 
+// Define user actions
 export const UserAction = {
   SignUp: "SignUp",
   Login: "Login",
   Logout: "Logout",
 };
 
+// Create UserContext
 const UserContext = createContext();
 
+// Initial state for the user
 const initialState = {
   id: null,
   username: null,
@@ -28,15 +31,10 @@ const initialState = {
   token: null,
 };
 
-// if (typeof window !== "undefined") {
-//   initialState.token = localStorage.getItem("token");
-//   initialState.user = JSON.parse(localStorage.getItem("user"));
-//   console.log("initialstate user", initialState);
-//   initialState.isAuthenticated = !!initialState.user;
-// }
-
+// Reducer function to handle user actions
 function reducer(state, action) {
   switch (action.type) {
+    // Signup action
     case UserAction.SignUp: {
       return {
         ...state,
@@ -47,6 +45,7 @@ function reducer(state, action) {
         token: action.payload.token,
       };
     }
+    // Login action
     case UserAction.Login: {
       return {
         ...state,
@@ -57,6 +56,7 @@ function reducer(state, action) {
         token: action.payload.token,
       };
     }
+    // Logout action
     case UserAction.Logout: {
       return {
         ...state,
@@ -72,6 +72,7 @@ function reducer(state, action) {
   }
 }
 
+// UserProvider component to provide userState and actions
 export const UserProvider = ({ children }) => {
   const [userState, userDispatch] = useReducer(reducer, initialState);
   const router = useRouter();
@@ -82,6 +83,7 @@ export const UserProvider = ({ children }) => {
   });
   const [isload, setIsload] = useState(false);
 
+  // Check for token in local storage abd fetch user data if token exists
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
@@ -106,10 +108,12 @@ export const UserProvider = ({ children }) => {
     }
   }, []);
 
+  // Function to close alert
   const closeAlert = () => {
     setAlert((prev) => ({ ...prev, open: false }));
   };
 
+  // Function to handle user Signup
   const SignUpFunction = async ({ username, emailId, password }) => {
     try {
       const response = await axios.post(`${UserApi}/register`, {
@@ -136,6 +140,7 @@ export const UserProvider = ({ children }) => {
     }
   };
 
+  // Function to handle user Login
   const LoginFunction = async ({ emailId, password }) => {
     try {
       const response = await axios.post(`${UserApi}/login`, {
@@ -166,6 +171,7 @@ export const UserProvider = ({ children }) => {
     }
   };
 
+  // Function to handle user Logout
   const LogoutFunction = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
@@ -205,6 +211,7 @@ export const UserProvider = ({ children }) => {
   );
 };
 
+// Custom hook to use UserContext
 export const useUserContext = () => {
   return useContext(UserContext);
 };

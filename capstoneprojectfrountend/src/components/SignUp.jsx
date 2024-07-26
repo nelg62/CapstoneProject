@@ -37,6 +37,7 @@ const defaultTheme = createTheme();
 export default function SignUp() {
   const { SignUpFunction } = useUserContext();
 
+  // Handle form submit
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -75,6 +76,7 @@ export default function SignUp() {
           >
             <Grid container spacing={2}>
               <Grid item xs={12}>
+                {/* Username */}
                 <TextField
                   autoComplete="given-name"
                   name="username"
@@ -87,6 +89,7 @@ export default function SignUp() {
               </Grid>
 
               <Grid item xs={12}>
+                {/* Email */}
                 <TextField
                   required
                   fullWidth
@@ -97,6 +100,7 @@ export default function SignUp() {
                 />
               </Grid>
               <Grid item xs={12}>
+                {/* Password */}
                 <TextField
                   required
                   fullWidth
@@ -116,6 +120,7 @@ export default function SignUp() {
                 />
               </Grid>
             </Grid>
+            {/* Submit button */}
             <Button
               type="submit"
               fullWidth
@@ -126,6 +131,7 @@ export default function SignUp() {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
+                {/* Login link to redirect to the login page */}
                 <Link href="/login" variant="body2">
                   Already have an account? Sign in
                 </Link>

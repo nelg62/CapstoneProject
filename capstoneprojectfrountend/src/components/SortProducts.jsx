@@ -5,17 +5,22 @@ const { Select, MenuItem, Grid, Box, Skeleton } = require("@mui/material");
 const { useState, useEffect } = require("react");
 
 const SortProductsButtons = () => {
+  // Destructure values from ProductContext
   const { productsSort, loading, setLoading, fetchProductsSort } =
     useProductContext();
+
+  // State variables for sorting and filtering
   const [sortBy, setSortBy] = useState("price");
   const [order, setOrder] = useState("asc");
   const [category, setCategory] = useState("");
 
+  // Fetch sorted and filterd products when sortBy, order, or category changes
   useEffect(() => {
     setLoading(true);
     fetchProductsSort(sortBy, order, category);
   }, [sortBy, order, category]);
 
+  // Handlers for chnaging sort and filter options
   const handleSortChange = (e) => {
     setSortBy(e.target.value);
   };
@@ -30,16 +35,22 @@ const SortProductsButtons = () => {
 
   return (
     <Box>
+      {/* Sorting and filtering options / controls */}
       <Box sx={{ display: "flex", justifyContent: "flex-end", mb: 2 }}>
+        {/* SortBy */}
         <Select value={sortBy} onChange={handleSortChange}>
           <MenuItem value="price">Price</MenuItem>
           <MenuItem value="rating">Rating</MenuItem>
           <MenuItem value="title">Title</MenuItem>
         </Select>
+
+        {/* Order */}
         <Select value={order} onChange={handleOrderChange}>
           <MenuItem value="asc">Ascending</MenuItem>
           <MenuItem value="desc">Descending</MenuItem>
         </Select>
+
+        {/* Category */}
         <Select value={category} onChange={handleCategoryChange}>
           <MenuItem value="">All Categories</MenuItem>
           <MenuItem value="beauty">Beauty</MenuItem>
@@ -51,6 +62,8 @@ const SortProductsButtons = () => {
           <MenuItem value="vehicle">Vehicle</MenuItem>
         </Select>
       </Box>
+
+      {/* Display the sorted and filtered products */}
       <Grid
         container
         spacing={{ xs: 2, md: 3 }}

@@ -5,6 +5,7 @@ import { CartApi } from "../../utils/api";
 import { useUserContext } from "./UserContext";
 const { createContext, useContext, useEffect, useReducer } = require("react");
 
+// Define cart actions
 export const cartAction = {
   initCart: "initCart",
   addToCart: "addToCart",
@@ -12,15 +13,20 @@ export const cartAction = {
   clearCart: "clearCart",
 };
 
+// Create CartContext
 const CartContext = createContext();
 
+// Initial state for the cart
 const initialState = [];
 
+// Reducer function to handle cart actions
 function reducer(state, action) {
   switch (action.type) {
+    // Initial cart action
     case cartAction.initCart: {
       return action.payload;
     }
+    // Add to cart action
     case cartAction.addToCart: {
       const newItem = action.payload;
       const existingItem = state.find(
@@ -35,6 +41,7 @@ function reducer(state, action) {
       }
       return [...state, { ...newItem, quantity: 1 }];
     }
+    // Remove from cart action
     case cartAction.removeFromCart: {
       return state
         .map((item) =>
@@ -44,6 +51,7 @@ function reducer(state, action) {
         )
         .filter((item) => item.quantity > 0);
     }
+    // Clear cart action
     case cartAction.clearCart: {
       return [];
     }
@@ -53,10 +61,12 @@ function reducer(state, action) {
   }
 }
 
+// CartProvider component to provide cart state and actions
 export const CartProvider = ({ children }) => {
   const [cart, cartDispitch] = useReducer(reducer, initialState);
   const { userState, setAlert } = useUserContext();
 
+  // Fetch cart items when component mounts or userState changes
   useEffect(() => {
     const fetchCart = async () => {
       console.log("userState", userState);
@@ -74,6 +84,7 @@ export const CartProvider = ({ children }) => {
     fetchCart();
   }, [userState]);
 
+  // Function to get items in cart
   const GetItemsInCart = async () => {
     if (userState.isAuthenticated) {
       try {
@@ -87,6 +98,7 @@ export const CartProvider = ({ children }) => {
     }
   };
 
+  // Function to add an item to cart
   const AddToCart = async (userId, productId) => {
     try {
       const response = await axios.post(
@@ -120,6 +132,7 @@ export const CartProvider = ({ children }) => {
     }
   };
 
+  // Function to remove an item from cart
   const RemoveFromCart = async (userId, productId) => {
     try {
       const response = await axios.delete(`${CartApi}`, {
@@ -150,6 +163,7 @@ export const CartProvider = ({ children }) => {
     }
   };
 
+  // Function to clear the cart after order (for frountend and backend)
   const clearCartAfterOrder = async (userId) => {
     try {
       const response = await axios.post(
@@ -167,6 +181,7 @@ export const CartProvider = ({ children }) => {
     }
   };
 
+  // Function to clear the cart (for logout)
   const clearCart = () => {
     cartDispitch({ type: cartAction.clearCart });
   };
@@ -189,6 +204,7 @@ export const CartProvider = ({ children }) => {
   );
 };
 
+// Custom hook to use CartContext
 export const useCartContext = () => {
   return useContext(CartContext);
 };

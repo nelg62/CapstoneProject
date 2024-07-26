@@ -11,6 +11,7 @@ import { Paper, Rating, Skeleton } from "@mui/material";
 export default function AlignItemsList({ product }) {
   const [loading, setLoading] = React.useState(true);
 
+  // Set loading to false if product and product.reviews are available
   React.useEffect(() => {
     if (product && product.reviews) {
       setLoading(false);
@@ -26,6 +27,7 @@ export default function AlignItemsList({ product }) {
               {loading ? (
                 <Skeleton variant="circular" width={40} height={40}></Skeleton>
               ) : (
+                // Reviewer Avatar
                 <ListItemAvatar>
                   <Avatar
                     alt={review.reviewerName}
@@ -37,12 +39,14 @@ export default function AlignItemsList({ product }) {
                 {loading ? (
                   <Skeleton></Skeleton>
                 ) : (
+                  // Reviewer name
                   <Typography>{review.reviewerName}</Typography>
                 )}
 
                 {loading ? (
                   <Skeleton variant="body2"></Skeleton>
                 ) : (
+                  // Reviewer Rating
                   <Typography variant="body2" color="text.secondary">
                     <Rating value={review.rating} readOnly precision={0.5} />
                   </Typography>
@@ -53,6 +57,7 @@ export default function AlignItemsList({ product }) {
                 {loading ? (
                   <Skeleton></Skeleton>
                 ) : (
+                  // Reviewer comment
                   <Typography color="text.secondary">
                     {review.comment}
                   </Typography>
@@ -63,6 +68,7 @@ export default function AlignItemsList({ product }) {
                 {loading ? (
                   <Skeleton variant="body2"></Skeleton>
                 ) : (
+                  // Date of comment by Reviewer
                   <Typography variant="body2" color="text.secondary">
                     {new Date(review.date).toLocaleDateString()}
                   </Typography>

@@ -36,18 +36,22 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function LogIn() {
+  // Destructure functions from user and cart context
   const { LoginFunction } = useUserContext();
   const { GetItemsInCart } = useCartContext();
 
+  // Handle form submission
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
+    // Extract email and password from form data
     const logindata = {
       emailId: data.get("email"),
       password: data.get("password"),
     };
 
+    // Call login function and fetch items in cart
     await LoginFunction(logindata);
     GetItemsInCart();
   };
@@ -76,6 +80,7 @@ export default function LogIn() {
             noValidate
             sx={{ mt: 1 }}
           >
+            {/* Email */}
             <TextField
               margin="normal"
               required
@@ -86,6 +91,7 @@ export default function LogIn() {
               autoComplete="email"
               autoFocus
             />
+            {/* Password */}
             <TextField
               margin="normal"
               required
@@ -100,6 +106,7 @@ export default function LogIn() {
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
             />
+            {/* Submit button */}
             <Button
               type="submit"
               fullWidth
@@ -115,6 +122,7 @@ export default function LogIn() {
                 </Link>
               </Grid>
               <Grid item>
+                {/* Link to signup page  */}
                 <Link href="/signup" variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Link>

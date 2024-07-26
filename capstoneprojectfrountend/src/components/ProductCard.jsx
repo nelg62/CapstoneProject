@@ -11,12 +11,14 @@ export default function ProductCard({ product }) {
   const router = useRouter();
   const [loading, setLoading] = React.useState(true);
 
+  // Set loading state to false once product is available
   React.useEffect(() => {
     if (product) {
       setLoading(false);
     }
   }, [product]);
 
+  // Redirect to product details page on card click
   const handleCardClick = () => {
     router.push(`/products/${product.id}`);
   };
@@ -27,6 +29,7 @@ export default function ProductCard({ product }) {
         {loading ? (
           <Skeleton variant="rectangle" height={200}></Skeleton>
         ) : (
+          // Product Image
           <CardMedia
             component="img"
             image={product.thumbnail}
@@ -37,6 +40,7 @@ export default function ProductCard({ product }) {
           {loading ? (
             <Skeleton variant="h5"></Skeleton>
           ) : (
+            // Product Title
             <Typography
               gutterBottom
               variant="h5"
@@ -51,6 +55,7 @@ export default function ProductCard({ product }) {
           {loading ? (
             <Skeleton variant="body2"></Skeleton>
           ) : (
+            // Product description
             <Typography
               sx={{
                 maxHeight: 100,
@@ -70,6 +75,7 @@ export default function ProductCard({ product }) {
           {loading ? (
             <Skeleton variant="body1"></Skeleton>
           ) : (
+            // Product category
             <Typography
               sx={{ marginLeft: "5px" }}
               gutterBottom
@@ -83,6 +89,7 @@ export default function ProductCard({ product }) {
           {loading ? (
             <Skeleton variant="body2"></Skeleton>
           ) : (
+            // Product rating
             <Typography gutterBottom variant="body2" color="text.secondary">
               <Rating
                 sx={{ top: "7px" }}
@@ -96,6 +103,7 @@ export default function ProductCard({ product }) {
           {loading ? (
             <Skeleton variant="body1"></Skeleton>
           ) : (
+            // Product price
             <Typography
               sx={{ float: "right", fontWeight: "700", marginRight: "5px" }}
               variant="body1"
@@ -107,6 +115,7 @@ export default function ProductCard({ product }) {
           {loading ? (
             <Skeleton variant="body1"></Skeleton>
           ) : (
+            // Product availability status
             <Typography variant="body1" sx={{ marginLeft: "5px" }}>
               {product.stock} {product.availabilityStatus}
             </Typography>

@@ -7,6 +7,7 @@ require("dotenv").config();
 const swaggerUi = require("swagger-ui-express");
 const swaggerDocument = require("../swagger.json");
 
+// Configure the database connection using Knex
 const db = knex({
   client: "mysql2",
   connection: {
@@ -17,6 +18,7 @@ const db = knex({
   },
 });
 
+// Enable CORS for the specified origin and methods
 app.use(
   cors({
     origin: "http://localhost:3000",
@@ -25,26 +27,29 @@ app.use(
   })
 );
 
+// Middleware to parse JSON requests
 app.use(express.json());
 
-let dbConnect = require("./dbConnect");
-
+// Importing routes and initializing them with a database connection
 let userRoutes = require("./routes/userRoutes")(db);
 let productRoutes = require("./routes/productRoutes")(db);
 let cartRoutes = require("./routes/cartRoutes")(db);
 let orderRoutes = require("./routes/orderRoutes")(db);
 
+// Registering routes with Express app
 app.use("/api/users", userRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/cart", cartRoutes);
 app.use("/api/orders", orderRoutes);
+
+// Setting up Swagger UI for API documentation
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to my application." });
 });
 
-// set port, listen for requests
+// Set port, listen for requests
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);

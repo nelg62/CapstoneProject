@@ -4,11 +4,13 @@ import CheckIcon from "@mui/icons-material/Check";
 
 // Component for displaying confirmation/notification alerts
 export default function SimpleAlert({ message, severity, onClose }) {
+  // Automatically close alert after 3 seconds
   React.useEffect(() => {
     const timer = setTimeout(() => {
-      onClose();
+      onClose(); // Call the onClose function to hide the alert
     }, 3000);
 
+    // Clean up the timer then component unmounts or onClose changes
     return () => clearTimeout(timer);
   }, [onClose]);
 

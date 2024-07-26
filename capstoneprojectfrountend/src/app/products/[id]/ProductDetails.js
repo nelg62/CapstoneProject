@@ -26,22 +26,26 @@ const ProductDetail = () => {
   const { product, fetchProduct } = useProductContext();
   const [loading, setLoading] = useState(true);
 
+  // Fetch product details when component mounts or product ID changes
   useEffect(() => {
     if (id) {
       fetchProduct(id);
     }
   }, [id]);
 
+  // Set loading to false when product data is available
   useEffect(() => {
     if (product) {
       setLoading(false);
     }
   }, [product]);
 
+  // When product is not found
   if (!product) {
     return <p>Product not found</p>;
   }
 
+  // Add product to cart pass user id and product id
   function addToCart() {
     AddToCart(userState.id, product.id);
   }
@@ -54,14 +58,18 @@ const ProductDetail = () => {
         columns={{ xs: 4, sm: 8, md: 12 }}
       >
         <Grid item xs={4} sm={6} md={6}>
+          {/* Image slider */}
           <DotsMobileStepper product={product} />
         </Grid>
+
+        {/* Product details */}
         <Grid item xs={4} sm={6} md={6}>
           <Card sx={{ maxWidth: 345, margin: "auto", marginTop: 4 }}>
             <CardContent>
               {loading ? (
                 <Skeleton variant="h5"></Skeleton>
               ) : (
+                // Product title
                 <Typography
                   sx={{
                     textAlign: "center",
@@ -81,6 +89,7 @@ const ProductDetail = () => {
               {loading ? (
                 <Skeleton variant="body1"></Skeleton>
               ) : (
+                // Product price
                 <Typography
                   sx={{ textAlign: "center", fontWeight: "600" }}
                   gutterBottom
@@ -96,6 +105,7 @@ const ProductDetail = () => {
               {loading ? (
                 <Skeleton variant="body2"></Skeleton>
               ) : (
+                // Product rating
                 <Typography
                   sx={{ textAlign: "center" }}
                   gutterBottom
@@ -115,6 +125,7 @@ const ProductDetail = () => {
               {loading ? (
                 <Skeleton variant="body2"></Skeleton>
               ) : (
+                // Product description
                 <Typography
                   sx={{ textAlign: "center" }}
                   gutterBottom
@@ -128,6 +139,7 @@ const ProductDetail = () => {
               {loading ? (
                 <Skeleton variant="body1"></Skeleton>
               ) : (
+                // Product category
                 <Typography
                   sx={{ textAlign: "center" }}
                   gutterBottom
@@ -143,6 +155,7 @@ const ProductDetail = () => {
               {loading ? (
                 <Skeleton variant="body1"></Skeleton>
               ) : (
+                // Product brand
                 <Typography
                   sx={{ textAlign: "center" }}
                   gutterBottom
@@ -158,6 +171,7 @@ const ProductDetail = () => {
               {loading ? (
                 <Skeleton variant="body1"></Skeleton>
               ) : (
+                // Product abvailability
                 <Typography
                   sx={{ textAlign: "center" }}
                   gutterBottom
@@ -173,6 +187,7 @@ const ProductDetail = () => {
               {loading ? (
                 <Skeleton variant="body1"></Skeleton>
               ) : (
+                // Product warranty information
                 <Typography
                   sx={{ textAlign: "center" }}
                   gutterBottom
@@ -188,6 +203,7 @@ const ProductDetail = () => {
               {loading ? (
                 <Skeleton variant="body1"></Skeleton>
               ) : (
+                // Product shipping information
                 <Typography
                   sx={{ textAlign: "center" }}
                   gutterBottom
@@ -203,6 +219,7 @@ const ProductDetail = () => {
               {loading ? (
                 <Skeleton variant="body1"></Skeleton>
               ) : (
+                // Product retun policy
                 <Typography
                   sx={{ textAlign: "center" }}
                   gutterBottom
@@ -213,6 +230,7 @@ const ProductDetail = () => {
                 </Typography>
               )}
             </CardContent>
+            {/* Add to cart button */}
             <Button
               onClick={addToCart}
               variant="contained"
@@ -225,6 +243,7 @@ const ProductDetail = () => {
       </Grid>
 
       <Divider sx={{ fontWeight: 600, fontSize: 25 }}>Reviews</Divider>
+      {/* Reviews section */}
       <AlignItemsList product={product} />
     </Box>
   );

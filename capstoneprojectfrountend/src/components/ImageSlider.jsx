@@ -12,19 +12,23 @@ export default function DotsMobileStepper({ product }) {
   const [loading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
+    // Set loading to false once the product data is available
     if (product) {
       setLoading(false);
     }
   }, [product]);
 
+  // Determine the maximum number of steps based on the amount of product images
   const maxSteps = product.images.length;
 
+  // Handle next step in the image carousel
   const handleNext = () => {
     setActiveStep((prevActiveStep) =>
       Math.min(prevActiveStep + 1, maxSteps - 1)
     );
   };
 
+  // Handle previous step in the image carousel
   const handleBack = () => {
     setActiveStep((prevActiveStep) => Math.max(prevActiveStep - 1, 0));
   };
@@ -34,6 +38,7 @@ export default function DotsMobileStepper({ product }) {
       {loading ? (
         <Skeleton variant="rectangular" width={500} height={300}></Skeleton>
       ) : (
+        // Show Product image depending on active step number
         <CardMedia
           component="img"
           image={product.images[activeStep]}
