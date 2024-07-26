@@ -22,7 +22,6 @@ import { useCartContext } from "@/context/CartContext";
 // Navigation pages
 const pages = ["dashboard", "products", "about"];
 const authPages = ["signup", "login"];
-const settings = ["Logout"];
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -215,10 +214,7 @@ function ResponsiveAppBar() {
             </Link>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar
-                  alt={userState.username || "User"}
-                  src="/static/images/avatar/2.jpg"
-                />
+                <Avatar alt={userState.username || "User"} src="" />
               </IconButton>
             </Tooltip>
             <Menu

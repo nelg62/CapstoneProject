@@ -1,7 +1,7 @@
 "use client";
 
 import { Divider, List, ListItem, Paper, Typography } from "@mui/material";
-import { Box, Container, width } from "@mui/system";
+import { Box, Container } from "@mui/system";
 import Link from "next/link";
 
 const AboutPage = () => {

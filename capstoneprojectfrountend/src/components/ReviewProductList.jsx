@@ -29,10 +29,7 @@ export default function AlignItemsList({ product }) {
               ) : (
                 // Reviewer Avatar
                 <ListItemAvatar>
-                  <Avatar
-                    alt={review.reviewerName}
-                    src="/static/images/avatar/1.jpg"
-                  />
+                  <Avatar alt={review.reviewerName} src="" />
                 </ListItemAvatar>
               )}
               <ListItemText>

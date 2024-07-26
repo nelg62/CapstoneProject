@@ -20,7 +20,7 @@ import { useUserContext } from "@/context/UserContext";
 import { useProductContext } from "@/context/ProductContext";
 
 const ProductDetail = () => {
-  const { cartDispitch, AddToCart } = useCartContext();
+  const { AddToCart } = useCartContext();
   const { userState } = useUserContext();
   const { id } = useParams();
   const { product, fetchProduct } = useProductContext();

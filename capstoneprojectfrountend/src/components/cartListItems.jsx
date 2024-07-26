@@ -13,14 +13,8 @@ import { CartApi } from "../../utils/api";
 
 export default function CartListItems() {
   // Context hooks for cart and user state
-  const {
-    cart,
-    AddToCart,
-    RemoveFromCart,
-    cartDispitch,
-    cartAction,
-    clearCartAfterOrder,
-  } = useCartContext();
+  const { cart, AddToCart, RemoveFromCart, cartDispitch, cartAction } =
+    useCartContext();
   const { userState } = useUserContext();
 
   // Fetch cart items when component mounts or userState changes

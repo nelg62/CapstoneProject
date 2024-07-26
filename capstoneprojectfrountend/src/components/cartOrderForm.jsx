@@ -5,7 +5,7 @@ import { OrdersApi } from "../../utils/api";
 import { useUserContext } from "@/context/UserContext";
 
 export default function CartOrderForm() {
-  const { cart, clearCartAfterOrder, GetItemsInCart } = useCartContext();
+  const { cart, clearCartAfterOrder } = useCartContext();
   const { userState, setAlert } = useUserContext();
 
   // Handle form submission

@@ -11,8 +11,6 @@ import {
   Skeleton,
   Typography,
 } from "@mui/material";
-import ProductCard from "./ProductCard";
-import { useProductContext } from "@/context/ProductContext";
 import { useRouter } from "next/navigation";
 
 export default function TopOrderedItems() {

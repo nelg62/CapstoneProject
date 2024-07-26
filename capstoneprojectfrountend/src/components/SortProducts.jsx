@@ -6,8 +6,7 @@ const { useState, useEffect } = require("react");
 
 const SortProductsButtons = () => {
   // Destructure values from ProductContext
-  const { productsSort, loading, setLoading, fetchProductsSort } =
-    useProductContext();
+  const { productsSort, setLoading, fetchProductsSort } = useProductContext();
 
   // State variables for sorting and filtering
   const [sortBy, setSortBy] = useState("price");
