@@ -22,7 +22,7 @@ const db = knex({
 app.use(
   cors({
     origin: "https://master--capstopeprojectglenharding.netlify.app",
-    methods: ["GET,POST,DELETE"],
+    methods: ["GET", "POST", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
