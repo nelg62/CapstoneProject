@@ -17,7 +17,7 @@ const ProtectedRoute = ({ Components, ...props }) => {
       // User is authenticated set ready to true
       setIsReady(true);
     }
-  }, [userState.isAuthenticated, router]);
+  }, [userState.isAuthenticated, router, userState]);
 
   // If not ready / not authenticated display loading message
   if (!isReady) {
