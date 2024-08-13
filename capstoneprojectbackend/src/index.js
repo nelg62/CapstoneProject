@@ -15,7 +15,10 @@ const db = knex({
     user: process.env.CLOUD_DB_USER,
     password: process.env.CLOUD_DB_PASSWORD,
     database: process.env.CLOUD_DB_NAME,
-    connectTimeout: 60000,
+  },
+  pool: {
+    min: 2,
+    max: 10,
   },
 });
 
@@ -45,6 +48,12 @@ app.use("/api/orders", orderRoutes);
 
 // Setting up Swagger UI for API documentation
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+app.use((err, req, res, next) => {
+  console.error(`Error occurred: ${err.message}`);
+  console.error(`Stack trace: ${err.stack}`);
+  res.status(500).json({ error: "Something went wrong!" });
+});
 
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to my application." });
