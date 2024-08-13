@@ -2,7 +2,7 @@ const express = require("express");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-const secret = process.env.DB_SECRET;
+const secret = process.env.CLOUD_DB_SECRET;
 
 // Middleware to authenticate JWT tokens
 const authenticateToken = (req, res, next) => {

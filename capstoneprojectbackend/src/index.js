@@ -11,10 +11,10 @@ const swaggerDocument = require("../swagger.json");
 const db = knex({
   client: "mysql2",
   connection: {
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
+    host: process.env.CLOUD_DB_HOST,
+    user: process.env.CLOUD_DB_USER,
+    password: process.env.CLOUD_DB_PASSWORD,
+    database: process.env.CLOUD_DB_NAME,
   },
 });
 
