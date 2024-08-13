@@ -106,7 +106,7 @@ export const UserProvider = ({ children }) => {
     } else {
       setIsload(true);
     }
-  }, [router]);
+  }, []);
 
   // Function to close alert
   const closeAlert = () => {

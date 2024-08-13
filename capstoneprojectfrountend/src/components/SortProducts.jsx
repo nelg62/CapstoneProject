@@ -17,7 +17,7 @@ const SortProductsButtons = () => {
   useEffect(() => {
     setLoading(true);
     fetchProductsSort(sortBy, order, category);
-  }, [sortBy, order, category, fetchProductsSort, setLoading]);
+  }, [sortBy, order, category]);
 
   // Handlers for chnaging sort and filter options
   const handleSortChange = (e) => {

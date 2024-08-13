@@ -32,7 +32,7 @@ export default function CartListItems() {
       }
     };
     if (userState.isAuthenticated) fetchCart();
-  }, [userState, cartAction.initCart, cartDispitch]);
+  }, [userState]);
 
   // Calculate the total price of items in the cart
   const calculateTotalPrice = () => {
