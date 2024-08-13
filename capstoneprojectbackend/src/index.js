@@ -15,6 +15,7 @@ const db = knex({
     user: process.env.CLOUD_DB_USER,
     password: process.env.CLOUD_DB_PASSWORD,
     database: process.env.CLOUD_DB_NAME,
+    connectTimeout: 60000,
   },
 });
 
