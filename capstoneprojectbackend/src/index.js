@@ -21,8 +21,8 @@ const db = knex({
 // Enable CORS for the specified origin and methods
 app.use(
   cors({
-    origin: "https://master--capstopeprojectglenharding.netlify.app/",
-    methods: "GET,POST,DELETE",
+    origin: "https://master--capstopeprojectglenharding.netlify.app",
+    methods: ["GET,POST,DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
