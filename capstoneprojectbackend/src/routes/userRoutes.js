@@ -29,10 +29,12 @@ module.exports = (db) => {
       const hashedPassword = await bcrypt.hash(password, 10);
 
       // Insert the new user into the database
-      await db("Users").insert({
-        username,
-        emailId,
-        password: hashedPassword,
+      await db.transaction(async (trx) => {
+        await trx("Users").insert({
+          username,
+          emailId,
+          password: hashedPassword,
+        });
       });
 
       // Retrieve the newly created user from the database
