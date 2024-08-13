@@ -31,7 +31,7 @@ const ProductDetail = () => {
     if (id) {
       fetchProduct(id);
     }
-  }, [id]);
+  }, [id, fetchProduct]);
 
   // Set loading to false when product data is available
   useEffect(() => {
