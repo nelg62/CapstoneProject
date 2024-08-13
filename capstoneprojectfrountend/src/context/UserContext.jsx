@@ -131,7 +131,10 @@ export const UserProvider = ({ children }) => {
 
       router.push("/login");
     } catch (error) {
-      console.error("Error adding user", error);
+      console.error(
+        "Error adding user",
+        error.response ? error.response.data : error.message
+      );
       setAlert({
         open: true,
         message: "User Signed up failed",

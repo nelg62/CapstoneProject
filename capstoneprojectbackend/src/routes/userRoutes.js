@@ -46,6 +46,7 @@ module.exports = (db) => {
 
       res.status(201).json({ id: newUser.id, username, emailId }); // User Created
     } catch (error) {
+      console.error("Error during registration", error);
       res.status(500).json({ error: "Failed to register user" });
     }
   });
