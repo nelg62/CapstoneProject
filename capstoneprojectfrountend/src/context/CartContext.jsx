@@ -73,7 +73,10 @@ export const CartProvider = ({ children }) => {
       if (userState.isAuthenticated) {
         try {
           const response = await axios.get(`${CartApi}/${userState.id}`, {
-            headers: { Authorization: `Bearer ${userState.token}` },
+            headers: {
+              Authorization: `Bearer ${userState.token}`,
+              "x-api-key": process.env.API_KEY,
+            },
           });
           cartDispitch({ type: cartAction.initCart, payload: response.data });
         } catch (error) {
@@ -89,7 +92,10 @@ export const CartProvider = ({ children }) => {
     if (userState.isAuthenticated) {
       try {
         const response = await axios.get(`${CartApi}/${userState.id}`, {
-          headers: { Authorization: `Bearer ${userState.token}` },
+          headers: {
+            Authorization: `Bearer ${userState.token}`,
+            "x-api-key": process.env.API_KEY,
+          },
         });
         cartDispitch({ type: cartAction.initCart, payload: response.data });
       } catch (error) {
@@ -141,7 +147,10 @@ export const CartProvider = ({ children }) => {
   const RemoveFromCart = async (userId, productId) => {
     try {
       const response = await axios.delete(`${CartApi}`, {
-        headers: { Authorization: `Bearer ${userState.token}` },
+        headers: {
+          Authorization: `Bearer ${userState.token}`,
+          "x-api-key": process.env.API_KEY,
+        },
         data: { userId, productId },
       });
       if (response.status === 200) {
@@ -174,7 +183,12 @@ export const CartProvider = ({ children }) => {
       const response = await axios.post(
         `${CartApi}/clear`,
         { userId },
-        { headers: { Authorization: `Bearer ${userState.token}` } }
+        {
+          headers: {
+            Authorization: `Bearer ${userState.token}`,
+            "x-api-key": process.env.API_KEY,
+          },
+        }
       );
       console.log("clearcartresponse", response);
       if (response) {
