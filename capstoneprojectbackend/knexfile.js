@@ -7,7 +7,7 @@ console.log("process.env", process.env.DB_HOST);
  */
 module.exports = {
   development: {
-    client: "mysql2",
+    client: "pg",
     connection: {
       host: process.env.CLOUD_DB_HOST,
       user: process.env.CLOUD_DB_USER,

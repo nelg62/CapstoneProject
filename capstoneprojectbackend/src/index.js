@@ -9,13 +9,12 @@ const swaggerDocument = require("../swagger.json");
 
 // Configure the database connection using Knex
 const db = knex({
-  client: "mysql2",
+  client: "pg",
   connection: {
     host: process.env.CLOUD_DB_HOST,
     user: process.env.CLOUD_DB_USER,
     password: process.env.CLOUD_DB_PASSWORD,
     database: process.env.CLOUD_DB_NAME,
-    connectTimeout: 120000,
   },
   pool: {
     min: 2,
