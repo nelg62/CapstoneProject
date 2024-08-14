@@ -107,7 +107,12 @@ export const CartProvider = ({ children }) => {
           userId,
           productId,
         },
-        { headers: { Authorization: `Bearer ${userState.token}` } }
+        {
+          headers: {
+            Authorization: `Bearer ${userState.token}`,
+            "x-api-key": process.env.API_KEY,
+          },
+        }
       );
       console.log("addtocart responce", response);
 

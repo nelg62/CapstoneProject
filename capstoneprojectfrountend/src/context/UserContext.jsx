@@ -146,10 +146,18 @@ export const UserProvider = ({ children }) => {
   // Function to handle user Login
   const LoginFunction = async ({ emailId, password }) => {
     try {
-      const response = await axios.post(`${UserApi}/login`, {
-        emailId,
-        password,
-      });
+      const response = await axios.post(
+        `${UserApi}/login`,
+        {
+          emailId,
+          password,
+        },
+        {
+          headers: {
+            "x-api-key": process.env.API_KEY,
+          },
+        }
+      );
 
       const { user, token } = response.data;
 
