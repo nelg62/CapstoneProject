@@ -79,7 +79,6 @@ module.exports = (db) => {
           db.raw("COUNT(OrderItems.productId) as orderCount")
         )
         .groupBy(
-          "OrderItems.productId",
           "Product.id",
           "Product.title",
           "Product.thumbnail",
