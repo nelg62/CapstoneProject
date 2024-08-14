@@ -24,18 +24,21 @@ module.exports = (db) => {
   // Register a new user  POST Route
   router.post("/register", async (req, res) => {
     const { username, emailId, password } = req.body;
+    const trx = await db.transaction();
+
     try {
       // Hash the password before storing in the database
       const hashedPassword = await bcrypt.hash(password, 10);
 
       // Insert the new user into the database
-      await db.transaction(async (trx) => {
-        await trx("Users").insert({
-          username,
-          emailId,
-          password: hashedPassword,
-        });
+
+      await trx("Users").insert({
+        username,
+        emailId,
+        password: hashedPassword,
       });
+
+      await trx.commit();
 
       // Retrieve the newly created user from the database
       const newUser = await db("Users").where({ emailId }).first();
@@ -48,6 +51,7 @@ module.exports = (db) => {
 
       res.status(201).json({ id: newUser.id, username, emailId }); // User Created
     } catch (error) {
+      await trx.rollback();
       console.error("Error during registration", error);
       res.status(500).json({ error: "Failed to register user" });
     }

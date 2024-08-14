@@ -28,32 +28,43 @@ module.exports = (db) => {
         .reduce((acc, item) => acc + parseFloat(item.price), 0)
         .toFixed(2);
 
-      // Insert a new order and get the order id
-      const [orderId] = await db("Orders").insert({ userId, totalAmount });
+      const trx = await db.transaction();
 
-      // Set the orderItems from the cartItems data
-      const orderItems = cartItems.map((item) => ({
-        orderId,
-        productId: item.productId,
-        quantity: item.quantity,
-        price: parseFloat(item.price),
-      }));
+      try {
+        // Insert a new order and get the order id
+        const [orderId] = await trx("Orders").insert({ userId, totalAmount });
 
-      // Insert orderItems to database
-      await db("OrderItems").insert(orderItems);
+        // Set the orderItems from the cartItems data
+        const orderItems = cartItems.map((item) => ({
+          orderId,
+          productId: item.productId,
+          quantity: item.quantity,
+          price: parseFloat(item.price),
+        }));
 
-      // Clear the users cart
-      await db("Cart").where({ userId }).del();
+        // Insert orderItems to database
+        await trx("OrderItems").insert(orderItems);
 
-      // Respond with created order
-      res.status(201).json({ orderId });
+        // Clear the user's cart
+        await trx("Cart").where({ userId }).del();
+
+        // Commit the transaction
+        await trx.commit();
+
+        // Respond with created order
+        res.status(201).json({ orderId });
+      } catch (error) {
+        // Rollback the transaction in case of error
+        await trx.rollback();
+        throw error;
+      }
     } catch (error) {
       console.error("Error creating order:", error);
       res.status(500).json({ error: "Failed to create order" });
     }
   });
 
-  // Get top ordered items  GET Route
+  // Get top ordered items GET Route
   router.get("/topOrderedItems", async (req, res) => {
     console.log("Received request for topOrderedItems");
     try {
@@ -84,7 +95,7 @@ module.exports = (db) => {
     }
   });
 
-  // Get details of specific order  GET Route
+  // Get details of specific order GET Route
   router.get("/:orderId", async (req, res) => {
     console.log("Received request for orderId:", req.params.orderId);
     const { orderId } = req.params;
@@ -109,7 +120,7 @@ module.exports = (db) => {
 
       res.json({ order, items: orderItems });
     } catch (error) {
-      console.error("Error fetching order details", error);
+      console.error("Error fetching order details:", error);
       res.status(500).json({ error: "Failed to fetch order details" });
     }
   });

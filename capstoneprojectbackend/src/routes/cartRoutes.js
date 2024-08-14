@@ -40,19 +40,21 @@ module.exports = (db) => {
     // Check if requesting user is current logged in user
     if (req.user.id !== userId) return res.sendStatus(403);
 
+    const trx = await db.transaction();
+
     try {
       // Insert new item to cart
-      await db("Cart").insert({ userId, productId });
+      await trx("Cart").insert({ userId, productId });
 
       // Get updated cart items pulling from multiple diffrarant tables
-      const cartItems = await db
+      const cartItems = await trx
         .select(
-          db.raw("MIN(Cart.id) as cartId"),
+          trx.raw("MIN(Cart.id) as cartId"),
           "Product.id as productId",
           "Product.title",
           "Product.thumbnail",
           "Product.price",
-          db.raw("COUNT(*) as quantity")
+          trx.raw("COUNT(*) as quantity")
         )
         .from("Cart")
         .leftJoin("Product", "Product.id", "Cart.productId")
@@ -66,8 +68,11 @@ module.exports = (db) => {
           "Product.price"
         );
 
+      await trx.commit();
+
       res.status(201).json(cartItems[0]); //Respond with created Product in cart
     } catch (error) {
+      await trx.rollback();
       console.error("Error adding item to cart", error);
       res.status(500).json({ error: "failed to add product to cart " });
     }
@@ -81,9 +86,11 @@ module.exports = (db) => {
     // Check if requesting user is current logged in user
     if (req.user.id !== userId) return res.sendStatus(403);
 
+    const trx = await db.transaction();
+
     try {
       // Find the earliest item in the cart with same id
-      const earliestItem = await db("Cart")
+      const earliestItem = await trx("Cart")
         .where({ userId, productId })
         .orderBy("created_at")
         .first();
@@ -93,10 +100,13 @@ module.exports = (db) => {
       }
 
       //Delete the erliest item in cart with id
-      await db("Cart").where({ id: earliestItem.id }).del();
+      await trx("Cart").where({ id: earliestItem.id }).del();
+
+      await trx.commit();
 
       res.json({ message: "Product removed from cart" });
     } catch (error) {
+      await trx.rollback();
       console.error("Error removing item from cart:", error);
       res.status(500).json({ error: "Failed to remove product from cart" });
     }
@@ -142,11 +152,17 @@ module.exports = (db) => {
     // Check if requesting user is current logged in user
     if (req.user.id !== userId) return res.sendStatus(403);
 
+    const trx = await db.transaction();
+
     try {
       // Clear all items from the cart
-      await db("Cart").where({ userId }).del();
+      await trx("Cart").where({ userId }).del();
+
+      await trx.commit();
+
       res.json({ message: "Cart cleared" });
     } catch (error) {
+      await trx.rollback();
       console.error("Error clearing cart", error);
       res.status(500).json({ error: "Failed to clear cart" });
     }
