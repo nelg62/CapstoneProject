@@ -1,6 +1,6 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
-const validateApiKey = require("../middleware/validateApiKey");
+// const validateApiKey = require("../middleware/validateApiKey");
 
 // Middleware to authenticate token
 const authenticateToken = (req, res, next) => {
@@ -32,7 +32,7 @@ module.exports = (db) => {
   const router = express.Router();
 
   // User authentication middleware on all routes
-  router.use(validateApiKey);
+  // router.use(validateApiKey);
   router.use(authenticateToken);
 
   // Add an item to Cart  POST Route
