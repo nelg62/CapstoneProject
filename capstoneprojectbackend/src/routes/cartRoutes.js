@@ -48,7 +48,7 @@ module.exports = (db) => {
 
     try {
       // Insert new item to cart
-      await trx("Cart").insert({ userId, productId });
+      await trx("Cart").insert({ userId: userId, productId: productId });
 
       // Get updated cart items pulling from multiple diffrarant tables
       const cartItems = await trx("Cart")
@@ -95,7 +95,7 @@ module.exports = (db) => {
     try {
       // Find the earliest item in the cart with same id
       const earliestItem = await trx("Cart")
-        .where({ userId, productId })
+        .where({ userId: userId, productId: productId })
         .orderBy("created_at")
         .first();
 
@@ -126,7 +126,7 @@ module.exports = (db) => {
     try {
       // Fetch cart items
       const cartItems = await db("Cart")
-        .where({ userId })
+        .where({ userId: userId })
         .join("Product", "Cart.productId", "Product.id")
         .select(
           "Cart.productId",
@@ -160,7 +160,7 @@ module.exports = (db) => {
 
     try {
       // Clear all items from the cart
-      await trx("Cart").where({ userId }).del();
+      await trx("Cart").where({ userId: userId }).del();
 
       await trx.commit();
 
