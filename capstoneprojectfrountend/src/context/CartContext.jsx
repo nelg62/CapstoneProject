@@ -106,6 +106,8 @@ export const CartProvider = ({ children }) => {
 
   // Function to add an item to cart
   const AddToCart = async (userId, productId) => {
+    console.log("API Key add to cartfrount end:", process.env.API_KEY);
+
     try {
       const response = await axios.post(
         `${CartApi}`,

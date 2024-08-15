@@ -1,6 +1,7 @@
 // middleware/validateApiKey.js
 const validateApiKey = (req, res, next) => {
   const apiKey = req.headers["x-api-key"];
+  console.log("API Key middleware:", process.env.API_KEY);
 
   if (!apiKey) {
     return res.status(401).json({ error: "API key missing" });

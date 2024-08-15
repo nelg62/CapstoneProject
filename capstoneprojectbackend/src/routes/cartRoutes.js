@@ -38,6 +38,7 @@ module.exports = (db) => {
   // Add an item to Cart  POST Route
   router.post("/", async (req, res) => {
     const { userId, productId } = req.body;
+    console.log("API Key backend post route:", process.env.API_KEY);
 
     // Check if requesting user is current logged in user
     if (req.user.id !== userId) return res.sendStatus(403);
