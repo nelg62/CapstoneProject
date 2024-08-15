@@ -89,7 +89,7 @@ module.exports = (db) => {
 
   // Get the authenticated users info  GET Route
   router.get("/me", authenticateToken, async (req, res) => {
-    console.log(req.headers.authorization);
+    console.log("me", req.headers.authorization);
 
     const authHeader = req.headers.authorization;
     // Check Authentication token exists

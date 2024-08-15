@@ -33,11 +33,12 @@ module.exports = (db) => {
 
   // User authentication middleware on all routes
   router.use(validateApiKey);
-  router.use(authenticateToken);
+  // router.use(authenticateToken);
 
   // Add an item to Cart  POST Route
   router.post("/", authenticateToken, async (req, res) => {
     const { userId, productId } = req.body;
+    console.log("post route", req.headers.authorization);
     console.log("API Key backend post route:", process.env.API_KEY);
 
     // Check if requesting user is current logged in user
