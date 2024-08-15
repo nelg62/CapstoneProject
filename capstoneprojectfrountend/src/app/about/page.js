@@ -49,6 +49,13 @@ const AboutPage = () => {
               npm run dev
             </code>
           </Typography>
+
+          <Typography variant="h6">Changes:</Typography>
+          <List sx={{ listStyleType: "disc" }}>
+            <ListItem sx={{ display: "list-item", marginLeft: "25px" }}>
+              Hosted with Netlify
+            </ListItem>
+          </List>
         </Paper>
         <Divider sx={{ marginBottom: "10px" }}></Divider>
 
@@ -92,6 +99,13 @@ const AboutPage = () => {
             </ListItem>
           </List>
 
+          <Typography variant="h6">Changes:</Typography>
+          <List sx={{ listStyleType: "disc" }}>
+            <ListItem sx={{ display: "list-item", marginLeft: "25px" }}>
+              Hosted with Render
+            </ListItem>
+          </List>
+
           <Typography>
             Rollback / remove SQL Database table from MySQL using knex:{" "}
             <code style={{ backgroundColor: "#1976d2", color: "#ffffff" }}>
@@ -131,6 +145,13 @@ const AboutPage = () => {
             </ListItem>
           </List>
 
+          <Typography variant="h6">Changes:</Typography>
+          <List sx={{ listStyleType: "disc" }}>
+            <ListItem sx={{ display: "list-item", marginLeft: "25px" }}>
+              No longer using a container
+            </ListItem>
+          </List>
+
           <Typography>
             Create Docker container:{" "}
             <code style={{ backgroundColor: "#1976d2", color: "#ffffff" }}>
@@ -159,6 +180,13 @@ const AboutPage = () => {
           <List sx={{ listStyleType: "disc" }}>
             <ListItem sx={{ display: "list-item", marginLeft: "25px" }}>
               MySQL
+            </ListItem>
+          </List>
+
+          <Typography variant="h6">Changes:</Typography>
+          <List sx={{ listStyleType: "disc" }}>
+            <ListItem sx={{ display: "list-item", marginLeft: "25px" }}>
+              Hosted with Supabase
             </ListItem>
           </List>
 
