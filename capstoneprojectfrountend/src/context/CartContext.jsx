@@ -24,7 +24,10 @@ function reducer(state, action) {
   switch (action.type) {
     // Initial cart action
     case cartAction.initCart: {
-      return action.payload;
+      return action.payload.map((item) => ({
+        ...item,
+        quantity: Number(item.quantity),
+      }));
     }
     // Add to cart action
     case cartAction.addToCart: {
@@ -35,7 +38,7 @@ function reducer(state, action) {
       if (existingItem) {
         return state.map((item) =>
           item.productId === newItem.productId
-            ? { ...item, quantity: (item.quantity || 1) + 1 }
+            ? { ...item, quantity: Number(item.quantity || 1) + 1 }
             : item
         );
       }
@@ -46,7 +49,7 @@ function reducer(state, action) {
       return state
         .map((item) =>
           item.productId === action.payload.productId
-            ? { ...item, quantity: item.quantity - 1 }
+            ? { ...item, quantity: Number(item.quantity) - 1 }
             : item
         )
         .filter((item) => item.quantity > 0);
