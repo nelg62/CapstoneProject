@@ -33,7 +33,10 @@ module.exports = (db) => {
       try {
         // Insert a new order and get the order id
         const [orderId] = await trx("Orders").insert({ userId, totalAmount });
-
+        console.log(cartItems);
+        if (!Array.isArray(cartItems) || cartItems.length === 0) {
+          return res.status(400).json({ error: "No items in the cart" });
+        }
         // Set the orderItems from the cartItems data
         const orderItems = cartItems.map((item) => ({
           orderId,
