@@ -36,7 +36,7 @@ module.exports = (db) => {
   router.use(authenticateToken);
 
   // Add an item to Cart  POST Route
-  router.post("/", async (req, res) => {
+  router.post("/", authenticateToken, async (req, res) => {
     const { userId, productId } = req.body;
     console.log("API Key backend post route:", process.env.API_KEY);
 
