@@ -23,10 +23,21 @@ const db = knex({
   },
 });
 
+const allowedOrigins = [
+  "https://master--capstopeprojectglenharding.netlify.app",
+  "https://capstopeprojectglenharding.netlify.app",
+];
+
 // Enable CORS for the specified origin and methods
 app.use(
   cors({
-    origin: "https://master--capstopeprojectglenharding.netlify.app",
+    origin: (origin, callback) => {
+      if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     methods: ["GET", "POST", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
