@@ -39,7 +39,7 @@ module.exports = (db) => {
         // Set the orderItems from the cartItems data
         const orderItems = cartItems.map((item) => ({
           orderId,
-          productId: item.productId,
+          productId: item.productId.id || item.productId,
           quantity: item.quantity,
           price: parseFloat(item.price),
         }));
