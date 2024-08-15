@@ -75,7 +75,6 @@ export const CartProvider = ({ children }) => {
           const response = await axios.get(`${CartApi}/${userState.id}`, {
             headers: {
               Authorization: `Bearer ${userState.token}`,
-              "x-api-key": process.env.API_KEY,
             },
           });
           cartDispitch({ type: cartAction.initCart, payload: response.data });
@@ -94,7 +93,6 @@ export const CartProvider = ({ children }) => {
         const response = await axios.get(`${CartApi}/${userState.id}`, {
           headers: {
             Authorization: `Bearer ${userState.token}`,
-            "x-api-key": process.env.API_KEY,
           },
         });
         cartDispitch({ type: cartAction.initCart, payload: response.data });
@@ -106,8 +104,6 @@ export const CartProvider = ({ children }) => {
 
   // Function to add an item to cart
   const AddToCart = async (userId, productId) => {
-    console.log("API Key add to cartfrount end:", process.env.API_KEY);
-
     try {
       const response = await axios.post(
         `${CartApi}`,
@@ -118,7 +114,6 @@ export const CartProvider = ({ children }) => {
         {
           headers: {
             Authorization: `Bearer ${userState.token}`,
-            "x-api-key": process.env.API_KEY,
           },
         }
       );
@@ -151,7 +146,6 @@ export const CartProvider = ({ children }) => {
       const response = await axios.delete(`${CartApi}`, {
         headers: {
           Authorization: `Bearer ${userState.token}`,
-          "x-api-key": process.env.API_KEY,
         },
         data: { userId, productId },
       });
@@ -188,7 +182,6 @@ export const CartProvider = ({ children }) => {
         {
           headers: {
             Authorization: `Bearer ${userState.token}`,
-            "x-api-key": process.env.API_KEY,
           },
         }
       );

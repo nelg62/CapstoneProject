@@ -16,9 +16,7 @@ export const ProductProvider = ({ children }) => {
   // Function to fetch a single product by ID
   const fetchProduct = async (id) => {
     try {
-      const response = await axios.get(`${ProductApi}/${id}`, {
-        headers: { "x-api-key": process.env.API_KEY },
-      });
+      const response = await axios.get(`${ProductApi}/${id}`);
       setProduct(response.data);
       setLoading(false);
     } catch (error) {
@@ -32,7 +30,6 @@ export const ProductProvider = ({ children }) => {
     try {
       const response = await axios.get(`${ProductApi}`, {
         params: { sortBy, order, category },
-        headers: { "x-api-key": process.env.API_KEY },
       });
       setProductsSort(response.data);
       setLoading(false);
