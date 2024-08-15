@@ -39,10 +39,12 @@ module.exports = (db) => {
         // Set the orderItems from the cartItems data
         const orderItems = cartItems.map((item) => ({
           orderId,
-          productId: item.productId.id || item.productId,
+          productId: item.productId,
           quantity: item.quantity,
           price: parseFloat(item.price),
         }));
+
+        console.log("Order Items:", orderItems);
 
         // Insert orderItems to database
         await trx("OrderItems").insert(orderItems);
