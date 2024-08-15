@@ -17,7 +17,7 @@ const authenticateToken = (req, res, next) => {
   }
 
   // Verify token
-  jwt.verify(token, process.env.DB_SECRET, (err, user) => {
+  jwt.verify(token, process.env.CLOUD_DB_SECRET, (err, user) => {
     if (err) {
       console.log("Token verification failed:", err);
       return res.sendStatus(403); // Forbidden
