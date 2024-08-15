@@ -72,7 +72,7 @@ export const CartProvider = ({ children }) => {
   // Fetch cart items when component mounts or userState changes
   useEffect(() => {
     const fetchCart = async () => {
-      console.log("userState", userState);
+      // console.log("userState", userState);
       if (userState.isAuthenticated) {
         try {
           const response = await axios.get(`${CartApi}/${userState.id}`, {
@@ -120,14 +120,14 @@ export const CartProvider = ({ children }) => {
           },
         }
       );
-      console.log("addtocart responce", response);
+      // console.log("addtocart responce", response);
 
       cartDispitch({
         type: cartAction.addToCart,
         payload: response.data,
       });
 
-      console.log("Item atted to cart in database");
+      // console.log("Item atted to cart in database");
       setAlert({
         open: true,
         message: "Item added to Cart",
@@ -157,7 +157,7 @@ export const CartProvider = ({ children }) => {
           type: cartAction.removeFromCart,
           payload: { productId },
         });
-        console.log("Product removed from cart", response);
+        // console.log("Product removed from cart", response);
         setAlert({
           open: true,
           message: "Removed Product from Cart",
@@ -188,10 +188,10 @@ export const CartProvider = ({ children }) => {
           },
         }
       );
-      console.log("clearcartresponse", response);
+      // console.log("clearcartresponse", response);
       if (response) {
         cartDispitch({ type: cartAction.clearCart });
-        console.log("Cart has been cleared in backend", response);
+        // console.log("Cart has been cleared in backend", response);
       }
     } catch (error) {
       console.error("Error failed to clear cart in backend", error);

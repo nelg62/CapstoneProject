@@ -81,7 +81,7 @@ module.exports = (db) => {
     try {
       // Delete product by ID
       const deleted = await db("Product").where({ id }).del();
-      console.log(deleted);
+      // console.log(deleted);
       if (deleted) {
         res.json({ message: "Product deleted successfully" });
       } else {

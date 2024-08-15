@@ -1,7 +1,7 @@
 require("dotenv").config();
-console.log("process.env.CLOUD_DB_HOST:", process.env.CLOUD_DB_HOST);
+// console.log("process.env.CLOUD_DB_HOST:", process.env.CLOUD_DB_HOST);
 
-console.log("process.env", process.env.DB_HOST);
+// console.log("process.env", process.env.DB_HOST);
 /**
  * @type { Object.<string, import("knex").Knex.Config> }
  */

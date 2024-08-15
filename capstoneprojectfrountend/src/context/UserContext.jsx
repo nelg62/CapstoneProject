@@ -92,7 +92,7 @@ export const UserProvider = ({ children }) => {
         .get(`${UserApi}/me`, { headers: { Authorization: `Bearer ${token}` } })
         .then((response) => {
           const user = response.data;
-          console.log("loccal store", user);
+          // console.log("loccal store", user);
           userDispatch({
             type: UserAction.Login,
             payload: { user, token },
@@ -122,7 +122,7 @@ export const UserProvider = ({ children }) => {
         password,
       });
 
-      console.log("User Signed up ", response);
+      // console.log("User Signed up ", response);
       setAlert({
         open: true,
         message: "User Signed up successfully",
@@ -146,10 +146,18 @@ export const UserProvider = ({ children }) => {
   // Function to handle user Login
   const LoginFunction = async ({ emailId, password }) => {
     try {
-      const response = await axios.post(`${UserApi}/login`, {
-        emailId,
-        password,
-      });
+      const response = await axios.post(
+        `${UserApi}/login`,
+        {
+          emailId,
+          password,
+        },
+        {
+          headers: {
+            "x-api-key": process.env.API_KEY,
+          },
+        }
+      );
 
       const { user, token } = response.data;
 

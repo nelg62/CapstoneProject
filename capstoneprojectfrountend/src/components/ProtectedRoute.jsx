@@ -9,10 +9,10 @@ const ProtectedRoute = (Components) => {
     const [isReady, setIsReady] = useState(false);
 
     useEffect(() => {
-      console.log("protected reoute", userState);
+      // console.log("protected reoute", userState);
       // If user is not authenticated redirect to login page
       if (!userState.isAuthenticated) {
-        console.log("protected route 2");
+        // console.log("protected route 2");
         router.push("/login");
       } else {
         // User is authenticated set ready to true

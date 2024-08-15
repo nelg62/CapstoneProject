@@ -44,7 +44,7 @@ module.exports = (db) => {
           price: parseFloat(item.price),
         }));
 
-        console.log("Order Items:", orderItems);
+        // console.log("Order Items:", orderItems);
 
         // Insert orderItems to database
         await trx("OrderItems").insert(orderItems);
@@ -70,7 +70,7 @@ module.exports = (db) => {
 
   // Get top ordered items GET Route
   router.get("/topOrderedItems", async (req, res) => {
-    console.log("Received request for topOrderedItems");
+    // console.log("Received request for topOrderedItems");
     try {
       // Fetch top ordered items
       const topOrderedItems = await db("OrderItems")
@@ -100,7 +100,7 @@ module.exports = (db) => {
 
   // Get details of specific order GET Route
   router.get("/:orderId", async (req, res) => {
-    console.log("Received request for orderId:", req.params.orderId);
+    // console.log("Received request for orderId:", req.params.orderId);
     const { orderId } = req.params;
     try {
       // Fetch order details

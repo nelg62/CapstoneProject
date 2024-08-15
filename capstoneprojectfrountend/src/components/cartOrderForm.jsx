@@ -22,7 +22,7 @@ export default function CartOrderForm() {
         userId: userState.id,
         items: cart,
       });
-      console.log("Order placed succesfully", response);
+      // console.log("Order placed succesfully", response);
 
       // Clear the cart after successful order
       await clearCartAfterOrder(userState.id);
@@ -35,7 +35,7 @@ export default function CartOrderForm() {
       });
     } catch (error) {
       console.error("Error placing order", error);
-      console.log("Failed to place order");
+      // console.log("Failed to place order");
 
       // Show error alert if order failed
       setAlert({
