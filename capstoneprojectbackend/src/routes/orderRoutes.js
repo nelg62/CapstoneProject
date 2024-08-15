@@ -80,7 +80,7 @@ module.exports = (db) => {
           "Product.title",
           "Product.thumbnail",
           "Product.price",
-          db.raw("COUNT(OrderItems.productId) as orderCount")
+          db.raw('COUNT("OrderItems"."productId") as "orderCount"')
         )
         .groupBy(
           "Product.id",
