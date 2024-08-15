@@ -51,16 +51,15 @@ module.exports = (db) => {
       await trx("Cart").insert({ userId, productId });
 
       // Get updated cart items pulling from multiple diffrarant tables
-      const cartItems = await trx
+      const cartItems = await trx("Cart")
         .select(
-          trx.raw("MIN(Cart.id) as cartId"),
+          trx.raw('MIN("Cart".id) as cartId'),
           "Product.id as productId",
           "Product.title",
           "Product.thumbnail",
           "Product.price",
           trx.raw("COUNT(*) as quantity")
         )
-        .from("Cart")
         .leftJoin("Product", "Product.id", "Cart.productId")
         .where("Cart.userId", userId)
         .andWhere("Cart.productId", productId)
