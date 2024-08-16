@@ -4,25 +4,25 @@ const validateApiKey = require("../middleware/validateApiKey");
 
 // Middleware to authenticate token
 const authenticateToken = (req, res, next) => {
-  console.log("Middleware reached");
+  // console.log("Middleware reached");
   const authHeader = req.headers.authorization;
-  console.log("Authorization Header", authHeader);
+  // console.log("Authorization Header", authHeader);
 
   // Extract token from authorization header
   const token = authHeader && authHeader.split(" ")[1];
 
   if (token == null) {
-    console.log("No token found");
+    // console.log("No token found");
     return res.sendStatus(401); //Unoutorized
   }
 
   // Verify token
   jwt.verify(token, process.env.CLOUD_DB_SECRET, (err, user) => {
     if (err) {
-      console.log("Token verification failed:", err);
+      // console.log("Token verification failed:", err);
       return res.sendStatus(403); // Forbidden
     }
-    console.log("Decoded User", user); // Success
+    // console.log("Decoded User", user); // Success
     req.user = user;
     next();
   });
@@ -38,8 +38,8 @@ module.exports = (db) => {
   // Add an item to Cart  POST Route
   router.post("/", async (req, res) => {
     const { userId, productId } = req.body;
-    console.log("post route", req.headers.authorization);
-    console.log("API Key backend post route:", process.env.API_KEY);
+    // console.log("post route", req.headers.authorization);
+    // console.log("API Key backend post route:", process.env.API_KEY);
 
     // Check if requesting user is current logged in user
     if (req.user.id !== userId) return res.sendStatus(403);
@@ -83,7 +83,7 @@ module.exports = (db) => {
   // Remove item from cart DELETE Route
   router.delete("/", async (req, res) => {
     const { userId, productId } = req.body;
-    console.log("Request user:", req.user);
+    // console.log("Request user:", req.user);
 
     // Check if requesting user is current logged in user
     if (req.user.id !== userId) return res.sendStatus(403);
