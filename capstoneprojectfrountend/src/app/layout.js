@@ -4,6 +4,8 @@ import ResponsiveAppBar from "@/components/NavBar";
 import { CartProvider } from "@/context/CartContext";
 import { UserProvider } from "@/context/UserContext";
 import { ProductProvider } from "@/context/ProductContext";
+import theme from "../styles/theme";
+import { ThemeProvider } from "@mui/material";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,14 +18,16 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <UserProvider>
-          <CartProvider>
-            <ProductProvider>
-              <ResponsiveAppBar />
-              {children}
-            </ProductProvider>
-          </CartProvider>
-        </UserProvider>
+        <ThemeProvider theme={theme}>
+          <UserProvider>
+            <CartProvider>
+              <ProductProvider>
+                <ResponsiveAppBar />
+                {children}
+              </ProductProvider>
+            </CartProvider>
+          </UserProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
