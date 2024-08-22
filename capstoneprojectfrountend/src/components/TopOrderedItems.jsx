@@ -1,22 +1,13 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { OrdersApi } from "../../utils/api";
-import {
-  Box,
-  Card,
-  CardActionArea,
-  CardContent,
-  CardMedia,
-  Grid,
-  Skeleton,
-  Typography,
-} from "@mui/material";
 import { useRouter } from "next/navigation";
-import theme from "@/styles/theme";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function TopOrderedItems() {
   // State to store top ordered items
-  const [TopOrderedItemsState, setTopOrderedItemsState] = useState([]);
+  const [topOrderedItemsState, setTopOrderedItemsState] = useState([]);
   const router = useRouter();
   const [loading, setLoading] = useState(true);
 
@@ -25,10 +16,9 @@ export default function TopOrderedItems() {
     const fetchTopOrderedItems = async () => {
       try {
         const response = await axios.get(`${OrdersApi}/topOrderedItems`);
-
         setTopOrderedItemsState(response.data);
       } catch (error) {
-        console.error("Error fetching top order items", error);
+        console.error("Error fetching top ordered items", error);
       } finally {
         setLoading(false);
       }
@@ -43,110 +33,59 @@ export default function TopOrderedItems() {
 
   return (
     <>
-      <Typography variant="h3" sx={{ textAlign: "center" }}>
+      <h3 className="tw-text-center tw-text-3xl tw-font-bold tw-mb-6">
         Top Ordered Items
-      </Typography>
-      <Box>
-        <Grid
-          container
-          spacing={{ xs: 2, md: 3 }}
-          columns={{ xs: 4, sm: 8, md: 12 }}
-        >
-          {loading //Show skeleton while loading and fetching data
-            ? Array.from(new Array(6)).map((_, index) => (
-                <Grid key={index} item xs={2} sm={4} md={4}>
-                  <Card sx={{ maxWidth: 345, margin: "auto", marginTop: 4 }}>
-                    <CardActionArea>
-                      <Skeleton variant="rectangular" height={300} />
-                      <Box>
-                        <CardContent>
-                          <Skeleton variant="h5" />
-                          <Skeleton variant="body1" />
-                          <Skeleton variant="body1" />
-                        </CardContent>
-                      </Box>
-                    </CardActionArea>
-                  </Card>
-                </Grid>
-              ))
-            : TopOrderedItemsState.map((item) => (
-                <Grid key={item.productId} item xs={2} sm={4} md={4}>
-                  <Card
-                    key={item.productId}
-                    sx={{
-                      maxWidth: 345,
-                      backgroundColor: theme.palette.background.default,
-                      borderColor: theme.palette.secondary.main,
-                      border: `1px solid ${theme.palette.secondary.main}`,
-                      boxShadow: theme.shadows[3],
-                      borderRadius: theme.shape.borderRadius,
-                    }}
-                  >
-                    {/* On Click action to navigate to product details page  */}
-                    <CardActionArea
-                      onClick={() => handleCardClick(item.productId)}
-                    >
-                      {/* Product Image */}
-                      <CardMedia
-                        component="img"
-                        image={item.thumbnail}
-                        alt={item.title}
-                        sx={{
-                          objectFit: "contain",
-                          maxWidth: 344,
-                          height: 194,
-                        }}
-                      />
+      </h3>
+      <div className="tw-grid tw-grid-cols-1 tw-gap-4 sm:tw-grid-cols-2 md:tw-grid-cols-3 lg:tw-grid-cols-4">
+        {loading
+          ? Array.from(new Array(6)).map((_, index) => (
+              <div
+                key={index}
+                className="tw-max-w-sm tw-mx-auto tw-bg-white tw-border tw-border-gray-200 tw-rounded-lg tw-shadow-md"
+              >
+                <Card>
+                  <CardHeader>
+                    <Skeleton className="tw-h-64 tw-w-full" />
+                  </CardHeader>
+                  <CardContent>
+                    <Skeleton className="tw-h-6 tw-mb-4" />
+                    <Skeleton className="tw-h-4 tw-mb-2" />
+                    <Skeleton className="tw-h-4" />
+                  </CardContent>
+                </Card>
+              </div>
+            ))
+          : topOrderedItemsState.map((item) => (
+              <div
+                key={item.productId}
+                className="tw-max-w-sm tw-mx-auto tw-bg-white tw-border tw-border-gray-200 tw-rounded-lg tw-shadow-md"
+              >
+                <Card
+                  onClick={() => handleCardClick(item.productId)}
+                  className="tw-cursor-pointer"
+                >
+                  {/* Product Image */}
+                  <img
+                    src={item.thumbnail}
+                    alt={item.title}
+                    className="tw-w-full tw-h-48 tw-object-contain tw-rounded-t-lg"
+                  />
 
-                      <Box>
-                        <CardContent>
-                          {/* Product Title */}
-                          <Typography
-                            gutterBottom
-                            variant="h5"
-                            component="div"
-                            sx={{
-                              color: theme.palette.text.primary,
-                              marginLeft: "5px",
-                              minHeight: "44px",
-                              maxHeight: "44px",
-                              marginBottom: "50px",
-                            }}
-                          >
-                            {item.title}
-                          </Typography>
-
-                          {/* Product Price */}
-                          <Typography
-                            sx={{
-                              fontWeight: "700",
-                              marginRight: "5px",
-                              marginLeft: "5px",
-                              color: theme.palette.primary.main,
-                            }}
-                            variant="body1"
-                          >
-                            Price: ${item.price}
-                          </Typography>
-
-                          {/* Product orderCount */}
-                          <Typography
-                            variant="body1"
-                            sx={{
-                              marginLeft: "5px",
-                              color: theme.palette.text.primary,
-                            }}
-                          >
-                            Ordered: {item.orderCount} times
-                          </Typography>
-                        </CardContent>
-                      </Box>
-                    </CardActionArea>
-                  </Card>
-                </Grid>
-              ))}
-        </Grid>
-      </Box>
+                  <CardContent>
+                    <CardTitle className="tw-text-xl tw-font-semibold tw-text-gray-800 tw-mb-2">
+                      {item.title}
+                    </CardTitle>
+                    <p className="tw-text-lg tw-font-bold tw-text-blue-600 tw-mb-2">
+                      Price: ${item.price}
+                    </p>
+                    <p className="tw-text-gray-600">
+                      Ordered: {item.orderCount} times
+                    </p>
+                  </CardContent>
+                </Card>
+              </div>
+            ))}
+      </div>
     </>
   );
 }

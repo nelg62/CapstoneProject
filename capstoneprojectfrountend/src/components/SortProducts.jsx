@@ -1,8 +1,14 @@
 import ProductCard from "./ProductCard";
-
-const { useProductContext } = require("@/context/ProductContext");
-const { Select, MenuItem, Grid, Box, Skeleton } = require("@mui/material");
-const { useState, useEffect } = require("react");
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useState, useEffect } from "react";
+import { useProductContext } from "@/context/ProductContext";
 
 const SortProductsButtons = () => {
   // Destructure values from ProductContext
@@ -13,81 +19,97 @@ const SortProductsButtons = () => {
   const [order, setOrder] = useState("asc");
   const [category, setCategory] = useState("");
 
-  // Fetch sorted and filterd products when sortBy, order, or category changes
+  // Fetch sorted and filtered products when sortBy, order, or category changes
   useEffect(() => {
     setLoading(true);
     fetchProductsSort(sortBy, order, category);
   }, [sortBy, order, category]);
 
-  // Handlers for chnaging sort and filter options
-  const handleSortChange = (e) => {
-    setSortBy(e.target.value);
+  // Handlers for changing sort and filter options
+  const handleSortChange = (value) => {
+    setSortBy(value);
   };
 
-  const handleOrderChange = (e) => {
-    setOrder(e.target.value);
+  const handleOrderChange = (value) => {
+    setOrder(value);
   };
 
-  const handleCategoryChange = (e) => {
-    setCategory(e.target.value);
+  const handleCategoryChange = (value) => {
+    setCategory(value);
   };
 
   return (
-    <Box>
+    <div className="tw-p-4">
       {/* Sorting and filtering options / controls */}
-      <Box sx={{ display: "flex", justifyContent: "flex-end", mb: 2 }}>
+      <div className="tw-flex tw-justify-end tw-mb-4 tw-space-x-4">
         {/* SortBy */}
-        <Select value={sortBy} onChange={handleSortChange}>
-          <MenuItem value="price">Price</MenuItem>
-          <MenuItem value="rating">Rating</MenuItem>
-          <MenuItem value="title">Title</MenuItem>
+        <Select
+          onValueChange={handleSortChange}
+          value={sortBy}
+          className="tw-w-40"
+        >
+          <SelectTrigger>
+            <SelectValue placeholder="Sort By" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="price">Price</SelectItem>
+            <SelectItem value="rating">Rating</SelectItem>
+            <SelectItem value="title">Title</SelectItem>
+          </SelectContent>
         </Select>
 
         {/* Order */}
-        <Select value={order} onChange={handleOrderChange}>
-          <MenuItem value="asc">Ascending</MenuItem>
-          <MenuItem value="desc">Descending</MenuItem>
+        <Select
+          onValueChange={handleOrderChange}
+          value={order}
+          className="tw-w-40"
+        >
+          <SelectTrigger>
+            <SelectValue placeholder="Order" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="asc">Ascending</SelectItem>
+            <SelectItem value="desc">Descending</SelectItem>
+          </SelectContent>
         </Select>
 
         {/* Category */}
-        <Select value={category} onChange={handleCategoryChange}>
-          <MenuItem value="">All Categories</MenuItem>
-          <MenuItem value="beauty">Beauty</MenuItem>
-          <MenuItem value="furniture">Furniture</MenuItem>
-          <MenuItem value="fragrances">Fragrances</MenuItem>
-          <MenuItem value="laptops">Laptops</MenuItem>
-          <MenuItem value="smartphones">Smartphones</MenuItem>
-          <MenuItem value="tablets">Tablets</MenuItem>
-          <MenuItem value="vehicle">Vehicle</MenuItem>
+        <Select
+          onValueChange={handleCategoryChange}
+          value={category}
+          className="tw-w-40"
+        >
+          <SelectTrigger>
+            <SelectValue placeholder="Category" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">All Categories</SelectItem>
+            <SelectItem value="beauty">Beauty</SelectItem>
+            <SelectItem value="furniture">Furniture</SelectItem>
+            <SelectItem value="fragrances">Fragrances</SelectItem>
+            <SelectItem value="laptops">Laptops</SelectItem>
+            <SelectItem value="smartphones">Smartphones</SelectItem>
+            <SelectItem value="tablets">Tablets</SelectItem>
+            <SelectItem value="vehicle">Vehicle</SelectItem>
+          </SelectContent>
         </Select>
-      </Box>
+      </div>
 
       {/* Display the sorted and filtered products */}
-      {/* <Grid
-        container
-        spacing={{ xs: 2, md: 3 }}
-        columns={{ xs: 4, sm: 8, md: 12 }}
-        sx={{ justifyContent: "flex-start", alignItems: "center" }}
-      >
-        {productsSort.map((product) => (
-          <Grid key={product.id} item xs={2} sm={4} md={4}>
-            <ProductCard product={product} />
-          </Grid>
-        ))}
-      </Grid> */}
-
-      <Grid
-        container
-        spacing={{ xs: 2, md: 3 }}
-        columns={{ xs: 4, sm: 8, md: 12 }}
-      >
-        {productsSort.map((product) => (
-          <Grid item xs={2} sm={4} md={4} key={product.id}>
-            <ProductCard product={product} />
-          </Grid>
-        ))}
-      </Grid>
-    </Box>
+      <div className="tw-grid tw-grid-cols-2 sm:tw-grid-cols-3 md:tw-grid-cols-4 tw-gap-4">
+        {productsSort.length === 0
+          ? Array.from({ length: 12 }).map((_, index) => (
+              <div key={index} className="tw-w-full tw-h-64">
+                <Skeleton className="tw-w-full tw-h-full tw-bg-gray-200" />
+              </div>
+            ))
+          : productsSort.map((product) => (
+              <div key={product.id} className="tw-w-full h-64">
+                <ProductCard product={product} />
+              </div>
+            ))}
+      </div>
+    </div>
   );
 };
 

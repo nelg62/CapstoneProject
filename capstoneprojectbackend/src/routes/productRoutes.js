@@ -9,8 +9,8 @@ module.exports = (db) => {
       const { sortBy, order = "asc", category } = req.query;
       let query = db("Product").select("*");
 
-      // Filter by category if provided
-      if (category) {
+      // Filter by category if provided and not all
+      if (category && category !== "all") {
         query = query.where("category", category);
       }
 

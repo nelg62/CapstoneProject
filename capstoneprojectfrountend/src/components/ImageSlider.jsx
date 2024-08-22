@@ -1,82 +1,71 @@
-import * as React from "react";
-import { useTheme } from "@mui/material/styles";
-import MobileStepper from "@mui/material/MobileStepper";
-import Button from "@mui/material/Button";
-import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
-import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
-import { Box, CardMedia, Skeleton } from "@mui/material";
+"use client";
+
+import { useState, useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function DotsMobileStepper({ product }) {
-  const theme = useTheme();
-  const [activeStep, setActiveStep] = React.useState(0);
-  const [loading, setLoading] = React.useState(true);
+  const [activeStep, setActiveStep] = useState(0);
+  const [loading, setLoading] = useState(true);
 
-  React.useEffect(() => {
-    // Set loading to false once the product data is available
+  useEffect(() => {
     if (product) {
       setLoading(false);
     }
   }, [product]);
 
-  // Determine the maximum number of steps based on the amount of product images
   const maxSteps = product.images.length;
 
-  // Handle next step in the image carousel
   const handleNext = () => {
     setActiveStep((prevActiveStep) =>
       Math.min(prevActiveStep + 1, maxSteps - 1)
     );
   };
 
-  // Handle previous step in the image carousel
   const handleBack = () => {
     setActiveStep((prevActiveStep) => Math.max(prevActiveStep - 1, 0));
   };
 
   return (
-    <Box sx={{ flexDirection: "column", marginTop: 4 }}>
+    <div className="tw-flex tw-flex-col tw-items-center tw-mt-4">
       {loading ? (
-        <Skeleton variant="rectangular" width={500} height={300}></Skeleton>
+        <Skeleton className="tw-w-full tw-h-72" />
       ) : (
-        // Show Product image depending on active step number
-        <CardMedia
-          component="img"
-          image={product.images[activeStep]}
-          alt={`${product.title} image ${activeStep + 1}`}
-          sx={{ maxHeight: 600, objectFit: "contain" }}
-        />
+        <Card className="tw-w-full tw-max-w-md tw-mx-auto">
+          <img
+            src={product.images[activeStep]}
+            alt={`${product.title} image ${activeStep + 1}`}
+            className="tw-w-full tw-h-72 tw-object-contain"
+          />
+        </Card>
       )}
-      <MobileStepper
-        variant="dots"
-        steps={maxSteps}
-        position="static"
-        activeStep={activeStep}
-        sx={{ flexGrow: 1 }}
-        nextButton={
-          <Button
-            size="small"
-            onClick={handleNext}
-            disabled={activeStep === maxSteps - 1}
-          >
-            Next
-            {theme.direction === "rtl" ? (
-              <KeyboardArrowLeft />
-            ) : (
-              <KeyboardArrowRight />
-            )}
-          </Button>
-        }
-        backButton={
-          <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
-            {theme.direction === "rtl" ? (
-              <KeyboardArrowRight />
-            ) : (
-              <KeyboardArrowLeft />
-            )}
-            Back
-          </Button>
-        }
-      />
-    </Box>
+      <div className="tw-flex tw-justify-between tw-w-full tw-mt-2">
+        <Button
+          onClick={handleBack}
+          disabled={activeStep === 0}
+          className="tw-bg-gray-300 tw-text-gray-700 hover:tw-bg-gray-400"
+        >
+          &lt; Back
+        </Button>
+        <div className="tw-flex tw-items-center tw-space-x-2">
+          {Array.from({ length: maxSteps }).map((_, index) => (
+            <div
+              key={index}
+              className={`tw-w-2 tw-h-2 tw-rounded-full ${
+                index === activeStep ? "tw-bg-blue-600" : "tw-bg-gray-300"
+              }`}
+            />
+          ))}
+        </div>
+        <Button
+          onClick={handleNext}
+          disabled={activeStep === maxSteps - 1}
+          className="tw-bg-gray-300 tw-text-gray-700 hover:tw-bg-gray-400"
+        >
+          Next &gt;
+        </Button>
+      </div>
+    </div>
   );
 }

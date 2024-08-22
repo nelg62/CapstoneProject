@@ -1,28 +1,33 @@
 import { useCartContext } from "@/context/CartContext";
-import { useUserContext } from "@/context/UserContext";
+import { Box, Button, Paper, TextField } from "@mui/material";
 import axios from "axios";
 import { OrdersApi } from "../../utils/api";
-import { Button } from "./ui/button";
-import { Card } from "./ui/card";
+import { useUserContext } from "@/context/UserContext";
 
 export default function CartOrderForm() {
   const { cart, clearCartAfterOrder } = useCartContext();
   const { userState, setAlert } = useUserContext();
 
+  // Handle form submission
   const handleSubmit = async (event) => {
     event.preventDefault();
     await handlePlaceOrder();
   };
 
+  // Place order and handle success or failure
   const handlePlaceOrder = async () => {
     try {
+      // Send order details to the server
       const response = await axios.post(`${OrdersApi}`, {
         userId: userState.id,
         items: cart,
       });
+      // console.log("Order placed succesfully", response);
 
+      // Clear the cart after successful order
       await clearCartAfterOrder(userState.id);
 
+      // Show success alert
       setAlert({
         open: true,
         message: "Order Placed Successfully",
@@ -30,7 +35,9 @@ export default function CartOrderForm() {
       });
     } catch (error) {
       console.error("Error placing order", error);
+      // console.log("Failed to place order");
 
+      // Show error alert if order failed
       setAlert({
         open: true,
         message: "Failed to Place Order",
@@ -40,19 +47,23 @@ export default function CartOrderForm() {
   };
 
   return (
-    <form
+    <Box
+      component={"form"}
+      sx={{
+        width: "100%",
+        marginTop: "10px",
+        marginLeft: "10px",
+        display: "flex",
+        flexDirection: "column",
+      }}
       onSubmit={handleSubmit}
-      className="tw-w-full tw-mt-2 tw-ml-2 tw-flex tw-flex-col"
     >
-      <Card className="tw-p-4">
+      <Paper>
         {/* Checkout / order button */}
-        <Button
-          type="submit"
-          className="tw-w-full tw-bg-blue-500 tw-text-white"
-        >
+        <Button type="submit" variant="contained" sx={{ width: "100%" }}>
           CheckOut
         </Button>
-      </Card>
-    </form>
+      </Paper>
+    </Box>
   );
 }

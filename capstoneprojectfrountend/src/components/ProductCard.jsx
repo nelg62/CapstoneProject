@@ -1,41 +1,27 @@
 "use client";
-import * as React from "react";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import Typography from "@mui/material/Typography";
-import {
-  Button,
-  CardActionArea,
-  CardActions,
-  Collapse,
-  Divider,
-  IconButton,
-  Rating,
-  Skeleton,
-} from "@mui/material";
 import { useRouter } from "next/navigation";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { styled } from "@mui/material/styles";
-import theme from "@/styles/theme";
+import { useState, useEffect } from "react";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardFooter,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
 import { useCartContext } from "@/context/CartContext";
 import { useUserContext } from "@/context/UserContext";
 
-const ExpandMore = styled((props) => {
-  const { expand, ...other } = props;
-  return <IconButton {...other} />;
-})(({ theme, expand }) => ({
-  transform: !expand ? "rotate(0deg)" : "rotate(180deg)",
-  marginLeft: "auto",
-  transition: theme.transitions.create("transform", {
-    duration: theme.transitions.duration.shortest,
-  }),
-}));
-
 export default function ProductCard({ product }) {
   const router = useRouter();
-  const [loading, setLoading] = React.useState(true);
-  const [expanded, setExpanded] = React.useState(false);
+  const [loading, setLoading] = useState(true);
+  const [expanded, setExpanded] = useState(false);
   const { AddToCart } = useCartContext();
   const { userState } = useUserContext();
 
@@ -43,202 +29,85 @@ export default function ProductCard({ product }) {
     AddToCart(userState.id, product.id);
   }
 
-  const handleExpandClick = (event) => {
-    event.stopPropagation();
-    setExpanded(!expanded);
-  };
-
-  // Set loading state to false once product is available
-  React.useEffect(() => {
+  useEffect(() => {
     if (product) {
       setLoading(false);
     }
   }, [product]);
 
-  // Redirect to product details page on card click
   const handleCardClick = () => {
     router.push(`/products/${product.id}`);
   };
 
   return (
     <Card
-      sx={{
-        maxWidth: 345,
-        backgroundColor: theme.palette.background.default,
-        borderColor: theme.palette.secondary.main,
-        border: `1px solid ${theme.palette.secondary.main}`,
-        boxShadow: theme.shadows[3],
-        borderRadius: theme.shape.borderRadius,
-      }}
+      className="tw-bg-gray-100 tw-border tw-border-gray-300 tw-shadow-lg tw-rounded-lg tw-cursor-pointer"
+      onClick={handleCardClick}
     >
-      <CardActionArea onClick={handleCardClick}>
+      <CardHeader>
+        <CardTitle className="tw-text-lg tw-font-semibold tw-text-gray-900">
+          {loading ? "Loading..." : product.title}
+        </CardTitle>
+        <CardDescription className="tw-text-gray-600">
+          {loading ? "Loading description..." : `Category: ${product.category}`}
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="tw-flex tw-flex-col tw-items-center">
         {loading ? (
-          <Skeleton variant="rectangle" height={200}></Skeleton>
+          <div className="tw-w-full tw-h-40 tw-bg-gray-200 tw-animate-pulse"></div>
         ) : (
-          // Product Image
-          <CardMedia
-            component="img"
-            image={product.thumbnail}
+          <img
+            src={product.thumbnail}
             alt={product.title}
-            sx={{
-              objectFit: "contain",
-              maxWidth: 344,
-              height: 194,
-            }}
+            className="tw-w-full tw-h-40 tw-object-contain"
           />
         )}
-        <CardContent>
-          {loading ? (
-            <Skeleton variant="h5"></Skeleton>
-          ) : (
-            // Product Title
-            <Typography
-              gutterBottom
-              variant="h5"
-              component="div"
-              sx={{
-                color: theme.palette.text.primary,
-                marginLeft: "5px",
-                minHeight: "44px",
-                maxHeight: "44px",
-                marginBottom: "20px",
-              }}
-            >
-              {product.title}
-            </Typography>
-          )}
-
-          {loading ? (
-            <Skeleton variant="body1"></Skeleton>
-          ) : (
-            // Product price
-            <Typography
-              sx={{
-                fontWeight: "700",
-                marginRight: "5px",
-                marginLeft: "5px",
-                color: theme.palette.primary.main,
-              }}
-              variant="body1"
-            >
-              ${product.price}
-            </Typography>
-          )}
-
-          {loading ? (
-            <Skeleton variant="body2"></Skeleton>
-          ) : (
-            // Product rating
-            <Typography
-              gutterBottom
-              variant="body2"
-              color={theme.palette.text.secondary}
-            >
-              <Rating
-                sx={{ top: "7px" }}
-                value={product.rating}
-                readOnly
-                precision={0.5}
-              />
-            </Typography>
-          )}
-
-          {loading ? (
-            <Skeleton variant="body1"></Skeleton>
-          ) : (
-            // Product category
-            <Typography
-              sx={{ marginLeft: "5px", color: theme.palette.text.secondary }}
-              gutterBottom
-              variant="body2"
-            >
-              Category: {product.category}
-            </Typography>
-          )}
-
-          {loading ? (
-            <Skeleton variant="body1"></Skeleton>
-          ) : (
-            // Product availability status
-            <Typography
-              variant="body1"
-              sx={{
-                float: "left",
-                marginLeft: "5px",
-                color: theme.palette.text.primary,
-              }}
-            >
-              {product.stock} {product.availabilityStatus}
-            </Typography>
-          )}
-        </CardContent>
-      </CardActionArea>
-
-      <CardActions disableSpacing>
-        <Button
-          onClick={addToCart}
-          sx={{
-            marginLeft: "5px",
-            color: theme.palette.primary.main,
-            borderColor: theme.palette.primary.main,
-            "&:hover": {
-              backgroundColor: theme.palette.primary.dark,
-              color: theme.palette.primary.contrastText,
-            },
-          }}
+        <p className="tw-mt-2 tw-text-xl tw-font-bold tw-text-gray-900">
+          ${loading ? "..." : product.price}
+        </p>
+        <p className="tw-mt-1 tw-text-sm tw-text-gray-600">
+          {loading ? "Loading rating..." : `Rating: ${product.rating}`}
+        </p>
+        <p className="tw-mt-1 tw-text-sm tw-text-gray-600">
+          {loading
+            ? "Loading stock..."
+            : `${product.stock} ${product.availabilityStatus}`}
+        </p>
+      </CardContent>
+      <Collapsible open={expanded} onOpenChange={setExpanded}>
+        <CardFooter
+          className={`tw-flex ${
+            expanded
+              ? "tw-flex-col tw-items-start tw-gap-4"
+              : "tw-justify-between tw-items-center"
+          }`}
         >
-          Add To Cart
-        </Button>
-        <ExpandMore
-          expand={expanded}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
-          sx={{
-            float: "right",
-            color: theme.palette.primary.main,
-            "&:hover": {
-              color: theme.palette.primary.dark,
-            },
-          }}
-        >
-          <ExpandMoreIcon />
-        </ExpandMore>
-      </CardActions>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent>
-          <Divider
-            sx={{
-              marginBottom: "5px",
-              borderColor: theme.palette.secondary.main,
-            }}
-          />
-          {loading ? (
-            <Skeleton variant="body2"></Skeleton>
-          ) : (
-            // Product description
-            <Typography
-              sx={{
-                minHeight: 100,
-                maxHeight: 100,
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                color: theme.palette.text.secondary,
-              }}
-              gutterBottom
-              variant="body2"
-            >
-              {product.description}
-            </Typography>
+          {expanded && (
+            <CollapsibleContent className="tw-w-full tw-text-left">
+              {loading ? (
+                <p className="tw-text-gray-600">Loading description...</p>
+              ) : (
+                <p className="tw-text-gray-600">{product.description}</p>
+              )}
+            </CollapsibleContent>
           )}
-          <Divider
-            sx={{
-              marginBottom: "5px",
-              borderColor: theme.palette.secondary.main,
+          <Button
+            onClick={(e) => {
+              e.stopPropagation();
+              addToCart();
             }}
-          />
-        </CardContent>
-      </Collapse>
+            className="tw-bg-blue-500 tw-text-white hover:tw-bg-blue-600"
+          >
+            Add To Cart
+          </Button>
+          <CollapsibleTrigger
+            className="tw-text-blue-500 hover:tw-text-blue-600"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {expanded ? "Show Less" : "Show More"}
+          </CollapsibleTrigger>
+        </CardFooter>
+      </Collapsible>
     </Card>
   );
 }

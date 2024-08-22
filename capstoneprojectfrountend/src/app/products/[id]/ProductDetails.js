@@ -1,24 +1,16 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import {
-  Box,
-  Button,
-  Card,
-  CardContent,
-  Divider,
-  Grid,
-  Rating,
-  Skeleton,
-  Typography,
-} from "@mui/material";
 import { useParams } from "next/navigation";
-import DotsMobileStepper from "@/components/ImageSlider";
-import AlignItemsList from "@/components/ReviewProductList";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
+import { Skeleton } from "@/components/ui/skeleton";
 import { useCartContext } from "@/context/CartContext";
 import { useUserContext } from "@/context/UserContext";
 import { useProductContext } from "@/context/ProductContext";
-import theme from "@/styles/theme";
+import DotsMobileStepper from "@/components/ImageSlider";
+import AlignItemsList from "@/components/ReviewProductList";
 
 const ProductDetail = () => {
   const { AddToCart } = useCartContext();
@@ -27,249 +19,147 @@ const ProductDetail = () => {
   const { product, fetchProduct } = useProductContext();
   const [loading, setLoading] = useState(true);
 
-  // Fetch product details when component mounts or product ID changes
   useEffect(() => {
     if (id) {
       fetchProduct(id);
     }
   }, [id]);
 
-  // Set loading to false when product data is available
   useEffect(() => {
     if (product) {
       setLoading(false);
     }
   }, [product]);
 
-  // When product is not found
   if (!product) {
     return <p>Product not found</p>;
   }
 
-  // Add product to cart pass user id and product id
   function addToCart() {
     AddToCart(userState.id, product.id);
   }
 
   return (
-    <Box sx={{ padding: 2 }}>
-      <Grid container spacing={4}>
-        <Grid item xs={12} md={6}>
-          {/* Image slider */}
+    <div className="tw-p-4">
+      <div className="tw-grid tw-grid-cols-1 md:tw-grid-cols-2 tw-gap-4">
+        <div>
           <DotsMobileStepper product={product} />
-        </Grid>
+        </div>
 
-        {/* Product details */}
-        <Grid item xs={12} md={6}>
-          <Card
-            sx={{
-              maxWidth: 345,
-              margin: "auto",
-              padding: 2,
-              boxShadow: theme.shadows[3],
-              borderRadius: theme.shape.borderRadius,
-            }}
-          >
+        <div className="tw-max-w-sm tw-mx-auto">
+          <Card className="tw-shadow-lg tw-rounded-lg tw-p-4">
             <CardContent>
               {loading ? (
-                <Skeleton variant="h5"></Skeleton>
+                <Skeleton className="tw-h-8 tw-w-full tw-mb-4" />
               ) : (
-                // Product title
-                <Typography
-                  sx={{
-                    textAlign: "center",
-                    backgroundColor: theme.palette.primary.main,
-                    color: theme.palette.common.white,
-                    fontWeight: "700",
-                    padding: 1,
-                    borderRadius: 1,
-                  }}
-                  gutterBottom
-                  variant="h5"
-                >
+                <h5 className="tw-text-center tw-bg-blue-600 tw-text-white tw-font-bold tw-p-2 tw-rounded">
                   {product.title}
-                </Typography>
+                </h5>
               )}
 
-              <Divider sx={{ marginY: 2, fontWeight: "600" }}>Price</Divider>
+              <Separator className="tw-my-4" />
+              <h6 className="tw-font-semibold">Price</h6>
               {loading ? (
-                <Skeleton variant="body1"></Skeleton>
+                <Skeleton className="tw-h-5 tw-w-full tw-mb-4" />
               ) : (
-                // Product price
-                <Typography
-                  sx={{
-                    textAlign: "center",
-                    fontWeight: "600",
-                    color: theme.palette.primary.main,
-                  }}
-                  gutterBottom
-                  variant="body1"
-                >
+                <p className="tw-text-center tw-font-semibold tw-text-blue-600">
                   ${product.price}
-                </Typography>
+                </p>
               )}
 
-              <Divider sx={{ marginY: 2, fontWeight: "600" }}>Rating</Divider>
-
+              <Separator className="tw-my-4" />
+              <h6 className="tw-font-semibold">Rating</h6>
               {loading ? (
-                <Skeleton variant="body2"></Skeleton>
+                <Skeleton className="tw-h-4 tw-w-full tw-mb-4" />
               ) : (
-                // Product rating
-                <Typography
-                  sx={{ textAlign: "center" }}
-                  gutterBottom
-                  variant="body2"
-                >
-                  <Rating
-                    sx={{ top: "7px" }}
-                    value={product.rating}
-                    readOnly
-                    precision={0.5}
-                  />
-                </Typography>
+                <p className="tw-text-center">
+                  <div className="tw-flex tw-justify-center">
+                    {/* Assuming you have a star rating component */}
+                    <div className="tw-flex tw-items-center">
+                      <div className="tw-text-yellow-500">★</div>
+                      <div>{product.rating}</div>
+                    </div>
+                  </div>
+                </p>
               )}
 
-              <Divider sx={{ marginY: 2, fontWeight: "600" }}>
-                Description
-              </Divider>
+              <Separator className="tw-my-4" />
+              <h6 className="tw-font-semibold">Description</h6>
               {loading ? (
-                <Skeleton variant="body2"></Skeleton>
+                <Skeleton className="tw-h-4 tw-w-full tw-mb-4" />
               ) : (
-                // Product description
-                <Typography
-                  sx={{
-                    textAlign: "center",
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                    height: 60,
-                  }}
-                  gutterBottom
-                  variant="body2"
-                >
+                <p className="tw-text-center tw-h-16 tw-overflow-hidden">
                   {product.description}
-                </Typography>
-              )}
-              <Divider sx={{ marginY: 2, fontWeight: "600" }}>Category</Divider>
-              {loading ? (
-                <Skeleton variant="body1"></Skeleton>
-              ) : (
-                // Product category
-                <Typography
-                  sx={{ textAlign: "center" }}
-                  gutterBottom
-                  variant="body1"
-                >
-                  {product.category}
-                </Typography>
+                </p>
               )}
 
-              <Divider sx={{ marginY: 2, fontWeight: "600" }}>Brand</Divider>
-
+              <Separator className="tw-my-4" />
+              <h6 className="tw-font-semibold">Category</h6>
               {loading ? (
-                <Skeleton variant="body1"></Skeleton>
+                <Skeleton className="tw-h-4 tw-w-full tw-mb-4" />
               ) : (
-                // Product brand
-                <Typography
-                  sx={{ textAlign: "center" }}
-                  gutterBottom
-                  variant="body1"
-                >
-                  {product.brand}
-                </Typography>
+                <p className="tw-text-center">{product.category}</p>
               )}
 
-              <Divider sx={{ marginY: 2, fontWeight: "600" }}>
-                Availability
-              </Divider>
-
+              <Separator className="tw-my-4" />
+              <h6 className="tw-font-semibold">Brand</h6>
               {loading ? (
-                <Skeleton variant="body1"></Skeleton>
+                <Skeleton className="tw-h-4 tw-w-full tw-mb-4" />
               ) : (
-                // Product abvailability
-                <Typography
-                  sx={{ textAlign: "center" }}
-                  gutterBottom
-                  variant="body1"
-                >
+                <p className="tw-text-center">{product.brand}</p>
+              )}
+
+              <Separator className="tw-my-4" />
+              <h6 className="tw-font-semibold">Availability</h6>
+              {loading ? (
+                <Skeleton className="tw-h-4 tw-w-full tw-mb-4" />
+              ) : (
+                <p className="tw-text-center">
                   {product.stock} {product.availabilityStatus}
-                </Typography>
+                </p>
               )}
 
-              <Divider sx={{ marginY: 2, fontWeight: "600" }}>
-                Warranty Information
-              </Divider>
-
+              <Separator className="tw-my-4" />
+              <h6 className="tw-font-semibold">Warranty Information</h6>
               {loading ? (
-                <Skeleton variant="body1"></Skeleton>
+                <Skeleton className="tw-h-4 tw-w-full tw-mb-4" />
               ) : (
-                // Product warranty information
-                <Typography
-                  sx={{ textAlign: "center" }}
-                  gutterBottom
-                  variant="body1"
-                >
-                  {product.warrantyInformation}
-                </Typography>
+                <p className="tw-text-center">{product.warrantyInformation}</p>
               )}
 
-              <Divider sx={{ marginY: 2, fontWeight: "600" }}>Shipping</Divider>
-
+              <Separator className="tw-my-4" />
+              <h6 className="tw-font-semibold">Shipping</h6>
               {loading ? (
-                <Skeleton variant="body1"></Skeleton>
+                <Skeleton className="tw-h-4 tw-w-full tw-mb-4" />
               ) : (
-                // Product shipping information
-                <Typography
-                  sx={{ textAlign: "center" }}
-                  gutterBottom
-                  variant="body1"
-                >
-                  {product.shippingInformation}
-                </Typography>
+                <p className="tw-text-center">{product.shippingInformation}</p>
               )}
 
-              <Divider sx={{ marginY: 2, fontWeight: "600" }}>
-                Return Policy
-              </Divider>
-
+              <Separator className="tw-my-4" />
+              <h6 className="tw-font-semibold">Return Policy</h6>
               {loading ? (
-                <Skeleton variant="body1"></Skeleton>
+                <Skeleton className="tw-h-4 tw-w-full tw-mb-4" />
               ) : (
-                // Product retun policy
-                <Typography
-                  sx={{ textAlign: "center" }}
-                  gutterBottom
-                  variant="body1"
-                >
-                  {product.returnPolicy}
-                </Typography>
+                <p className="tw-text-center">{product.returnPolicy}</p>
               )}
             </CardContent>
-            {/* Add to cart button */}
-            <Button
-              onClick={addToCart}
-              variant="contained"
-              sx={{
-                width: "100%",
-                fontWeight: "700",
-                marginTop: 2,
-                backgroundColor: theme.palette.primary.main,
-                "&:hover": {
-                  backgroundColor: theme.palette.primary.dark,
-                },
-              }}
-            >
-              Add to Cart
-            </Button>
+            <CardFooter>
+              <Button
+                onClick={addToCart}
+                className="tw-w-full tw-bg-blue-600 tw-text-white tw-font-bold tw-mt-2 hover:tw-bg-blue-700"
+              >
+                Add to Cart
+              </Button>
+            </CardFooter>
           </Card>
-        </Grid>
-      </Grid>
+        </div>
+      </div>
 
-      <Divider sx={{ marginY: 4, fontWeight: 600, fontSize: 25 }}>
+      <Separator className="tw-my-8 tw-text-lg tw-font-semibold">
         Reviews
-      </Divider>
-      {/* Reviews section */}
+      </Separator>
       <AlignItemsList product={product} />
-    </Box>
+    </div>
   );
 };
 

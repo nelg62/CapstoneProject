@@ -1,81 +1,66 @@
-import * as React from "react";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import Divider from "@mui/material/Divider";
-import ListItemText from "@mui/material/ListItemText";
-import ListItemAvatar from "@mui/material/ListItemAvatar";
-import Avatar from "@mui/material/Avatar";
-import Typography from "@mui/material/Typography";
-import { Paper, Rating, Skeleton } from "@mui/material";
+"use client";
+
+import { useState, useEffect } from "react";
+import { Avatar } from "./ui/avatar";
+import { Skeleton } from "./ui/skeleton";
+import { Rating } from "@/components/Rating"; // Import the custom Rating component
 
 export default function AlignItemsList({ product }) {
-  const [loading, setLoading] = React.useState(true);
+  const [loading, setLoading] = useState(true);
 
-  // Set loading to false if product and product.reviews are available
-  React.useEffect(() => {
+  useEffect(() => {
     if (product && product.reviews) {
       setLoading(false);
     }
   }, [product]);
 
   return (
-    <Paper>
-      <List sx={{ width: "100%", bgcolor: "background.paper" }}>
+    <div className="tw-p-4 tw-bg-white tw-shadow-md tw-rounded-md">
+      <ul className="tw-divide-y tw-divide-gray-200">
         {product.reviews.map((review, index) => (
-          <React.Fragment key={index}>
-            <ListItem>
+          <li
+            key={index}
+            className="tw-py-4 tw-flex tw-items-start tw-space-x-4"
+          >
+            {loading ? (
+              <Skeleton className="tw-w-10 tw-h-10 tw-rounded-full" />
+            ) : (
+              <Avatar alt={review.reviewerName} src="" className="w-10 h-10" />
+            )}
+            <div className="tw-flex-1">
               {loading ? (
-                <Skeleton variant="circular" width={40} height={40}></Skeleton>
+                <Skeleton className="tw-mb-2" />
               ) : (
-                // Reviewer Avatar
-                <ListItemAvatar>
-                  <Avatar alt={review.reviewerName} src="" />
-                </ListItemAvatar>
+                <h3 className="tw-font-semibold tw-text-lg tw-mb-1">
+                  {review.reviewerName}
+                </h3>
               )}
-              <ListItemText>
-                {loading ? (
-                  <Skeleton></Skeleton>
-                ) : (
-                  // Reviewer name
-                  <Typography>{review.reviewerName}</Typography>
-                )}
 
-                {loading ? (
-                  <Skeleton variant="body2"></Skeleton>
-                ) : (
-                  // Reviewer Rating
-                  <Typography variant="body2" color="text.secondary">
-                    <Rating value={review.rating} readOnly precision={0.5} />
-                  </Typography>
-                )}
-              </ListItemText>
+              {loading ? (
+                <Skeleton className="tw-mb-2" />
+              ) : (
+                <div className="tw-flex tw-items-center tw-space-x-2 tw-mb-2">
+                  <Rating value={review.rating} readOnly precision={0.5} />
+                </div>
+              )}
 
-              <ListItemText>
-                {loading ? (
-                  <Skeleton></Skeleton>
-                ) : (
-                  // Reviewer comment
-                  <Typography color="text.secondary">
-                    {review.comment}
-                  </Typography>
-                )}
-              </ListItemText>
+              {loading ? (
+                <Skeleton className="tw-mb-2" />
+              ) : (
+                <p className="tw-text-gray-600 tw-mb-2">{review.comment}</p>
+              )}
 
-              <ListItemText>
-                {loading ? (
-                  <Skeleton variant="body2"></Skeleton>
-                ) : (
-                  // Date of comment by Reviewer
-                  <Typography variant="body2" color="text.secondary">
-                    {new Date(review.date).toLocaleDateString()}
-                  </Typography>
-                )}
-              </ListItemText>
-            </ListItem>
-            <Divider variant="inset" component="li" />
-          </React.Fragment>
+              {loading ? (
+                <Skeleton className="tw-mb-2" />
+              ) : (
+                <time className="tw-text-gray-400 tw-text-sm">
+                  {new Date(review.date).toLocaleDateString()}
+                </time>
+              )}
+            </div>
+          </li>
         ))}
-      </List>
-    </Paper>
+      </ul>
+    </div>
   );
 }
