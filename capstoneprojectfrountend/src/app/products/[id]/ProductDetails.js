@@ -42,6 +42,7 @@ const ProductDetail = () => {
   return (
     <div className="tw-p-4">
       <div className="tw-grid tw-grid-cols-1 md:tw-grid-cols-2 tw-gap-4">
+        {/* Product stepper */}
         <div>
           <DotsMobileStepper product={product} />
         </div>
@@ -49,6 +50,7 @@ const ProductDetail = () => {
         <div className="tw-max-w-sm tw-mx-auto">
           <Card className="tw-shadow-lg tw-rounded-lg tw-p-4">
             <CardContent>
+              {/* Product Title */}
               {loading ? (
                 <Skeleton className="tw-h-8 tw-w-full tw-mb-4" />
               ) : (
@@ -57,6 +59,7 @@ const ProductDetail = () => {
                 </h5>
               )}
 
+              {/* Product Price */}
               <Separator className="tw-my-4" />
               <h6 className="tw-font-semibold">Price</h6>
               {loading ? (
@@ -67,12 +70,13 @@ const ProductDetail = () => {
                 </p>
               )}
 
+              {/* Product Rating */}
               <Separator className="tw-my-4" />
               <h6 className="tw-font-semibold">Rating</h6>
               {loading ? (
                 <Skeleton className="tw-h-4 tw-w-full tw-mb-4" />
               ) : (
-                <p className="tw-text-center">
+                <div className="tw-text-center">
                   <div className="tw-flex tw-justify-center">
                     {/* Assuming you have a star rating component */}
                     <div className="tw-flex tw-items-center">
@@ -80,9 +84,10 @@ const ProductDetail = () => {
                       <div>{product.rating}</div>
                     </div>
                   </div>
-                </p>
+                </div>
               )}
 
+              {/* Product Description */}
               <Separator className="tw-my-4" />
               <h6 className="tw-font-semibold">Description</h6>
               {loading ? (
@@ -93,6 +98,7 @@ const ProductDetail = () => {
                 </p>
               )}
 
+              {/* Product Category */}
               <Separator className="tw-my-4" />
               <h6 className="tw-font-semibold">Category</h6>
               {loading ? (
@@ -101,6 +107,7 @@ const ProductDetail = () => {
                 <p className="tw-text-center">{product.category}</p>
               )}
 
+              {/* Product Brand */}
               <Separator className="tw-my-4" />
               <h6 className="tw-font-semibold">Brand</h6>
               {loading ? (
@@ -109,6 +116,7 @@ const ProductDetail = () => {
                 <p className="tw-text-center">{product.brand}</p>
               )}
 
+              {/* Product Availability */}
               <Separator className="tw-my-4" />
               <h6 className="tw-font-semibold">Availability</h6>
               {loading ? (
@@ -119,6 +127,7 @@ const ProductDetail = () => {
                 </p>
               )}
 
+              {/* Product Warranty Information */}
               <Separator className="tw-my-4" />
               <h6 className="tw-font-semibold">Warranty Information</h6>
               {loading ? (
@@ -127,6 +136,7 @@ const ProductDetail = () => {
                 <p className="tw-text-center">{product.warrantyInformation}</p>
               )}
 
+              {/* Product Shipping Information */}
               <Separator className="tw-my-4" />
               <h6 className="tw-font-semibold">Shipping</h6>
               {loading ? (
@@ -135,6 +145,7 @@ const ProductDetail = () => {
                 <p className="tw-text-center">{product.shippingInformation}</p>
               )}
 
+              {/* Product Return Policy */}
               <Separator className="tw-my-4" />
               <h6 className="tw-font-semibold">Return Policy</h6>
               {loading ? (
@@ -144,6 +155,7 @@ const ProductDetail = () => {
               )}
             </CardContent>
             <CardFooter>
+              {/* Add To Cart Button */}
               <Button
                 onClick={addToCart}
                 className="tw-w-full tw-bg-blue-600 tw-text-white tw-font-bold tw-mt-2 hover:tw-bg-blue-700"
@@ -158,6 +170,8 @@ const ProductDetail = () => {
       <Separator className="tw-my-8 tw-text-lg tw-font-semibold">
         Reviews
       </Separator>
+
+      {/* Reviews Table */}
       <AlignItemsList product={product} />
     </div>
   );

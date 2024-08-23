@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useUserContext } from "@/context/UserContext";
 import { useCartContext } from "@/context/CartContext";
 import { Avatar } from "./ui/avatar";
@@ -8,9 +8,10 @@ import { Menu as MenuIcon, ShoppingCart, User as UserIcon } from "lucide-react";
 import Link from "next/link";
 import { Button } from "./ui/button";
 import { Tooltip, TooltipProvider } from "./ui/tooltip";
+import CustomizedBadges from "./cartIcon";
 
-const pages = ["dashboard", "products", "about"];
-const authPages = ["signup", "login"];
+const pages = ["Dashboard", "Products", "About"];
+const authPages = ["Signup", "Login"];
 
 export default function ResponsiveAppBar() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -19,8 +20,28 @@ export default function ResponsiveAppBar() {
   const { clearCart } = useCartContext();
   const [isClient, setIsClient] = useState(false);
 
+  const dropdownRef = useRef(null);
+  const menuRef = useRef(null);
+
   useEffect(() => {
     setIsClient(true);
+  }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setDropdownOpen(false);
+      }
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setMenuOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
   }, []);
 
   const handleLogout = () => {
@@ -40,7 +61,10 @@ export default function ResponsiveAppBar() {
     <nav className="tw-bg-gray-800">
       <div className="tw-container tw-mx-auto tw-px-4 tw-flex tw-justify-between tw-items-center tw-h-16">
         <div className="tw-flex tw-items-center">
-          <Link href="/" className="tw-text-white tw-text-xl tw-font-semibold">
+          <Link
+            href="/dashboard"
+            className="tw-text-white tw-text-xl tw-font-semibold"
+          >
             LOGO
           </Link>
         </div>
@@ -51,7 +75,10 @@ export default function ResponsiveAppBar() {
             <MenuIcon />
           </button>
           {menuOpen && (
-            <div className="tw-absolute tw-top-16 tw-left-0 tw-right-0 tw-bg-gray-800 tw-z-50">
+            <div
+              ref={menuRef}
+              className="tw-absolute tw-top-16 tw-left-0 tw-right-0 tw-bg-gray-800 tw-z-50"
+            >
               {pages.map((page) => (
                 <Link key={page} href={`/${page.toLowerCase()}`}>
                   <Button
@@ -96,11 +123,7 @@ export default function ResponsiveAppBar() {
 
         {/* Cart and Avatar/Logout */}
         <div className="tw-flex tw-items-center tw-space-x-4">
-          <Link href="/cart">
-            <Button className="tw-text-white">
-              <ShoppingCart />
-            </Button>
-          </Link>
+          <CustomizedBadges />
 
           {/* Avatar with Dropdown for Mobile */}
           <div className="tw-relative">
@@ -125,6 +148,7 @@ export default function ResponsiveAppBar() {
 
             {/* Dropdown for Mobile */}
             <div
+              ref={dropdownRef}
               className={`tw-absolute tw-right-0 tw-mt-2 tw-w-48 tw-bg-white tw-rounded-md tw-shadow-lg ${
                 dropdownOpen ? "tw-block" : "tw-hidden"
               } md:tw-hidden`}

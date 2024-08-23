@@ -41,10 +41,10 @@ export default function ProductCard({ product }) {
 
   return (
     <Card
-      className="tw-bg-gray-100 tw-border tw-border-gray-300 tw-shadow-lg tw-rounded-lg tw-cursor-pointer"
+      className="tw-bg-gray-100 tw-border tw-border-gray-300 tw-shadow-lg tw-rounded-lg tw-cursor-pointer tw-flex tw-flex-col tw-h-full hover:tw-shadow-lg hover:tw-shadow-gray-400 hover:tw-bg-gray-200"
       onClick={handleCardClick}
     >
-      <CardHeader>
+      <CardHeader className="tw-flex-grow">
         <CardTitle className="tw-text-lg tw-font-semibold tw-text-gray-900">
           {loading ? "Loading..." : product.title}
         </CardTitle>
@@ -52,7 +52,7 @@ export default function ProductCard({ product }) {
           {loading ? "Loading description..." : `Category: ${product.category}`}
         </CardDescription>
       </CardHeader>
-      <CardContent className="tw-flex tw-flex-col tw-items-center">
+      <CardContent className="tw-flex tw-flex-col tw-items-center tw-flex-grow">
         {loading ? (
           <div className="tw-w-full tw-h-40 tw-bg-gray-200 tw-animate-pulse"></div>
         ) : (
@@ -80,7 +80,7 @@ export default function ProductCard({ product }) {
             expanded
               ? "tw-flex-col tw-items-start tw-gap-4"
               : "tw-justify-between tw-items-center"
-          }`}
+          } tw-flex-grow`}
         >
           {expanded && (
             <CollapsibleContent className="tw-w-full tw-text-left">

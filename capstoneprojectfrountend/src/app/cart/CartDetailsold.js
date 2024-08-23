@@ -2,13 +2,14 @@
 import CartListItems from "@/components/cartListItems";
 import CartOrderForm from "@/components/cartOrderForm";
 import ProtectedRoute from "@/components/ProtectedRoute";
+import { Box } from "@mui/material";
 
 const CartDetails = () => {
   return (
-    <div className="tw-flex tw-flex-col lg:tw-flex-row tw-w-full">
+    <Box sx={{ display: "flex", width: "100%" }}>
       <CartListItems />
       <CartOrderForm />
-    </div>
+    </Box>
   );
 };
 

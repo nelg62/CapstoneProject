@@ -41,13 +41,13 @@ export default function TopOrderedItems() {
           ? Array.from(new Array(6)).map((_, index) => (
               <div
                 key={index}
-                className="tw-max-w-sm tw-mx-auto tw-bg-white tw-border tw-border-gray-200 tw-rounded-lg tw-shadow-md"
+                className="tw-w-full tw-h-[24rem] tw-flex tw-flex-col"
               >
-                <Card>
-                  <CardHeader>
-                    <Skeleton className="tw-h-64 tw-w-full" />
+                <Card className="tw-h-full">
+                  <CardHeader className="tw-flex-1">
+                    <Skeleton className="tw-h-full tw-w-full" />
                   </CardHeader>
-                  <CardContent>
+                  <CardContent className="tw-flex-1">
                     <Skeleton className="tw-h-6 tw-mb-4" />
                     <Skeleton className="tw-h-4 tw-mb-2" />
                     <Skeleton className="tw-h-4" />
@@ -58,11 +58,11 @@ export default function TopOrderedItems() {
           : topOrderedItemsState.map((item) => (
               <div
                 key={item.productId}
-                className="tw-max-w-sm tw-mx-auto tw-bg-white tw-border tw-border-gray-200 tw-rounded-lg tw-shadow-md"
+                className="tw-w-full tw-h-[24rem] tw-flex tw-flex-col"
               >
                 <Card
                   onClick={() => handleCardClick(item.productId)}
-                  className="tw-cursor-pointer"
+                  className="tw-h-full tw-cursor-pointer hover:tw-shadow-lg hover:tw-shadow-gray-400 hover:tw-bg-gray-100"
                 >
                   {/* Product Image */}
                   <img
@@ -71,7 +71,7 @@ export default function TopOrderedItems() {
                     className="tw-w-full tw-h-48 tw-object-contain tw-rounded-t-lg"
                   />
 
-                  <CardContent>
+                  <CardContent className="tw-flex-1 tw-overflow-hidden">
                     <CardTitle className="tw-text-xl tw-font-semibold tw-text-gray-800 tw-mb-2">
                       {item.title}
                     </CardTitle>

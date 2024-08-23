@@ -42,7 +42,7 @@ export default function CartOrderForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="tw-w-full tw-mt-2 tw-ml-2 tw-flex tw-flex-col"
+      className="tw-w-full lg:tw-w-1/2 tw-p-4 tw-mt-2 tw-ml-2 tw-flex tw-flex-col"
     >
       <Card className="tw-p-4">
         {/* Checkout / order button */}

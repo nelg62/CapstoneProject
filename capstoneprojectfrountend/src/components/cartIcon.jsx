@@ -1,27 +1,28 @@
 import * as React from "react";
-import Badge from "@mui/material/Badge";
-import { styled } from "@mui/material/styles";
-import IconButton from "@mui/material/IconButton";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { useCartContext } from "@/context/CartContext";
-
-const StyledBadge = styled(Badge)(({ theme }) => ({
-  "& .MuiBadge-badge": {
-    right: -3,
-    top: 13,
-    border: `2px solid ${theme.palette.background.paper}`,
-    padding: "0 4px",
-  },
-}));
+import { ShoppingCart } from "lucide-react"; // Assuming you're using Lucide icons with shadcn
+import Link from "next/link";
+import { Button } from "./ui/button";
 
 export default function CustomizedBadges() {
   const { cart } = useCartContext();
 
   return (
-    <IconButton aria-label="cart" sx={{ marginRight: "10px" }}>
-      <StyledBadge badgeContent={cart.length} color="secondary">
-        <ShoppingCartIcon />
-      </StyledBadge>
-    </IconButton>
+    <Link href="/cart">
+      <Button
+        aria-label="cart"
+        className="tw-relative tw-inline-flex tw-items-center tw-justify-center tw-p-2 tw-text-white-700 hover:tw-text-gray-700 hover:tw-bg-gray-100 tw-rounded-md"
+      >
+        {/* Cart Icon */}
+        <ShoppingCart className="tw-w-6 tw-h-6" />
+
+        {/* Badge */}
+        {cart.length > 0 && (
+          <span className="tw-absolute tw-top-0 tw-right-0 tw-w-5 tw-h-5 tw-bg-red-600 tw-text-white tw-rounded-full tw-text-xs tw-flex tw-items-center tw-justify-center tw-border-2 tw-border-white">
+            {cart.length}
+          </span>
+        )}
+      </Button>
+    </Link>
   );
 }

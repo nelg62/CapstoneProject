@@ -39,7 +39,7 @@ export default function CartListItems() {
   const totalPrice = calculateTotalPrice();
 
   return (
-    <div className="tw--4">
+    <div className="tw-w-full lg:tw-w-1/2 tw-p-4">
       <Card className="tw-flex tw-flex-col">
         {cart.map((item) => {
           return (
@@ -62,7 +62,7 @@ export default function CartListItems() {
               >
                 <Minus className="tw-w-6 tw-h-6" />
               </Button>
-              <div className="tw-text-center">{item.quantity}</div>
+              <div className="tw-text-center tw-text-lg">{item.quantity}</div>
               <Button
                 variant="outline"
                 onClick={() => AddToCart(userState.id, item.productId)}
@@ -70,7 +70,9 @@ export default function CartListItems() {
               >
                 <Plus className="tw-w-6 tw-h-6" />
               </Button>
-              <div>${Number(item.price).toFixed(2)}</div>
+              <div className="tw-m-2">
+                ${Number(item.price).toFixed(2) * item.quantity}
+              </div>
             </div>
           );
         })}
