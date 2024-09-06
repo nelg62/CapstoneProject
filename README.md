@@ -204,8 +204,8 @@ _For more examples, please refer to the [Documentation](https://example.com)_ --
 - [ ] make payment form more then just a button so it can be filled out and can collect shipping information -[ ] integrate payment system like stripe
 - [ ] add ability to rate and add comments
 - [ ] star rating to be calculated rather then from seeded data
-
-See the [open issues](https://github.com/nelg62/CapstoneProject/issues) for a full list of proposed features (and known issues).
+- [ ] Develop an admin dashboard for product and order management.
+      See the [open issues](https://github.com/nelg62/CapstoneProject/issues) for a full list of proposed features (and known issues).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
