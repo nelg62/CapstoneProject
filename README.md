@@ -71,7 +71,7 @@ This project is a full-stack e-commerce application that includes a frontend bui
 <li>Responsive Design: Mobile-friendly UI with dynamic components.</li>
 </ul>
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+[![Product Name Screen Shot][product-screenshot]](https://capstopeprojectglenharding.netlify.app/)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
