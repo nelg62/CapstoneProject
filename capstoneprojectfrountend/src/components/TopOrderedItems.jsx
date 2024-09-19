@@ -12,6 +12,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useRouter } from "next/navigation";
+import theme from "@/styles/theme";
 
 export default function TopOrderedItems() {
   // State to store top ordered items
@@ -74,8 +75,11 @@ export default function TopOrderedItems() {
                     key={item.productId}
                     sx={{
                       maxWidth: 345,
-                      margin: "auto",
-                      marginTop: 4,
+                      backgroundColor: theme.palette.background.default,
+                      borderColor: theme.palette.secondary.main,
+                      border: `1px solid ${theme.palette.secondary.main}`,
+                      boxShadow: theme.shadows[3],
+                      borderRadius: theme.shape.borderRadius,
                     }}
                   >
                     {/* On Click action to navigate to product details page  */}
@@ -87,6 +91,11 @@ export default function TopOrderedItems() {
                         component="img"
                         image={item.thumbnail}
                         alt={item.title}
+                        sx={{
+                          objectFit: "contain",
+                          maxWidth: 344,
+                          height: 194,
+                        }}
                       />
 
                       <Box>
@@ -96,7 +105,13 @@ export default function TopOrderedItems() {
                             gutterBottom
                             variant="h5"
                             component="div"
-                            sx={{ marginLeft: "5px" }}
+                            sx={{
+                              color: theme.palette.text.primary,
+                              marginLeft: "5px",
+                              minHeight: "44px",
+                              maxHeight: "44px",
+                              marginBottom: "50px",
+                            }}
                           >
                             {item.title}
                           </Typography>
@@ -104,9 +119,10 @@ export default function TopOrderedItems() {
                           {/* Product Price */}
                           <Typography
                             sx={{
-                              float: "right",
                               fontWeight: "700",
                               marginRight: "5px",
+                              marginLeft: "5px",
+                              color: theme.palette.primary.main,
                             }}
                             variant="body1"
                           >
@@ -116,7 +132,10 @@ export default function TopOrderedItems() {
                           {/* Product orderCount */}
                           <Typography
                             variant="body1"
-                            sx={{ marginLeft: "5px" }}
+                            sx={{
+                              marginLeft: "5px",
+                              color: theme.palette.text.primary,
+                            }}
                           >
                             Ordered: {item.orderCount} times
                           </Typography>
